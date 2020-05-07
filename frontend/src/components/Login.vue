@@ -11,7 +11,7 @@
         <!-- Login Form -->
         <form @submit="loginAuth">
           <input type="text" id="email" v-model="email" class="fadeIn second" name="email" placeholder="email">
-          <div class="error" v-if="$v.email.$dirty && !$v.email.required">Please enter email</div>
+          <div class="error" v-if="$v.email.$dirty && !$v.email.required || !$v.email.email">Please enter proper email</div>
           <input type="password" id="password" v-model="password" class="fadeIn third" name="password" placeholder="password">
           <div class="error" v-if="$v.password.$dirty && !$v.password.required">Please enter password</div>
           <input type="submit" class="fadeIn fourth" value="Log In">
@@ -28,7 +28,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import { required } from 'vuelidate/lib/validators'
+import { required, email } from 'vuelidate/lib/validators'
 export default {
     name: "Login",
     computed: mapGetters(["users","loader"]),
@@ -52,7 +52,8 @@ export default {
     },
     validations: {
       email: {
-        required
+        required,
+        email
       },
       password: {
         required

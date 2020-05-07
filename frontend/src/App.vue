@@ -1,10 +1,8 @@
 <template>
   <div id="app">
     <Header/>
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    <Leftbar/>
+    
     <router-view/>
     <Footer/>
   </div>
@@ -13,6 +11,7 @@
 <script>
 import Header from '@/components/layouts/Header.vue'
 import Footer from '@/components/layouts/Footer.vue'
+import Leftbar from '@/components/layouts/Leftbar.vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap-vue/dist/bootstrap-vue-icons.min.css'
@@ -21,7 +20,8 @@ import 'bootstrap-vue/dist/bootstrap-vue-icons.min.css'
 export default {
   components:{
     Header,
-    Footer
+    Footer,
+    Leftbar
   }
 }
 </script>
@@ -40,12 +40,4 @@ export default {
   padding: 30px;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>

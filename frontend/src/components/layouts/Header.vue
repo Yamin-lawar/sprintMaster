@@ -1,7 +1,9 @@
 <template>
-    <div>
-        This is header file
-    </div>    
+    <div class="header">
+        <b-nav small>
+            
+        </b-nav>
+    </div>
 </template>
 <script>
 export default {
@@ -9,5 +11,8 @@ export default {
 }
 </script>
 <style scoped>
-
+.header{
+    border-bottom: 1px solid #dfe2e2;
+    height: 45px;
+}
 </style>

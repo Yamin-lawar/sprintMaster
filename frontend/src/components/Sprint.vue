@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="wrapper">
         This is current sprint
     </div>    
 </template>
