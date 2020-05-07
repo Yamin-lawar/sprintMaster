@@ -10,8 +10,10 @@
 
         <!-- Login Form -->
         <form @submit="loginAuth">
-          <input type="text" id="email" v-model="email" class="fadeIn second" name="email" placeholder="login">
+          <input type="text" id="email" v-model="email" class="fadeIn second" name="email" placeholder="email">
+          <div class="error" v-if="$v.email.$dirty && !$v.email.required">Please enter email</div>
           <input type="password" id="password" v-model="password" class="fadeIn third" name="password" placeholder="password">
+          <div class="error" v-if="$v.password.$dirty && !$v.password.required">Please enter password</div>
           <input type="submit" class="fadeIn fourth" value="Log In">
         </form>
 
@@ -26,6 +28,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
+import { required } from 'vuelidate/lib/validators'
 export default {
     name: "Login",
     computed: mapGetters(["users","loader"]),
@@ -39,8 +42,20 @@ export default {
       ...mapActions(['loginAction']),
       loginAuth(e){
         e.preventDefault();
+        this.$v.$touch();
+        if (this.$v.$invalid) {
+            return;
+        }
         console.log(this.email, this.password, 'check the form content')
         this.loginAction({email: this.email, password: this.password});
+      }
+    },
+    validations: {
+      email: {
+        required
+      },
+      password: {
+        required
       }
     }
 }

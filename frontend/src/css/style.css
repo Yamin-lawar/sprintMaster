@@ -107,4 +107,9 @@ input[type=button], input[type=submit], input[type=reset]  {
     height: 31px;
     width: 31px;
 }
+/*error class for form elements*/
+.error{
+    color: red;
+    left: 0;
+}
   

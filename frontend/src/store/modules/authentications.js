@@ -1,3 +1,5 @@
+import router from '../../router'
+
 const state = {
     users:{},
     loader: false
@@ -16,7 +18,9 @@ const actions = {
        .then(response => response.json())
        .then(json => {
                commit('setUser', json); 
-               setTimeout( function () { commit('setLoader', false) }, 5000) 
+               //setTimeout( function () {
+                    commit('setLoader', false); router.push({ name: "Sprint"}) 
+              // }, 5000) 
        })
        .catch(err => { throw err; });
    }
