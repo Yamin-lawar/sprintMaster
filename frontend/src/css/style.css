@@ -34,7 +34,7 @@
 /* FORM TYPOGRAPHY*/
   
 input[type=button], input[type=submit], input[type=reset]  {
-    background-color: #56baed;
+    background-color: #39ace7;
     border: none;
     color: white;
     padding: 15px 80px;
@@ -67,7 +67,7 @@ input[type=button], input[type=submit], input[type=reset]  {
     transform: scale(0.95);
   }
   
-  input[type=text], input[type=password] {
+  input[type=text], input[type=password], textarea {
     background-color: #f6f6f6;
     border: none;
     color: #0d0d0d;
@@ -87,8 +87,14 @@ input[type=button], input[type=submit], input[type=reset]  {
     -webkit-border-radius: 5px 5px 5px 5px;
     border-radius: 5px 5px 5px 5px;
   }
+
+  .normalBox{
+    text-align: left !important;
+    padding: 15px 5px !important;
+  }
+
   
-  input[type=text]:focus {
+  input[type=text]:focus, textarea:focus {
     background-color: #fff;
     border-bottom: 2px solid #5fbae9;
   }
@@ -111,5 +117,9 @@ input[type=button], input[type=submit], input[type=reset]  {
 .error{
     color: red;
     left: 0;
+}
+
+.btn-primary{
+  background-color: #39ace7;
 }
   

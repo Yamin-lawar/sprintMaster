@@ -1,9 +1,14 @@
 <template>
   <div id="app">
-    <Header/>
-    <Leftbar/>
-    
-    <router-view/>
+    <div>
+      <Header/>
+    </div>
+    <div>
+      <Leftbar/>
+    </div>
+    <div>
+      <router-view/>
+    </div>  
     <Footer/>
   </div>
 </template>
@@ -15,6 +20,7 @@ import Leftbar from '@/components/layouts/Leftbar.vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'bootstrap-vue/dist/bootstrap-vue-icons.min.css'
+import 'vue-good-table/dist/vue-good-table.css'
 
 
 export default {
