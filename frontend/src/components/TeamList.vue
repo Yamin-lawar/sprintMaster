@@ -3,7 +3,7 @@
           <b-spinner variant="primary" style="width: 3rem; height: 3rem;" class="m-5 loader" label="Spinning" v-if="teamLoader"></b-spinner>
          <div><input type="button" v-on:click="openAddTeam('open')" value="Add Team"></div>
          <modal name="hello-world" height="400">
-            <AddTeam v-on:closeAddTeam="openAddTeam('close')" v-on:handleTeamForm="saveTeam" />
+            <AddTeam v-on:closeAddTeam="openAddTeam('close')" v-on:handleEditTeamForm="editTeamForm"  v-on:handleTeamForm="saveTeam" :currentData="currentData" />
          </modal>
          <vue-good-table
             :columns="columns"
@@ -19,7 +19,8 @@
          >
          <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'option'">
-            <span>Edit {{props.formattedRow['id']}} </span> 
+            <span><b-icon icon="pencil-square" v-on:click="editTeamPoup(props.formattedRow)"></b-icon></span> 
+            <span><b-icon icon="trash" v-on:click="deleteTeamAction(props.formattedRow['id'])"></b-icon></span>
           </span>
           
         </template>
@@ -53,6 +54,7 @@ export default {
     },
     data(){
     return {
+      currentData: {},
       columns: [
         {
           label: 'Name',
@@ -94,18 +96,33 @@ export default {
     };
   },
   methods:{
-    ...mapActions(['addTeam', 'resetCreationFlag', 'getTeam']),
+    ...mapActions(['addTeam', 'resetCreationFlag', 'getTeam', 'editTeam','deleteTeam']),
     openAddTeam(action){
       if(action == 'open'){
+         this.currentData = {};
         this.$modal.show('hello-world');  
       }else{
         this.$modal.hide('hello-world'); 
       }
     },
     saveTeam(resObj){
+      console.log(resObj,'resObj in add')
       this.addTeam(resObj);
-     
     },
+    editTeamForm(resObj){
+      console.log(resObj,'resObj')
+      this.editTeam(resObj);
+    },
+    editTeamPoup(teamObj){
+      this.currentData = teamObj;
+      this.$modal.show('hello-world', teamObj);    
+      console.log(teamObj,'edit team')
+    },
+    deleteTeamAction(id){
+      this.deleteTeam(id)
+      console.log(id,'ods')
+    }
+    
   },
   created() {
     this.getTeam();

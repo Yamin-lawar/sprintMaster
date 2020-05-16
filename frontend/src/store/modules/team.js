@@ -25,6 +25,34 @@ const actions = {
       .then(json =>  {commit('setLoader', false); commit('setCreationFlag', true); actions.getTeam({commit})}) //this.todos = json)
       .catch(err => { throw err; });
    },
+   editTeam({commit}, teamData){
+      commit('setLoader', true);
+      console.log(teamData,'teamData')
+      fetch('https://jsonplaceholder.cypress.io/todos',{
+       method:'post',
+       body: JSON.stringify({title: 'sdgf', completed: false}),
+       headers: {
+         "Content-type": "application/json; charset=UTF-8"
+       }
+     })
+     .then(response => response.json())
+     .then(json =>  {commit('setLoader', false); commit('setCreationFlag', true); actions.getTeam({commit})}) //this.todos = json)
+     .catch(err => { throw err; });
+   },
+   deleteTeam({commit}, id){
+      commit('setLoader', true);
+      console.log(id,'teamData')
+      fetch('https://jsonplaceholder.cypress.io/todos',{
+       method:'post',
+       body: JSON.stringify({title: 'sdgf', completed: false}),
+       headers: {
+         "Content-type": "application/json; charset=UTF-8"
+       }
+     })
+     .then(response => response.json())
+     .then(json =>  {actions.getTeam({commit})}) //this.todos = json)
+     .catch(err => { throw err; });
+   },
    resetCreationFlag({commit}){
       console.log('setCreationFlag')
       commit('setCreationFlag', false);
