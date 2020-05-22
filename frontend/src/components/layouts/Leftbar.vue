@@ -18,13 +18,13 @@
                
             </li>
             <li>
-                <a href="#"><b-icon icon="layout-text-sidebar"></b-icon><span class="menu-title">Projects</span></a>
+                <a href="/project"><b-icon icon="layout-text-sidebar"></b-icon><span class="menu-title">Projects</span></a>
             </li>
             <li>
                 <a href="/team"><b-icon icon="people-fill"></b-icon><span class="menu-title">Team</span></a>
             </li>
             <li>
-                <a href="#"><b-icon icon="people-circle"></b-icon><span class="menu-title">Users</span></a>
+                <a href="/users"><b-icon icon="people-circle"></b-icon><span class="menu-title">Users</span></a>
             </li>
             <li>
                 <a href="#"><b-icon icon="power"></b-icon><span class="menu-title">Logout</span></a>

@@ -4,6 +4,8 @@ import Login from '../components/Login.vue'
 import Sprint from '../components/Sprint.vue'
 import TeamList from '../components/TeamList.vue'
 import AddTeam from '../components/AddTeam.vue'
+import UserList from '../components/UserList.vue'
+import Projects from '../components/Projects.vue'
 
 Vue.use(VueRouter)
 
@@ -27,6 +29,16 @@ Vue.use(VueRouter)
     path: '/add-team',
     name: 'AddTeam',
     component: AddTeam
+  },
+  {
+    path: '/users',
+    name: 'UserList',
+    component: UserList
+  },
+  {
+    path: '/projects',
+    name: 'prjects',
+    component: Projects
   }
 ]
 

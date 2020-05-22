@@ -2,6 +2,8 @@ import Vuex from 'vuex';
 import Vue from 'vue';
 import authentications from './modules/authentications';
 import team from './modules/team';
+import user from './modules/user';
+import project from './modules/project';
 
 
 Vue.use(Vuex);
@@ -9,6 +11,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     modules:{
         authentications,
-        team
+        team,
+        user,
+        project
     }
 })
