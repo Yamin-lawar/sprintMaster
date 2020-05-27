@@ -4,6 +4,7 @@ import authentications from './modules/authentications';
 import team from './modules/team';
 import user from './modules/user';
 import project from './modules/project';
+import sprint from './modules/sprint'
 
 
 Vue.use(Vuex);
@@ -13,6 +14,7 @@ export default new Vuex.Store({
         authentications,
         team,
         user,
-        project
+        project,
+        sprint
     }
 })

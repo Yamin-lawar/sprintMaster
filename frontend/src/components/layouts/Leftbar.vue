@@ -11,10 +11,10 @@
                
             </li>
             <li>
-                <a href="#"><b-icon icon="bullseye"></b-icon><span class="menu-title">Active Sprint</span></a>
+                <a href="/sprint/active"><b-icon icon="bullseye"></b-icon><span class="menu-title">Active Sprint</span></a>
             </li>
             <li>
-                <a href="#"><b-icon icon="card-checklist"></b-icon><span class="menu-title">Sprints</span></a>
+                <a href="/sprint"><b-icon icon="card-checklist"></b-icon><span class="menu-title">Sprints</span></a>
                
             </li>
             <li>

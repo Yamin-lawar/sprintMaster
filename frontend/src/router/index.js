@@ -6,6 +6,7 @@ import TeamList from '../components/TeamList.vue'
 import AddTeam from '../components/AddTeam.vue'
 import UserList from '../components/UserList.vue'
 import Projects from '../components/Projects.vue'
+import SprintList from '../components/SprintList.vue'
 
 Vue.use(VueRouter)
 
@@ -16,7 +17,7 @@ Vue.use(VueRouter)
     component: Login
   },
   {
-    path: '/sprint',
+    path: '/sprint/active',
     name: 'Sprint',
     component: Sprint
   },
@@ -39,7 +40,13 @@ Vue.use(VueRouter)
     path: '/projects',
     name: 'prjects',
     component: Projects
-  }
+  },
+  {
+    path: '/sprint',
+    name: 'sprint-list',
+    component: SprintList
+  },
+  
 ]
 
 const router = new VueRouter({
