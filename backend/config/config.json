@@ -1,0 +1,35 @@
+{
+  "development": {
+    "username": "root",
+    "password": "root",
+    "database": "zephx_development",
+    "port": "3306",
+    "host": "localhost",
+    "dialect": "mysql",
+    "operatorsAliases": false
+  },
+  "test": {
+    "username": "app",
+    "password": "f94oqf9nnrzkst17",
+    "database": "discovr",
+    "port": "25060",
+    "host": "discovr-analytics-hub-do-user-6288890-0.db.ondigitalocean.com",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": true
+    },
+    "operatorsAliases": false
+  },
+  "production": {
+    "username": "app",
+    "password": "f94oqf9nnrzkst17",
+    "database": "discovr",
+    "port": "25060",
+    "host": "discovr-analytics-hub-do-user-6288890-0.db.ondigitalocean.com",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": true
+    },
+    "operatorsAliases": false
+  }
+}
