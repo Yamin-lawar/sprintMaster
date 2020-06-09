@@ -1,14 +1,24 @@
 const typeDefs = [`
-  type Course {
-    id: Int
-    title: String
-    author: String
+  
+  type Event {
+    _id: ID!
+    title: String!
     description: String
-    topic: String
-    url: String
+    price: Float!
+    date: String! 
   }
   type Query {
-    allCourses: [Course]
-    course(id:Int!):Course 
+    events: [Event!]! 
+  }
+  input EventInput{
+    title: String!
+    description: String
+    price: Float!
+    date: String!
+  }
+  type Mutation{
+    createEvent(eventInput: EventInput): Event
   }
 `]
+
+module.exports = {typeDefs}

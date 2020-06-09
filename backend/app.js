@@ -3,7 +3,8 @@ const http = require('http')
 const path = require('path')
 const bodyParser = require('body-parser');
 const schema = require('./schema.js') 
-
+import {typeDefs} from './schema'
+import {resolvers} from './resolvers'
 
 const express = require('express')
 const dotenv = require('dotenv');
@@ -19,18 +20,6 @@ app.use(bodyParser.json());
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
 app.set('views', path.join(__dirname, 'views'));
-	
-const typeDefs = gql`
-	type Query 	{
-		hello: String!
-	}
-`;
-
-const resolvers = {
-	Query:{
-		hello: () => "Hell"
-	}
-}
 
 
 const AServer = new ApolloServer({
