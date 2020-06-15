@@ -1,23 +1,20 @@
 const typeDefs = [`
   
-  type Event {
+  type Team {
     _id: ID!
-    title: String!
-    description: String
-    price: Float!
-    date: String! 
+    name: String!
+    skills: String,
+    createdAt: Number  
   }
   type Query {
-    events: [Event!]! 
+    teams: [Team!]! 
   }
-  input EventInput{
-    title: String!
-    description: String
-    price: Float!
-    date: String!
+  input TeamInput{
+    name: String!
+    skills: String
   }
   type Mutation{
-    createEvent(eventInput: EventInput): Event
+    createTeam(input:TeamInput): Team
   }
 `]
 

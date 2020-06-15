@@ -1,27 +1,44 @@
-const events = [{
-    _id: '3435',
-    title: 'first',
-    description: 'this is description',
-    price: 240.00,
-    date: '20-02-2020' 
-}];  
+const Team = require('./models/team')  
 const resolvers = {
         Query:{   
-            events: () => {
-                return events
+            teams: () => {
+                try{
+                    return Team.find({}, function(err, result) {
+                        if (err) {
+                          return err;
+                        } else {
+                           console.log(result,'resuly') 
+                          return result;
+                        }
+                      });
+                   
+
+                }catch(err){
+
+                }
+                
             }
+            
         },
         Mutation: {
-            createEvent: args => {
-                console.log(args,'args')
-                const event = {
-                    _id: Math.random().toString(),
-                    title: args.eventInput.title,
-                    description: args.eventInput.description,
-                    price: +args.eventInput.price,
-                    date: new Date().toISOString
-                }
-                events.push(event)
+           
+            createTeam: (_,args) => {
+                try{
+                    const team = new Team({
+                        name: args.input.name,
+                        skills: args.input.skills
+                    });
+                    return team.save().then(result => {
+                        console.log(result._doc,'result._doc')
+                        return {...result._doc}
+                    }).catch(err => {
+                        return {'code': 500, 'message':'Problem in adding user'}
+                        console.log(err)
+                    });
+                 }catch(err){
+                    return {'code': 500, 'message':'Problem in adding user'}
+                 }    
+             
             }
         }
         

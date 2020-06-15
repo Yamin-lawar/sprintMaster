@@ -3,8 +3,10 @@ const http = require('http')
 const path = require('path')
 const bodyParser = require('body-parser');
 const schema = require('./schema.js') 
+const mongoose = require('mongoose')
 import {typeDefs} from './schema'
 import {resolvers} from './resolvers'
+
 
 const express = require('express')
 const dotenv = require('dotenv');
@@ -53,4 +55,10 @@ app.use((req,res,next)=>{
 
 
 const server = http.createServer(app)
-server.listen(process.env.PORT || 4002)
+mongoose.connect(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PSW}@ticketingsystem-araam.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`,{ useUnifiedTopology: true, useNewUrlParser: true })
+.then(() => {
+	server.listen(process.env.PORT || 4002)	
+})
+.catch(err =>{
+	console.log(err)
+})
