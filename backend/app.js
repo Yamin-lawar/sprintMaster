@@ -26,7 +26,16 @@ app.set('views', path.join(__dirname, 'views'));
 
 const AServer = new ApolloServer({
 	typeDefs,
-	resolvers
+	resolvers,
+	formatError: (err) => {
+		if(typeof err.extensions.exception.name !== undefined && err.extensions.exception.name == 'customError'){
+			return new Error(err.message);
+		}else{
+			return new Error('Internal server error')
+		}
+		
+		
+	}
 })
 
 AServer.applyMiddleware({app});
