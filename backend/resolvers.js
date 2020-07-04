@@ -15,14 +15,14 @@ const resolvers = {
                     return Team.find({}, function(err, result) {
                         if (err) {
                           logger('team',`Get Team: Problem in getting all team: ${err}`);
-                          throw customErrorHandler('Problem in getting team list');
+                          throw customErrorHandler('Problem in getting team list', 500);
                         } else {
                           return result;
                         }
                       });
                 }catch(err){
                   logger('team',`Get Team: Problem in getting all team: ${err}`);
-                  throw customErrorHandler('Problem in getting team list');
+                  throw customErrorHandler('Problem in getting team list', 500);
                 }
                 
             }
@@ -45,11 +45,11 @@ const resolvers = {
                         return {...result._doc}
                     }).catch(err => {
                        logger('team',`Create Team: Problem in adding team: ${err}`);
-                       throw customErrorHandler('Problem in adding team');
+                       throw customErrorHandler('Problem in adding team', 500);
                     });
                  }catch(err){
                        logger('team',`Create Team: Problem in adding team: ${err}`);
-                       throw customErrorHandler('Problem in adding team');
+                       throw customErrorHandler('Problem in adding team', 500);
                  }    
              
             }

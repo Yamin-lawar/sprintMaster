@@ -10,9 +10,10 @@ exports.logger = (fileName, err)=>{
     return true
 }
 
-exports.customErrorHandler = (message)=>{
-    
+exports.customErrorHandler = (message, code)=>{
+
     let e = new Error('Problem in adding user'); 
     e.name = 'customError';
+    e.code = code;
     return e
 }
