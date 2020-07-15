@@ -10,13 +10,21 @@ const typeDefs = [`
   type Query {
     teams: [Team!]! 
   }
+  type error{
+    name: String,
+    message: String
+  }
   input TeamInput{
     name: String!
     skills: String
   }
+  type AddTeamPayload{
+    error: [error],
+    team: Team
+  }
   type Mutation{
     userInputError(input: String): String
-    createTeam(input:TeamInput): Team
+    createTeam(input:TeamInput): AddTeamPayload
   }
 `]
 

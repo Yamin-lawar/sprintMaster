@@ -17,3 +17,30 @@ exports.customErrorHandler = (message, code)=>{
     e.code = code;
     return e
 }
+/**
+ * Custom error handler common function
+ * @author Yamin
+ * @param {*} message 
+ * @param {*} code 
+ */
+exports.customErrorHandler = (message, code)=>{
+
+    let e = new Error('Problem in adding user'); 
+    e.name = 'customError';
+    e.code = code;
+    return e
+}
+
+/**
+ * Custom function for validation error response
+ * @auuthor Yamin
+ * @param {*} err 
+ */
+exports.validationErrorResponse = (err) => {
+      return {
+        error:[{
+            name: err.error.details[0].path[0],
+            message: err.error.details[0].message
+        }]
+      }
+}

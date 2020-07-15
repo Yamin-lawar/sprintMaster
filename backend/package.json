@@ -22,6 +22,7 @@
     "@babel/cli": "^7.10.1",
     "@babel/core": "^7.10.1",
     "@babel/node": "^7.10.1",
+    "@hapi/joi": "^17.1.1",
     "adal-node": "^0.1.28",
     "apollo-server-express": "^2.14.0",
     "bcrypt": "^3.0.6",
@@ -40,6 +41,7 @@
     "pg-hstore": "^2.3.3",
     "sequelize": "^5.10.0",
     "sequelize-cli": "^5.5.0",
-    "simple-node-logger": "^18.12.24"
+    "simple-node-logger": "^18.12.24",
+    "yup": "^0.29.1"
   }
 }

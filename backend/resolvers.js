@@ -2,6 +2,8 @@ const Team = require('./models/team')
 const { GraphQLScalarType } = require('graphql') ;
 const generalFunctions = require('./utils/general')
 import {logger, customErrorHandler} from './utils/general'
+import { createTeamValidation } from './validations/validator'
+
 
 
 const resolvers = {
@@ -34,15 +36,19 @@ const resolvers = {
              * @author Yamin
              * @param args
              */
-            createTeam: (_,args) => {
+            createTeam: async(_,args) => {
                 try{
+                    const checkResponse = createTeamValidation.validate(args.input);
+                    if(checkResponse.error !== undefined){
+                      return generalFunctions.validationErrorResponse(error)
+                    }
                     const team = new Team({
                         name: args.input.name,
                         skills: args.input.skills
                     });
 
                     return team.save().then(result => {
-                        return {...result._doc}
+                        return {team: result._doc}
                     }).catch(err => {
                        logger('team',`Create Team: Problem in adding team: ${err}`);
                        throw customErrorHandler('Problem in adding team', 500);
