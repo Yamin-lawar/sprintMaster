@@ -27,7 +27,7 @@ app.set('views', path.join(__dirname, 'views'));
 const AServer = new ApolloServer({
 	typeDefs,
 	resolvers,
-	//formatError: (err) => ({ message: typeof err.extensions.exception.name !== undefined && err.extensions.exception.name == 'customError' ? err.message : 'Internal server error', status: typeof err.extensions.exception.code !== undefined ? err.extensions.exception.code: 500 })
+	formatError: (err) => ({ message: typeof err.extensions.exception.name !== undefined && err.extensions.exception.name == 'customError' ? err.message : 'Internal server error', status: typeof err.extensions.exception.code !== undefined ? err.extensions.exception.code: 500 })
 	/*formatError: (err) => {
 		console.log(err)
 	}*/

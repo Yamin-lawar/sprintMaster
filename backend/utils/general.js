@@ -25,7 +25,7 @@ exports.customErrorHandler = (message, code)=>{
  */
 exports.customErrorHandler = (message, code)=>{
 
-    let e = new Error('Problem in adding user'); 
+    let e = new Error(message); 
     e.name = 'customError';
     e.code = code;
     return e
@@ -39,8 +39,8 @@ exports.customErrorHandler = (message, code)=>{
 exports.validationErrorResponse = (err) => {
       return {
         error:[{
-            name: err.error.details[0].path[0],
-            message: err.error.details[0].message
+            name: err.details[0].path[0],
+            message: err.details[0].message
         }]
       }
 }

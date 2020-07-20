@@ -7,9 +7,23 @@ const typeDefs = [`
     skills: String
     createdAt: Date  
   }
+  type User {
+    _id: ID!,
+    firstName: String!
+    lastName: String!
+    email: String!
+    skills: String
+    mobileNo: String
+    avtaar: String
+    team: Team
+    createdAt: Date
+  }
   type Query {
     teams: [Team!]! 
+    users: [User!]!
   }
+
+  
   type error{
     name: String,
     message: String
@@ -22,9 +36,24 @@ const typeDefs = [`
     error: [error],
     team: Team
   }
+  input UserInput{
+    firstName: String!
+    password: String!
+    lastName: String!
+    email: String!
+    skills: String
+    mobileNo: String
+    avtaar: String
+    team: ID!
+  }
+  type AddUserPayload{
+    error: [error],
+    user: User
+  }
   type Mutation{
     userInputError(input: String): String
     createTeam(input:TeamInput): AddTeamPayload
+    createUser(input:UserInput): AddUserPayload
   }
 `]
 
