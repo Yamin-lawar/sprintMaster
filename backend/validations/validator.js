@@ -1,10 +1,9 @@
 const Joi = require('@hapi/joi');
 
 const createTeamValidation = Joi.object({
-    name: Joi.string().required()
-})
+    name: Joi.string().required().messages({"string.empty": `Please enter name of team`})
+}).unknown()
 
-module.exports = { createTeamValidation }
 
 const createUserValidation = Joi.object({
     firstName: Joi.string().required().messages({"string.empty": `Please enter first name`}),
@@ -14,6 +13,9 @@ const createUserValidation = Joi.object({
     team: Joi.string().required().messages({"string.empty":`Please select team for user`})
 }).unknown();
 
-module.exports = { createUserValidation }
+module.exports = {
+    createUserValidation,
+    createTeamValidation
+}
 
 

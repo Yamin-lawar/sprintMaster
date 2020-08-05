@@ -4,17 +4,18 @@ const { GraphQLScalarType } = require('graphql') ;
 import {logger, customErrorHandler, validationErrorResponse} from './utils/general'
 import { createTeamValidation, createUserValidation } from './validations/validator'
 const bcrypt = require('bcrypt');
+const Joi = require('@hapi/joi');
 
-
-
-const resolvers = {
-        Query:{   
+module.exports = {
+        
             /**
              * get all teams
              * @author Yamin
              */
             teams: () => {
+               
                 try{
+                  console.log('old team query')
                     return Team.find({}, function(err, result) {
                         if (err) {
                           logger('team',`Get Team: Problem in getting all team: ${err}`);
@@ -43,18 +44,21 @@ const resolvers = {
                 throw customErrorHandler('Problem in getting user list', 500);
               }
               
-          }
+          },
             
-        },
-        Mutation: {
+        
+       
             /**
              * Create team 
              * @author Yamin
              * @param args
              */
-            createTeam: async(_,args) => {
-                console.log('createTeam')
+            createTeam: async(args) => {
+               console.log(createTeamValidation,'createTeamValidation')
                 try{
+                    const schema = Joi.object({
+                      name: Joi.string().required()
+                    })
                     const checkResponse = createTeamValidation.validate(args.input);
                     if(checkResponse.error !== undefined){
                       return validationErrorResponse(checkResponse.error)
@@ -71,6 +75,7 @@ const resolvers = {
                        throw customErrorHandler('Problem in adding team', 500);
                     });
                  }catch(err){
+                        console.log(err,'err')
                        logger('team',`Create Team: Problem in adding team: ${err}`);
                        throw customErrorHandler('Problem in adding team', 500);
                  }    
@@ -119,7 +124,7 @@ const resolvers = {
                     throw customErrorHandler('Problem in adding user', 500);
                }    
            
-          }
+          
         }, 
         /**
          * Custom scalar for date
@@ -143,6 +148,5 @@ const resolvers = {
           })
         
 }
-module.exports = {resolvers}
 
 

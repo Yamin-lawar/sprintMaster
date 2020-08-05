@@ -1,11 +1,12 @@
-const typeDefs = [`
+import {buildSchema} from 'graphql'
+const typeDefs = buildSchema(`
   scalar Date
   
   type Team {
     _id: ID!
     name: String!
     skills: String
-    createdAt: Date  
+    createdAt: String  
   }
   type User {
     _id: ID!,
@@ -16,7 +17,7 @@ const typeDefs = [`
     mobileNo: String
     avtaar: String
     team: Team
-    createdAt: Date
+    createdAt: String
   }
   type Query {
     teams: [Team!]! 
@@ -55,6 +56,6 @@ const typeDefs = [`
     createTeam(input:TeamInput): AddTeamPayload
     createUser(input:UserInput): AddUserPayload
   }
-`]
+`)
 
 module.exports = {typeDefs}
