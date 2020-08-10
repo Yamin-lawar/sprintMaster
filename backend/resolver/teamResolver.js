@@ -36,7 +36,7 @@ module.exports = {
                       return validationErrorResponse(checkResponse.error)
                     }
                     const team = new Team({
-                        name: args.input.nam,
+                        name: args.input.name,
                         skills: args.input.skills
                     });
 
@@ -47,7 +47,6 @@ module.exports = {
                        throw customErrorHandler('Problem in adding team', 500);
                     });
                  }catch(err){
-                       console.log(err)
                        logger('team',`Create Team: Problem in adding team: ${err}`);
                        throw customErrorHandler('Problem in adding team', 500);
                  }    

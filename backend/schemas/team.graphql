@@ -1,5 +1,3 @@
-import {buildSchema} from 'graphql'
-const teamSchema = buildSchema(`
   type Team {
     _id: ID!
     name: String!
@@ -27,5 +25,3 @@ const teamSchema = buildSchema(`
   type Mutation{
     createTeam(input:TeamInput): AddTeamPayload
   }
-`);
-module.exports = {teamSchema}
