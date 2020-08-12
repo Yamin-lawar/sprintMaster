@@ -27,11 +27,22 @@ input UserInput{
   avtaar: String
   team: ID!
 }
-type AddUserPayload{
+type UserPayload{
   error: [Usererror],
   user: User
 }
+
+input loginInput{
+  email: String!,
+  password: String!
+}
+type LoginPayload{
+  user:User,
+  token: String!,
+  error: [Usererror]
+}
 type Mutation{
-  createUser(input:UserInput): AddUserPayload
+  createUser(input:UserInput): UserPayload
+  login(input:loginInput): LoginPayload 
 }
 

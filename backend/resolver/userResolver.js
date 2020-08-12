@@ -1,8 +1,9 @@
 import User from '../models/user'
+import Token from '../models/token'
 import {logger, customErrorHandler, validationErrorResponse} from '../utils/general'
-import { createTeamValidation, createUserValidation } from '../validations/validator'
+import { createUserValidation } from '../validations/validator'
 const bcrypt = require('bcrypt');
-const { GraphQLScalarType } = require('graphql') ;
+var jwt = require('jsonwebtoken');
 
 
 module.exports = {
@@ -28,7 +29,7 @@ module.exports = {
              * @author Yamin
              * @param args
              */
-            createUser: async(_,args) => {
+            createUser: async(args) => {
               console.log('createUser')
               try{
                   //form validation
@@ -66,7 +67,65 @@ module.exports = {
                     throw customErrorHandler('Problem in adding user', 500);
                }    
            
-          }
+          },
+          /**
+           * Login function for user, will return user detail
+           * @author Yamin
+           * @params input
+           */
+          login: async(args, context) => {
+              try{
+                console.log(context.request.headers.authorization,'auth')
+                //form validation
+                const {email, password} = args.input;
+                console.log(email)
+                //check email is exist 
+                const emailExist = await User.findOne({email: email});
+                if(emailExist == null){
+                  return customErrorHandler('Email address is not found', 404);
+                }
+                //match password
+                const passwordCheck = await bcrypt.compare(password, emailExist.password)
+                if(!passwordCheck){
+                  return customErrorHandler('Please enter right password', 500); 
+                }
+                const jwtPayload = {
+                  id: emailExist._id,
+                  name: emailExist.firstName,
+                  sureName: emailExist.lastName,
+                  avtaar: emailExist.avtaar,
+                  mobileNo: emailExist.mobileNo,
+                  team: emailExist.team
+                }
+                console.log(process.env.JWT_KEY,'token')
+                const token = await jwt.sign(jwtPayload, process.env.JWT_KEY.replace(/\\n/gm, '\n'), { 
+                  algorithm: 'HS256',
+                  expiresIn: '7d' 
+                })
+                let expireDate = new Date();
+                expireDate.setDate(expireDate.getDate() + 7);
+                const tokenPayload = new Token({
+                  user: emailExist._id,
+                  token: token,
+                  expiredAt: expireDate,
+                });
+                const TokenSave = tokenPayload.save();
+                if(!TokenSave){
+                  logger('user',`Login: Problem in adding token`);
+                  return customErrorHandler('Problem in login, Please try again', 500);
+                }
+                return {
+                  user: emailExist,
+                  token: token
+                }
+               
+             }catch(err){
+                  console.log(err);
+                  logger('user',`Login: Problem in login: ${err}`);
+                  throw customErrorHandler('Problem in login, Please try again', 500);
+             }    
+        }
+
         
   
       

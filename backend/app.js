@@ -30,17 +30,20 @@ app.set('views', path.join(__dirname, 'views'));
 
 //AServer.applyMiddleware({app});
 
-
-app.use('/graphql',graphqlHTTP({
+//set date locale
+app.use('/graphql',graphqlHTTP((request, response, graphQLParams) => ({
+	
 	schema: typeDefs,
 	rootValue: rootResolver,
+	context: {request: request},  	
 	customFormatErrorFn: (error) => ({
 		message:  typeof error.customError !== undefined ? error.message : 'Internal server error',
 		path: typeof error.customError !== undefined ? error.path : 'No path sepcified'
 		//status: typeof error.extensions.exception.code !== undefined ? error.extensions.exception.code: 500,
 	})
 
-}))
+})))
+
 app.get('/', expressPlayground({ endpoint: '/graphql' }))
 app.get('/',(req, res)=>{
 	res.status(400);

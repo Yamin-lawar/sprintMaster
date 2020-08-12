@@ -1,13 +1,15 @@
 const Team = require('../models/team')  
 import {logger, customErrorHandler, validationErrorResponse} from '../utils/general'
 import { createTeamValidation } from '../validations/validator'
+import authMiddleware from '../middlewares/auth'
 module.exports = {
             /**
              * get all teams (Query)
              * @author Yamin
              */
-            teams: () => {
-                console.log('here')
+            teams: async(args, context) =>  {
+                await authMiddleware(context)
+                //console.log('here')
                 try{
                     return Team.find({}, function(err, result) {
                         if (err) {
@@ -29,11 +31,16 @@ module.exports = {
              * @param args
              */
             createTeam: async(args) => {
-                console.log('createTeam',customErrorHandler)
                 try{
+                    await authMiddleware(context)
                     const checkResponse = createTeamValidation.validate(args.input);
                     if(checkResponse.error !== undefined){
                       return validationErrorResponse(checkResponse.error)
+                    }
+                    //check same team avail or not 
+                    const teamExist = Team.findOne({name: args.input.name});
+                    if(teamExist && teamExist.length > 0){
+                      throw customErrorHandler('Team already exist, please enter different name', 500);
                     }
                     const team = new Team({
                         name: args.input.name,
