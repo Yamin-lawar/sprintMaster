@@ -59,10 +59,12 @@ module.exports = {
                   return user.save().then(result => {
                       return {user: result._doc}
                   }).catch(err => {
+                     
                      logger('user',`Create User: Problem in adding user: ${err}`);
                      throw customErrorHandler('Problem in adding user', 500);
                   });
                }catch(err){
+                    
                     logger('user',`Create User: Problem in adding user: ${err}`);
                     throw customErrorHandler('Problem in adding user', 500);
                }    

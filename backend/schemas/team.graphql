@@ -2,18 +2,22 @@
     _id: ID!
     name: String!
     skills: String
-    createdAt: String  
+    createdAt: String
+    deleted: Boolean 
   }
-  
+ 
+  type teamInput{
+    id: ID
+  }
   type Query {
-    teams: [Team!]! 
+    teams(id: ID): [Team!]! 
   }
   
   type error{
     name: String,
     message: String
   }
-  input TeamInput{
+  input AddTeamInput{
     name: String!
     skills: String
   }
@@ -21,7 +25,21 @@
     error: [error],
     team: Team
   }
+  input UpdateTeamInput{
+    _id: ID!
+    name: String
+    skills: String
+  }
+  input RemoveTeamInput{
+    _id: ID!
+  }
+  type RemoveTeamPayload{
+    error: [error],
+    message: String!
+  }
  
   type Mutation{
-    createTeam(input:TeamInput): AddTeamPayload
+    createTeam(input:AddTeamInput): AddTeamPayload
+    updateTeam(input:UpdateTeamInput): AddTeamPayload,
+    removeTeam(input:RemoveTeamInput): RemoveTeamPayload
   }

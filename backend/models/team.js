@@ -14,5 +14,5 @@ const teamSchema = new Schema({
     }
 },{ timestamps: true })
 
-teamSchema.plugin(mongoose_delete);
+teamSchema.plugin(mongoose_delete,{ overrideMethods: 'all' }),
 module.exports = mongoose.model('Team',teamSchema)
