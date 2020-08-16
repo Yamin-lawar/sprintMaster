@@ -10,7 +10,7 @@ type User {
   createdAt: String
 }
 type Query {
-  users: [User!]!
+  users(_id: ID, team: ID): [User!]!
 }
 type Usererror{
   name: String,
@@ -19,7 +19,6 @@ type Usererror{
 
 input UserInput{
   firstName: String!
-  password: String!
   lastName: String!
   email: String!
   skills: String
@@ -41,8 +40,38 @@ type LoginPayload{
   token: String!,
   error: [Usererror]
 }
+input UpdateUserInput{
+  _id: ID!
+  firstName: String
+  password: String
+  lastName: String
+  skills: String
+  mobileNo: String
+  avtaar: String
+  team: ID!
+}
+input RemoveUserInput{
+    _id: ID!
+  }
+type generalMessagePayload{
+    error: [error],
+    message: String
+}
+input changePasswordInput{
+  _id: ID!
+  oldPassword: String!
+  newPassword: String!
+  confirmPassword: String!
+}
+input forgotPasswordInput{
+  email: String!
+}
 type Mutation{
   createUser(input:UserInput): UserPayload
-  login(input:loginInput): LoginPayload 
+  updateUser(input:UpdateUserInput): UserPayload
+  login(input:loginInput): LoginPayload,
+  removeUser(input:RemoveUserInput): generalMessagePayload
+  changePassword(input:changePasswordInput): generalMessagePayload
+  forgotPassword(input:forgotPasswordInput): generalMessagePayload
 }
 

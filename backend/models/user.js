@@ -35,8 +35,16 @@ const userSchema = new Schema({
     team:{
         type: Schema.Types.ObjectId,
         ref: 'Team'
+    },
+    passwordtoken:{
+        type: String,
+        required: false
+    },
+    passwordTokenExpiresIn:{
+        type: Date,
+        required: false
     }
 },{ timestamps: true })
 
-userSchema.plugin(mongoose_delete);
+userSchema.plugin(mongoose_delete,{ overrideMethods: 'all' });
 module.exports = mongoose.model('User',userSchema)

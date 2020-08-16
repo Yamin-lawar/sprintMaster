@@ -1,3 +1,44 @@
+const nodemailer = require('nodemailer');
+
+exports.sendEmail = (toEmail,subject,content)=>{
+    return new Promise(function(resolve, reject) {
+         var transporter = nodemailer.createTransport({
+            host: process.env.EMAIL_HOST,
+            port: process.env.EMAIL_PORT,
+            secure: false,
+            auth: {
+                user: process.env.EMAIL_ID,
+                pass: process.env.EMAIL_PASSWORD
+            },
+            tls: {
+                rejectUnauthorized: false
+            }
+        });
+
+        var mailOptions = {
+            from: `${process.env.EMAIL_FROM}<${process.env.EMAIL_ID}>` ,
+            to: toEmail,
+            subject: subject,
+            html: content
+        };
+
+        transporter.verify(function(error, success) {
+            if (error) {
+                resolve(false)
+            } else {
+                transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                        resolve(false)
+                    } else {
+                        resolve(true)
+                    }
+                });
+            }
+          });
+
+        
+    })
+}   
 exports.logger = (fileName, err)=>{
     const opts = {
             errorEventName:'error',
