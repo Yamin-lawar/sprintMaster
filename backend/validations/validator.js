@@ -42,6 +42,11 @@ const changePasswordValidation = Joi.object({
 const forgotPasswordValidation = Joi.object({
     email: Joi.string().required().email().messages({"string.empty": `Please enter email`,"string.email": `Please enter proper email`})
 })
+const resetPasswordValidation = Joi.object({
+    resetToken: Joi.string().required().messages({"string.empty": `Problem in authorising your reset password`}),
+    newPassword: Joi.string().regex(RegExp(passwordPattern)).required().messages({"string.empty": `Please enter new password`,"string.pattern.base":`Password should be minimum 8 character, one upper case, one lower case, one number and one special character is mandatory`}),
+    confirmPassword: Joi.string().required().valid(Joi.ref('newPassword'))
+}).with('confirmPassword', 'newPassword')
 
 module.exports = {
     createUserValidation,
@@ -51,7 +56,8 @@ module.exports = {
     updateUserValidation,
     removeUserValidation,
     changePasswordValidation,
-    forgotPasswordValidation
+    forgotPasswordValidation,
+    resetPasswordValidation
 }
 
 

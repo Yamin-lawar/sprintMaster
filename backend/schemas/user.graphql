@@ -66,6 +66,11 @@ input changePasswordInput{
 input forgotPasswordInput{
   email: String!
 }
+input resetPasswordInput{
+  resetToken: String!,
+  newPassword: String!,
+  confirmPassword: String!
+}
 type Mutation{
   createUser(input:UserInput): UserPayload
   updateUser(input:UpdateUserInput): UserPayload
@@ -73,5 +78,6 @@ type Mutation{
   removeUser(input:RemoveUserInput): generalMessagePayload
   changePassword(input:changePasswordInput): generalMessagePayload
   forgotPassword(input:forgotPasswordInput): generalMessagePayload
+  resetPassword(input:resetPasswordInput): generalMessagePayload
 }
 

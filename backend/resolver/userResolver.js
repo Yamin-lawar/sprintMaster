@@ -1,7 +1,7 @@
 const User = require('../models/user') 
 import Token from '../models/token'
 import {logger, customErrorHandler, validationErrorResponse, sendEmail} from '../utils/general'
-import { createUserValidation, updateUserValidation,removeUserValidation, changePasswordValidation, forgotPasswordValidation } from '../validations/validator'
+import { createUserValidation, updateUserValidation,removeUserValidation, changePasswordValidation, forgotPasswordValidation, resetPasswordValidation } from '../validations/validator'
 const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 var crypto = require("crypto-js");
@@ -280,11 +280,44 @@ module.exports = {
                 return {message: "We have sent you a link to reset your password on you email address"}
                 
           }catch(err){
-            console.log(err)
             logger('user',`Forgot password: Problem in forgot password: ${err}`);
             throw customErrorHandler(err.name == 'customError' ? err.message :  'Problem in reseting password, Please try again', 500);
           }  
+        },
+        /**
+         * Forgot password API
+         * @author Yamin
+         * @param args,context
+         */
+        resetPassword: async(args,context) => {
+          try{
+            const checkResponse = resetPasswordValidation.validate(args.input);
+            if(checkResponse.error !== undefined){
+              return validationErrorResponse(checkResponse.error)
+            }
+            const {resetToken, newPassword} = args.input
+            const userExist = await User.findOne({passwordtoken:resetToken})
+            if(userExist == null){
+              throw customErrorHandler("Problem in authenticating your reset password", 500);
+            }
+            const encPassword = await bcrypt.hash(newPassword, 16);
+            const passwordUpdate = await User.update({_id:userExist._id},{$set: {
+              password: encPassword, 
+              passwordTokenExpiresIn: null,
+              passwordtoken: null
+            }});
+            if(passwordUpdate.nModified == 0){
+              logger('team',`Reset password: Problem in reseting password: ${userExist._i}`);  
+              throw customErrorHandler('Problem in reseting password', 500);  
+            }
+            return {message: "Your password reset successfully"}
+            
+          }catch(err){
+            logger('user',`Reset password: Problem in reseting password: ${err}`);
+            throw customErrorHandler(err.name == 'customError' ? err.message :  'Problem in reseting password', 500);
+          }  
         }
+        
 
         
   
