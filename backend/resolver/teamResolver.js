@@ -10,7 +10,7 @@ module.exports = {
             teams: async(args, context) =>  {
                 console.log('jo')
                 await authMiddleware(context)
-                try{
+                try{ 
                     let queryCondition = {};
                     if(typeof args.id !== "undefined"){
                       queryCondition = {_id: args.id}

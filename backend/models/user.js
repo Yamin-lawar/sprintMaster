@@ -43,6 +43,16 @@ const userSchema = new Schema({
     passwordTokenExpiresIn:{
         type: Date,
         required: false
+    },
+    role:{
+        required: false,
+        project:{
+            type: Schema.Types.ObjectId,
+            ref: 'Project',
+        },
+        role:{
+            type: String
+        }
     }
 },{ timestamps: true })
 

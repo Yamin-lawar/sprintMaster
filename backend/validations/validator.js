@@ -44,9 +44,26 @@ const forgotPasswordValidation = Joi.object({
 })
 const resetPasswordValidation = Joi.object({
     resetToken: Joi.string().required().messages({"string.empty": `Problem in authorising your reset password`}),
-    newPassword: Joi.string().regex(RegExp(passwordPattern)).required().messages({"string.empty": `Please enter new password`,"string.pattern.base":`Password should be minimum 8 character, one upper case, one lower case, one number and one special character is mandatory`}),
+    newPassword: Joi.string().regex(RegExp(passwordPattern)).required().messages({"string.empty": `Please enter new password`,"string.pattern.base":`Password should be minimum 8 character, one upper case, one lower case, one number and one special character is mandatory`}), 
     confirmPassword: Joi.string().required().valid(Joi.ref('newPassword'))
 }).with('confirmPassword', 'newPassword')
+
+const createProjectValidation = Joi.object({
+    name: Joi.string().required().messages({"string.empty": `Please enter project name`}),
+    code: Joi.string().required().messages({"string.empty": `Please enter project code`}),
+    smj: Joi.string().required().messages({"string.empty": `Please select SMJ for project`}),
+    po: Joi.string().required().messages({"string.empty": `Please select PO for project`}),
+    status: Joi.string().required().messages({"string.empty": `Please select status for project`}),
+}).unknown();
+
+const updateProjectValidation = Joi.object({
+    _id: Joi.string().required().messages({"string.empty": `Please select project to update`}),    
+    name: Joi.string().required().messages({"string.empty": `Please enter project name`}),
+    code: Joi.string().required().messages({"string.empty": `Please enter project code`}),
+    smj: Joi.string().required().messages({"string.empty": `Please select SMJ for project`}),
+    po: Joi.string().required().messages({"string.empty": `Please select PO for project`}),
+    status: Joi.string().required().messages({"string.empty": `Please select status for project`}),
+}).unknown();
 
 module.exports = {
     createUserValidation,
@@ -57,7 +74,9 @@ module.exports = {
     removeUserValidation,
     changePasswordValidation,
     forgotPasswordValidation,
-    resetPasswordValidation
+    resetPasswordValidation,
+    createProjectValidation,
+    updateProjectValidation
 }
 
 

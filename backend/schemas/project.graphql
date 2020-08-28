@@ -1,0 +1,57 @@
+enum projectStatusType{
+   Pending
+   Active
+   Completed
+   Onhold
+}
+
+type Project{
+  _id: ID!,
+  name: String!
+  code: String!
+  smj: User!
+  dsmj: User
+  po: User!
+  spo: User
+  status: projectStatusType!
+  createdAt: String
+}
+type Query {
+  projects(_id: ID): [Project!]!
+}
+
+input ProjectInput{
+  name: String!
+  code: String!
+  smj: ID!
+  dsmj: ID
+  po: ID!
+  spo: ID
+  status: projectStatusType!
+}
+
+input updateProjectInput{
+  _id: ID!
+  name: String!
+  code: String!
+  smj: ID!
+  dsmj: ID
+  po: ID!
+  spo: ID
+  status: projectStatusType!
+}
+
+type ProjectError{
+  name: String,
+  message: String
+}
+
+type ProjectPayload{
+  error: [ProjectError],
+  project: Project
+}
+
+type Mutation{
+    createProject(input:ProjectInput): ProjectPayload
+    updateProject(input:updateProjectInput): ProjectPayload
+}
