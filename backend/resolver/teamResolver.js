@@ -99,7 +99,7 @@ module.exports = {
               if(checkResponse.error !== undefined){
                 return validationErrorResponse(checkResponse.error)
               }
-              try{
+              try{ 
                 const deleteTeam = await Team.delete({_id: args.input._id})
                 if(deleteTeam.deletedCount == 0){
                     throw customErrorHandler('Problem in removing team', 500);

@@ -65,6 +65,11 @@ const updateProjectValidation = Joi.object({
     status: Joi.string().required().messages({"string.empty": `Please select status for project`}),
 }).unknown();
 
+const removeProjectValidation = Joi.object({
+    _id: Joi.string().required().messages({"string.empty": `Please select project to remove`}),    
+   
+}).unknown();
+
 module.exports = {
     createUserValidation,
     createTeamValidation,
@@ -76,7 +81,8 @@ module.exports = {
     forgotPasswordValidation,
     resetPasswordValidation,
     createProjectValidation,
-    updateProjectValidation
+    updateProjectValidation,
+    removeProjectValidation
 }
 
 

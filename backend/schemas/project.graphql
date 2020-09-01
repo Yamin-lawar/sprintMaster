@@ -40,7 +40,10 @@ input updateProjectInput{
   spo: ID
   status: projectStatusType!
 }
-
+type ProjectGeneralPayload{
+  message: String,
+  error: [ProjectError]
+}
 type ProjectError{
   name: String,
   message: String
@@ -50,8 +53,13 @@ type ProjectPayload{
   error: [ProjectError],
   project: Project
 }
+input RemoveProjectInput{
+    _id: ID!
+}
+
 
 type Mutation{
     createProject(input:ProjectInput): ProjectPayload
     updateProject(input:updateProjectInput): ProjectPayload
+    removeProject(input:RemoveProjectInput): ProjectGeneralPayload
 }

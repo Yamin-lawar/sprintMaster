@@ -1,10 +1,9 @@
 const Project = require('../models/project') 
 const User = require('../models/user')  
 import {logger, customErrorHandler, validationErrorResponse} from '../utils/general'
-import { createProjectValidation, updateProjectValidation } from '../validations/validator'
+import { createProjectValidation, updateProjectValidation, removeProjectValidation} from '../validations/validator'
 import authMiddleware from '../middlewares/auth'
-import { update } from '../models/project'
-import { concatAST } from 'graphql'
+const mongoose = require('mongoose');
 module.exports = {
             /**
              * get all teams (Query)
@@ -33,14 +32,17 @@ module.exports = {
             
             createProject: async(args,context) => {
                 await authMiddleware(context)
+                const session = await mongoose.startSession();
+                session.startTransaction();
                 try{
+                    const opts = { session, new: true };
                     const checkResponse = createProjectValidation.validate(args.input);
                     if(checkResponse.error !== undefined){
                       return validationErrorResponse(checkResponse.error)
                     }
                     const {name, code, smj, dsmj, po, spo, status} = args.input
                     //check same team avail or not 
-                    const projectExist = await Project.findOne({name: name});
+                    const projectExist = await Project.findOne({name: name},null,opts);
                     if(projectExist !== null){
                       throw customErrorHandler('Project already exist, enter different name', 500);
                     }
@@ -54,22 +56,31 @@ module.exports = {
                       status: status
                     });
 
-                    return createProject.save().then(async result => {
+                    return createProject.save(opts).then(async result => {
                         //update role in users
                         console.log(result._doc._id,'result._doc._id')
-                        await module.exports.updateRoleForProject(smj,'smj',result._doc._id)
-                        await module.exports.updateRoleForProject(dsmj,'dsmj',result._doc._id)
-                        await module.exports.updateRoleForProject(po,'po',result._doc._id)
-                        await module.exports.updateRoleForProject(spo,'spo',result._doc._id)
+                        const smjAdded = await module.exports.updateRoleForProject(smj,'smj',result._doc._id,false,opts)
+                        const dsmjAdded = await module.exports.updateRoleForProject(dsmj,'dsmj',result._doc._id,false,opts)
+                        const poAdded = await module.exports.updateRoleForProject(po,'po',result._doc._id,false,opts)
+                        const spoAdded = await module.exports.updateRoleForProject(spo,'spo',result._doc._id,false,opts)
+
+                        if(smjAdded !== "success" || dsmjAdded !== "success" || poAdded !== "success" || spoAdded !== "success"){
+                          throw customErrorHandler('Problem in adding project', 500);
+                        }
+                        await session.commitTransaction();
+                        session.endSession();
                         return {project: result._doc}
-                    }).catch(err => {
-                      console.log(err,'err')
+                    }).catch(async err => {
+                      await session.abortTransaction();
+                      session.endSession();
                       logger('team',`Create Project: Problem in adding project: ${err}`);
                       throw customErrorHandler('Problem in adding project', 500);
                     });
 
                  }catch(err){
                        console.log(err,'err')
+                       await session.abortTransaction();
+                       session.endSession();
                        logger('project',`Create Project: Problem in adding project: ${err}`);
                        throw customErrorHandler(err.name == 'customError' ? err.message :  'Problem in adding project', 500);
                  }    
@@ -149,22 +160,22 @@ module.exports = {
              * @author Yamin
              * @param id role project
              */
-            updateRoleForProject: async(id, role, project, updateRole = false) => {
-              console.log('up[date role')
+            updateRoleForProject: async(id, role, project, updateRole = false, opts) => {
+              console.log('up[date role',opts)
               try{
                   if(id !== ""){
-                    const getUserDetail = await User.findOne({_id: id})
+                    const getUserDetail = await User.findOne({_id: id},null, opts)
                     if(getUserDetail == null){
-                      throw customErrorHandler('User is not found for role '.role, 500);
+                      throw customErrorHandler('User is not found for role '+role, 500);
                     }
                   }
                   console.log(updateRole,'updateRole')
                   if(updateRole){
-                    console.log('sdfrg', role, project)
                     const userRoleRemove = await User.update(
                       { },
                       { $pull: { role: { role: role, project: project } } },
-                      { multi: true}
+                      { multi: true},
+                      opts
                     )
                     console.log(userRoleRemove,'userRoleRemove')
                     if(userRoleRemove.nModified == 0){
@@ -172,23 +183,59 @@ module.exports = {
                       throw customErrorHandler('Problem in updating project', 500); 
                     }
                   }
+                  
                   if(id !== ""){
                       const userRoleUpdate = await User.update({_id:id},{ $push: {
                         "role":{
                           project: project,
                           role: role
-                      }}})  
+                      }}},opts)  
                       if(userRoleUpdate.nModified == 0){
                         logger('project',`Update Project role: Problem in updating project role: ${role}, project: ${project}`);  
                         throw customErrorHandler('Problem in updating project', 500); 
                       }
                   }
-                  return true  
+                  return "success"  
               }catch(err){
                 console.log(err)
                 logger('project',`Create project: Problem in adding project: ${err}`);
                 throw customErrorHandler(err.name == 'customError' ? err.message :  'Problem in adding project', 500);
                 return false
+              }
+            },
+            /**
+             * Remove project and all its access
+             * @author Yamin
+             * Object args
+             */
+            removeProject: async (args,context) => {
+              await authMiddleware(context)
+              try{
+                const checkResponse = removeProjectValidation.validate(args.input);
+                if(checkResponse.error !== undefined){
+                  return validationErrorResponse(checkResponse.error)
+                }
+                const projectExist = await Project.findOne({_id: args.input._id});
+                if(projectExist == null){
+                    throw customErrorHandler("Project doesn't exist, enter different name", 500);
+                }
+                const removeProject = await Project.delete({_id: args.input._id})
+                if(removeProject.deletedCount == 0){
+                    throw customErrorHandler('Problem in removing project', 500);
+                }
+                const userRoleRemove = await User.update(
+                  { },
+                  { $pull: { role: {project: args.input._id } } },
+                  { multi: true}
+                )
+                if(userRoleRemove.nModified == 0){
+                  logger('project',`Remove Project role: Problem in removing project and its role for project: ${args.input._id}`);  
+                  throw customErrorHandler('Problem in updating project', 500); 
+                }
+                return {message: "Project removed successuflly"}
+              }catch(err){
+                  logger('project',`Remove Project: Problem in removing project: ${err}`);
+                  throw customErrorHandler(err.name == 'customError' ? err.message :  'Problem in removing project', 500);
               }
             }
            
