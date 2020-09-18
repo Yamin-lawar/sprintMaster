@@ -1,0 +1,80 @@
+scalar Date
+enum taskStatusType{
+   Pending
+   Active
+   Completed
+   Onhold
+}
+
+type Comments{
+    _id: ID!,
+    user: User!,
+    comment: String!,
+    createdAt: Date!
+}
+
+type Tasks{
+    _id: ID,
+    name: String,
+    user: User
+    hours: Int,
+    createdAt: Date,
+    createdBy: User,
+    completion: Float!,
+    status: taskStatusType
+    comments: [Comments]
+}
+
+type SprintProject{
+    _id: ID!,
+    name: String!,
+    code: String,
+    smj: User!
+    dsmj: User
+    po: User!
+    spo: User,
+    poRanking: Float,
+    gurujiRanking: Float,
+    completion: Float!,
+    task:[Tasks]
+}
+
+type Sprint{
+  _id: ID!,
+  name: String!
+  code: String
+  startDate: Date!
+  endDate: Date!
+  sprintHours: Int
+  createdBy: User!
+  projects: [SprintProject]
+  status: projectStatusType!
+  createdAt: Date
+}
+type Query {
+  sprints(_id: ID): [Sprint!]!
+}
+
+input SprintInput{
+  name: String!
+  code: String
+  startDate: Date!
+  endDate: Date!
+  sprintHours: Int
+  createdBy: ID!
+}
+
+type SprintError{
+  name: String,
+  message: String
+}
+
+type SprintPayload{
+  error: [SprintError],
+  sprint: Sprint
+}
+
+
+type Mutation{
+    createSprint(input:SprintInput): SprintPayload
+}

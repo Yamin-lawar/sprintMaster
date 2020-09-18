@@ -70,6 +70,13 @@ const removeProjectValidation = Joi.object({
    
 }).unknown();
 
+const createSprintValidation = Joi.object({
+    name: Joi.string().required().messages({"string.empty": `Please enter sprint name`}),
+    startDate: Joi.string().required().messages({"string.empty": `Please select start date for sprint`}),
+    endDate: Joi.string().required().messages({"string.empty": `Please select end date for sprint`}),
+    createdBy: Joi.string().required().messages({"string.empty": `Sprint owner is not defined`}),
+}).unknown()
+
 module.exports = {
     createUserValidation,
     createTeamValidation,
@@ -82,7 +89,8 @@ module.exports = {
     resetPasswordValidation,
     createProjectValidation,
     updateProjectValidation,
-    removeProjectValidation
+    removeProjectValidation,
+    createSprintValidation
 }
 
 

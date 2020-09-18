@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 var crypto = require("crypto-js");
 import authMiddleware from '../middlewares/auth'
+const { GraphQLScalarType } = require('graphql') ;
 
 module.exports = {
              /**
@@ -316,7 +317,27 @@ module.exports = {
             logger('user',`Reset password: Problem in reseting password: ${err}`);
             throw customErrorHandler(err.name == 'customError' ? err.message :  'Problem in reseting password', 500);
           }  
-        }
+        },
+        /**
+         * Custom scalar for date
+         * @author Yamin
+         */
+        Date: new GraphQLScalarType({
+          name: 'Date',
+          description: 'Custom date scalar',
+          parseValue(value) {
+            return value;
+          },
+          serialize(value) {
+            return new Date(Number(value));
+          },
+          parseLiteral(ast) {
+            if (ast.kind === Kind.INT) {
+              return new Date(ast.value);
+            }
+            return null;
+          }
+        })
         
 
         
