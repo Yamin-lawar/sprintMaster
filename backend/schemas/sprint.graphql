@@ -7,10 +7,10 @@ enum taskStatusType{
 }
 
 type Comments{
-    _id: ID!,
-    user: User!,
-    comment: String!,
-    createdAt: Date!
+    _id: ID,
+    user: User,
+    comment: String,
+    createdAt: Date
 }
 
 type Tasks{
@@ -20,7 +20,7 @@ type Tasks{
     hours: Int,
     createdAt: Date,
     createdBy: User,
-    completion: Float!,
+    completion: Float,
     status: taskStatusType
     comments: [Comments]
 }
@@ -35,7 +35,7 @@ type SprintProject{
     spo: User,
     poRanking: Float,
     gurujiRanking: Float,
-    completion: Float!,
+    completion: Float,
     task:[Tasks]
 }
 
@@ -49,10 +49,13 @@ type Sprint{
   createdBy: User!
   projects: [SprintProject]
   status: projectStatusType!
+  completion: Float,
   createdAt: Date
 }
+
 type Query {
-  sprints(_id: ID): [Sprint!]!
+  sprints(_id: ID): [Sprint]
+  activeSprint: Sprint
 }
 
 input SprintInput{
@@ -69,12 +72,86 @@ type SprintError{
   message: String
 }
 
-type SprintPayload{
+type SprintGeneralPayload{
+  message: String,
+  error: [ProjectError]
+}
+
+type SprintPayload{ 
   error: [SprintError],
   sprint: Sprint
 }
 
+input tasksInput{
+    name: String!
+    user: ID!
+    hours: Int,
+    completion: Float
+}
+input AddUpdateTaskInput{
+    sprintId: ID!
+    projectId: ID!
+    tasks: [tasksInput]
+}
+
+input updateTaskStatusInput{
+    sprintId: ID!
+    projectId: ID!
+    taskId: ID!
+    status: projectStatusType,
+    completion: Float
+}
+
+input updateSprintInput{
+  sprintId: ID!
+  name: String!
+  code: String
+  startDate: Date!
+  endDate: Date!
+  sprintHours: Int!
+}
+
+input deleteSprintInput{
+    _id: ID!
+}
+
+input updateProjectRankingInput{
+  sprintId: ID!
+  projectId: ID!
+  poRanking: Float
+  gurujiRanking: Float
+}
+
+input addCommentInput{
+  sprintId: ID!
+  projectId: ID!
+  taskId: ID!
+  comment: String!
+}
+input updateCommentInput{
+  sprintId: ID!
+  projectId: ID!
+  taskId: ID!
+  commentId: ID!
+  comment: String!
+}
+
+input removeCommentInput{
+    sprintId: ID!
+    projectId: ID!
+    taskId: ID!
+    commentId: ID!
+}
+
 
 type Mutation{
-    createSprint(input:SprintInput): SprintPayload
+    createSprint(input:SprintInput): SprintGeneralPayload
+    addUpdateTask(input:AddUpdateTaskInput): SprintPayload
+    updateTaskStatus(input:updateTaskStatusInput): SprintPayload
+    updateSprint(input:updateSprintInput): SprintGeneralPayload
+    removeSprint(input:deleteSprintInput): SprintGeneralPayload
+    updateProjectRanking(input:updateProjectRankingInput): SprintGeneralPayload
+    addComment(input:addCommentInput): SprintGeneralPayload
+    updateComment(input:updateCommentInput): SprintGeneralPayload
+    removeComment(input:removeCommentInput): SprintGeneralPayload
 }

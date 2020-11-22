@@ -77,6 +77,61 @@ const createSprintValidation = Joi.object({
     createdBy: Joi.string().required().messages({"string.empty": `Sprint owner is not defined`}),
 }).unknown()
 
+const addUpdateTaskValidation = Joi.object({
+    sprintId: Joi.string().required().messages({"string.empty": `Sprint is not available`}),
+    projectId: Joi.string().required().messages({"string.empty": `Project is not available`}),
+
+}).unknown()
+
+const updateTaskStatusValidation = Joi.object({
+    sprintId: Joi.string().required().messages({"string.empty": `Sprint is not available`}),
+    projectId: Joi.string().required().messages({"string.empty": `Project is not available`}),
+    taskId: Joi.string().required().messages({"string.empty": `Task is not available`}),
+    status: Joi.string().required().messages({"string.empty": `Please select status`}),
+    completion: Joi.required().messages({"string.empty": `Please enter complition rate`}),
+}).unknown()
+
+const updateSprintValidation = Joi.object({
+    sprintId: Joi.string().required().messages({"string.empty": `Please select sprint`}),
+    name: Joi.string().required().messages({"string.empty": `Please enter sprint name`}),
+    startDate: Joi.string().required().messages({"string.empty": `Please select start date for sprint`}),
+    endDate: Joi.string().required().messages({"string.empty": `Please select end date for sprint`}),
+    sprintHours: Joi.required().messages({"string.empty": `Please enter sprint hours`}),
+}).unknown()
+
+const deleteSprintValidation = Joi.object({
+    _id: Joi.string().required().messages({"string.empty": `Please select sprint to remove`}),    
+}).unknown();
+
+const updateProjectRankingValidation = Joi.object({
+    sprintId: Joi.string().required().messages({"string.empty": `Sprint is not available`}),
+    projectId: Joi.string().required().messages({"string.empty": `Project is not available`}),
+}).unknown()
+
+const addCommentValidation = Joi.object({
+    sprintId: Joi.string().required().messages({"string.empty": `Sprint is not available`}),
+    projectId: Joi.string().required().messages({"string.empty": `Project is not available`}),
+    taskId: Joi.string().required().messages({"string.empty": `Task is not available`}),
+    comment: Joi.string().required().messages({"string.empty": `Please enter comment`}),
+})
+
+const updateCommentValidation = Joi.object({
+    sprintId: Joi.string().required().messages({"string.empty": `Sprint is not available`}),
+    projectId: Joi.string().required().messages({"string.empty": `Project is not available`}),
+    taskId: Joi.string().required().messages({"string.empty": `Task is not available`}),
+    commentId: Joi.string().required().messages({"string.empty": `Comment is not available`}),
+    comment: Joi.string().required().messages({"string.empty": `Please enter comment`}),
+})
+
+const deleteCommentValidation = Joi.object({
+    sprintId: Joi.string().required().messages({"string.empty": `Sprint is not available`}),
+    projectId: Joi.string().required().messages({"string.empty": `Project is not available`}),
+    taskId: Joi.string().required().messages({"string.empty": `Task is not available`}),
+    commentId: Joi.string().required().messages({"string.empty": `Please select comment to remove`}),    
+})
+
+
+
 module.exports = {
     createUserValidation,
     createTeamValidation,
@@ -90,7 +145,15 @@ module.exports = {
     createProjectValidation,
     updateProjectValidation,
     removeProjectValidation,
-    createSprintValidation
+    createSprintValidation,
+    addUpdateTaskValidation,
+    updateTaskStatusValidation,
+    updateSprintValidation,
+    deleteSprintValidation,
+    updateProjectRankingValidation,
+    addCommentValidation,
+    updateCommentValidation,
+    deleteCommentValidation
 }
 
 
