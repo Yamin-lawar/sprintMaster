@@ -115,6 +115,11 @@ const sprintSchema = new Schema({
         type: Date,
         required: true
     },
+    hours:{
+        type: Number,
+        required: true,
+        default: 0
+    },
     createdBy:{
         type: Schema.Types.ObjectId,
         ref: 'User',

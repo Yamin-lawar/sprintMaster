@@ -17,7 +17,7 @@ type Tasks{
     _id: ID,
     name: String,
     user: User
-    hours: Int,
+    hours: Float,
     createdAt: Date,
     createdBy: User,
     completion: Float,
@@ -45,7 +45,7 @@ type Sprint{
   code: String
   startDate: Date!
   endDate: Date!
-  sprintHours: Int
+  sprintHours: Float
   createdBy: User!
   projects: [SprintProject]
   status: projectStatusType!
@@ -53,9 +53,19 @@ type Sprint{
   createdAt: Date
 }
 
+type sprintUser{
+  _id: ID!,
+  firstName: String!
+  lastName: String!
+  email: String!
+  avtaar: String!
+  hoursLeft: Float
+}
+
 type Query {
   sprints(_id: ID): [Sprint]
   activeSprint: Sprint
+  userHours(_id: ID): [sprintUser]
 }
 
 input SprintInput{
@@ -63,7 +73,7 @@ input SprintInput{
   code: String
   startDate: Date!
   endDate: Date!
-  sprintHours: Int
+  sprintHours: Float
   createdBy: ID!
 }
 
@@ -85,7 +95,7 @@ type SprintPayload{
 input tasksInput{
     name: String!
     user: ID!
-    hours: Int,
+    hours: Float,
     completion: Float
 }
 input AddUpdateTaskInput{
@@ -108,7 +118,7 @@ input updateSprintInput{
   code: String
   startDate: Date!
   endDate: Date!
-  sprintHours: Int!
+  sprintHours: Float!
 }
 
 input deleteSprintInput{

@@ -1,9 +1,11 @@
 const Sprint = require('../models/sprint') 
 const Project = require('../models/project') 
+const Team = require('../models/team') 
+const User = require('../models/user') 
 import {logger, customErrorHandler, validationErrorResponse} from '../utils/general'
 import { createSprintValidation, addUpdateTaskValidation, updateTaskStatusValidation, updateSprintValidation,  deleteSprintValidation, updateProjectRankingValidation, addCommentValidation, updateCommentValidation, deleteCommentValidation} from '../validations/validator'
 import authMiddleware from '../middlewares/auth'
-import sprint from '../models/sprint'
+import user from '../models/user'
 const mongoose = require('mongoose');
 const { ObjectID } = require('mongodb');
 module.exports = {
@@ -34,16 +36,16 @@ module.exports = {
                         activeProjects.map((projectList) => {
                           projectArray.push(projectList)
                         })
-                        
                     }
                     //automatically get status of sprint from date
                     const currentDate = new Date()
                     let sprintStatus = ''
-                    if(currentDate<startDate){
+                    console.log(currentDate<new Date(startDate))
+                    if(currentDate<new Date(startDate)){
                       sprintStatus = 'Pending'
-                    }else if(currentDate>endDate){
+                    }else if(currentDate>new Date(endDate)){
                       sprintStatus = 'Completed'
-                    }else if(currentDate>=startDate){
+                    }else if(currentDate>=new Date(startDate)){
                       sprintStatus = 'Active'
                     }
                     const createSprint = new Sprint({
@@ -51,7 +53,7 @@ module.exports = {
                       code: code,
                       startDate: startDate,
                       endDate: endDate,
-                      sprintHours: sprintHours,
+                      hours: sprintHours,
                       createdBy: createdBy,
                       status: sprintStatus,
                       projects: projectArray
@@ -89,8 +91,28 @@ module.exports = {
                     }
                     const taskDataInput = [] ;
                     let totalCompletion = 0
-                    tasksData.tasks.map((taskArray,index)=>{
+                    let userHourArray = []
+                    for(let i = 0; i< tasksData.tasks.length; i++){
+                      let taskArray = tasksData.tasks[i]
+                    //tasksData.tasks.map(async (taskArray,index)=>{
                       totalCompletion += taskArray.completion ? taskArray.completion : 0
+                      const hours = await Sprint.aggregate([
+                        { $match: { "_id":  ObjectID(tasksData.sprintId)} },
+                        {
+                          "$unwind": "$projects"
+                        },
+                        {
+                          "$unwind": "$projects.task"
+                        },
+                        { $match: { "projects._id": {$ne: ObjectID(tasksData.projectId)} } },
+                        { $match: { "projects.task.user": ObjectID(taskArray.user) } },
+                        { $group: { _id : null, hours : { $addToSet: '$hours' }, sum : { $sum: "$projects.task.hours" } } }
+                      ])
+                      const nextCount = typeof userHourArray[taskArray.user] == "undefined" ?  0 : userHourArray[taskArray.user] 
+                      userHourArray[taskArray.user] = nextCount + taskArray.hours
+                      if(hours.length > 0 && hours[0].sum + userHourArray[taskArray.user] > hours[0].hours){
+                        throw customErrorHandler('Some user already consumed in other project, please check your data', 500);
+                      }
                       taskDataInput.push({
                         "_id": new ObjectID(),
                         "name": taskArray.name,
@@ -101,8 +123,12 @@ module.exports = {
                         "completion": taskArray.completion ? taskArray.completion : 0,
                         "status": "Pending", 
                       })
-                    })
+                      
+                    }
                     const completionRate = totalCompletion/tasksData.tasks.length
+                    if(taskDataInput.length == 0){
+                       throw customErrorHandler("Problem in adding task",500)
+                    }
                     const sprintUpdate = await Sprint.update(
                       { 
                         "_id" : tasksData.sprintId, 
@@ -115,7 +141,6 @@ module.exports = {
                     const sprintOutput = module.exports.updateSprintCompletionAndGetSprintData(tasksData.sprintId)
                     return {"sprint": sprintOutput}
                   }catch(err){
-                    console.log(err,'err')
                     logger('project',`Update Task: Problem in updating task: ${err}`);
                     throw customErrorHandler(err.name == 'customError' ? err.message :  'Problem in updating task', 500);
                   }  
@@ -139,22 +164,29 @@ module.exports = {
                   if(checkSprinAndProject !== "pass"){
                       throw checkSprinAndProject
                   }
-                  const sprintData = await Sprint.findOne({
+                 /* const sprintData = await Sprint.findOne({
                     "_id" : tasksData.sprintId, 
                     "projects._id" : tasksData.projectId
-                  })
+                  })*/
+                  const sprintData =await Sprint.findOne(
+                    {
+                      "_id" : tasksData.sprintId, 
+                    "projects._id" : tasksData.projectId
+                    }, 
+                    {projects: {$elemMatch: {_id: tasksData.projectId}}});
                  
-                  console.log(sprintData,'sprintData',sprintData.projects.task)
+                  console.log(sprintData,'sprintData',sprintData.projects[0].task)
                   let projectCompletion = 0;
                     ///get project and update its completion
-                    sprintData.projects.task.map((taskData) => {
-                      console.log(sprintData.projects._id, tasksData.projectId,'tasksData.projectIdsd')
-                      if(sprintData.projects._id == tasksData.projectId){
-                        console.log(taskData.completion,'taskData.completion')
+                    if(sprintData.projects[0].task.length > 0){
+                      sprintData.projects[0].task.map((taskData) => {
+                        console.log(taskData,'taskData')
                         projectCompletion += taskData.completion
-                      }
+                        
                     })
-                  
+                    }
+                  projectCompletion = projectCompletion/sprintData.projects[0].task.length  
+                  console.log(projectCompletion,'projectCompletion')
                   const sprintUpdate = await Sprint.update(
                     { 
                       "_id" : tasksData.sprintId, 
@@ -264,7 +296,7 @@ module.exports = {
                     "_id" : sprintId, 
                   },
                   {    
-                    $set: {name: name, code: code, startDate: startDate, endDate: endDate, sprintHours: sprintHours}
+                    $set: {name: name, code: code, startDate: startDate, endDate: endDate, hours: sprintHours}
                   } 
                 )
                 return {message: "Sprint updated successfully"}
@@ -574,12 +606,59 @@ module.exports = {
                 return sprintData
                 
               }catch(err){
-                console.log(err,'err')
                 logger('sprint',`Sprint list: Problem in getting sprint data: ${err}`);
                 throw customErrorHandler(err.name == 'customError' ? err.message :  'Problem in getting sprint data', 500);
               }
+            },
+            /**
+             * List users with reamining hours
+             * @author Yamin
+             * @param {args, context} 
+             */
+            userHours: async(args,context) =>{
+              await authMiddleware(context)
+              try{
+                  //get all users
+                  const userDataArray = await User.find().sort({ firstName: 1});
+                  //get total sprint hours 
+                  const sprintTotalHours = await Sprint.findOne({_id: ObjectID("5fb2184953675d5409b6c8e8")},{hours:1})
+                  let userArray = [];
+                      for(let j=0; j<userDataArray.length; j++){
+                            //count total hours consumed for user in sprint
+                            const hours = await Sprint.aggregate([
+                              { $match: { "_id": ObjectID(args._id) } }, 
+                              {
+                                "$unwind": "$projects"
+                              },
+                              {
+                                "$unwind": "$projects.task"
+                              },
+                              { $match: { "projects.task.user": ObjectID(userDataArray[j]._id) } },
+                              { $group: { _id : null, hours : { $addToSet: '$hours' }, sum : { $sum: "$projects.task.hours" } } }
+                            ])
+                            if(hours.length > 0){
+                              //if hours consumed then substract from total hours and append in user object
+                              let hoursObject = {
+                                "hoursLeft": hours[0].hours - hours[0].sum
+                              }
+                              let userDataObject = userDataArray[j]._doc
+                              userArray[j] = {...hoursObject, ...userDataObject}
+                             
+                            }else{
+                              let hoursObject = {
+                                "hoursLeft": sprintTotalHours.hours
+                              }
+                              let userDataObject = userDataArray[j]._doc
+                              userArray[j] = {...hoursObject, ...userDataObject}
+                            }
+                      }//end user loop
+                return userArray
+                
+              }catch(err){
+                logger('sprint',`Sprint user hour list: Problem in getting sprint users hours data: ${err}`);
+                throw customErrorHandler(err.name == 'customError' ? err.message :  'Problem in getting users', 500);
+              }
             }
-            
             
 }
 
