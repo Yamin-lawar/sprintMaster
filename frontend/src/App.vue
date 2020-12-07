@@ -1,9 +1,10 @@
 <template>
   <div id="app">
-    <div>
+    <div> 
       <Header/>
+      <notifications group="sprint" position='top' width="300px"/>
     </div>
-    <div>
+    <div v-if="$route.name != 'Login'">
       <Leftbar/>
     </div>
     <div>
@@ -28,7 +29,8 @@ export default {
     Header,
     Footer,
     Leftbar
-  }
+  },
+  
 }
 </script>
 

@@ -1,8 +1,10 @@
 <template>
     <div>
+      <div>Logo here</div>    
       <div class="wrapper fadeInDown">
         <b-spinner variant="primary" style="width: 3rem; height: 3rem;" class="m-5 loader" label="Spinning" v-if="loader"></b-spinner>
         <div id="formContent">
+        
         <!-- Top text -->
         <div class="fadeIn first">
           Enter your credential to login into the system
@@ -46,7 +48,6 @@ export default {
         if (this.$v.$invalid) {
             return;
         }
-        console.log(this.email, this.password, 'check the form content')
         this.loginAction({email: this.email, password: this.password});
       }
     },

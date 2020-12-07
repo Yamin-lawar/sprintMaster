@@ -1,3 +1,4 @@
+
 const state = {
     allUsers:{},
     userLoader: false,
@@ -68,6 +69,7 @@ const actions = {
         })
       .catch(err => { throw err; });
    }
+   
 }
 
 const mutations = {
