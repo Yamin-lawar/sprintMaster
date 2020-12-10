@@ -1,7 +1,8 @@
-import { apolloClient } from '../../main'
+import { apolloClient, root } from '../../main'
 import router from '../../router'
 import { LOGIN, CURRENT_USER} from '../queries/authQuery'
 import Vue from 'vue'
+
 
 const state = {
     users:{},
@@ -46,7 +47,7 @@ const actions = {
          })
       })
    },
-   getCurrentUser({commit}){
+   getCurrentUser({commit}, routerName){
       commit('setLoader', true)
       apolloClient.query({
         query: CURRENT_USER,
@@ -54,8 +55,10 @@ const actions = {
             "id": localStorage.getItem('userId'),
         }
      }).then(data => {
+         var parsedobj = JSON.parse(JSON.stringify(data))
          commit('setLoader', false); 
-         commit('setCurrentUser', data.data.users)
+         commit('setCurrentUser', parsedobj.data.users[0])
+         router.push({ name: routerName}) 
      })
      .catch(err =>{
        commit('setLoader', false); 
