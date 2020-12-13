@@ -67,7 +67,7 @@ const apolloProvider = new VueApollo({
 
 Vue.config.productionTip = false
 
-new Vue({
+export const root = new Vue({
   store,
   router,
   apolloProvider,

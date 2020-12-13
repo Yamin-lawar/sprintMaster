@@ -7,6 +7,7 @@ import AddTeam from '../components/AddTeam.vue'
 import UserList from '../components/UserList.vue'
 import Projects from '../components/Projects.vue'
 import SprintList from '../components/SprintList.vue'
+import AuthGuard from '../utils/AuthGuard'
 
 Vue.use(VueRouter)
 
@@ -19,32 +20,38 @@ Vue.use(VueRouter)
   {
     path: '/sprint/active',
     name: 'Sprint',
-    component: Sprint
+    component: Sprint,
+    beforeEnter: AuthGuard
   },
   {
     path: '/team',
     name: 'TeamList',
-    component: TeamList
+    component: TeamList,
+    beforeEnter: AuthGuard
   },
   {
     path: '/add-team',
     name: 'AddTeam',
-    component: AddTeam
+    component: AddTeam,
+    beforeEnter: AuthGuard
   },
   {
     path: '/users',
     name: 'UserList',
-    component: UserList
+    component: UserList,
+    beforeEnter: AuthGuard
   },
   {
     path: '/projects',
     name: 'prjects',
-    component: Projects
+    component: Projects,
+    beforeEnter: AuthGuard
   },
   {
     path: '/sprint',
     name: 'sprint-list',
-    component: SprintList
+    component: SprintList,
+    beforeEnter: AuthGuard
   },
   
 ]
