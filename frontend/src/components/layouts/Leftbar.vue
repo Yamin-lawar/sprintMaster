@@ -11,23 +11,23 @@
                
             </li>
             <li>
-                <a href="/sprint/active"><b-icon icon="bullseye"></b-icon><span class="menu-title">Active Sprint</span></a>
+                <RouterLink :to="'/sprint/active'"><b-icon icon="bullseye"></b-icon><span class="menu-title">Active Sprint</span></RouterLink>
             </li>
             <li>
-                <a href="/sprint"><b-icon icon="card-checklist"></b-icon><span class="menu-title">Sprints</span></a>
+                <RouterLink :to="'/sprint'"><b-icon icon="card-checklist"></b-icon><span class="menu-title">Sprints</span></RouterLink>
                
             </li>
             <li>
-                <a href="/project"><b-icon icon="layout-text-sidebar"></b-icon><span class="menu-title">Projects</span></a>
+                <RouterLink :to="'/project'"><b-icon icon="layout-text-sidebar"></b-icon><span class="menu-title">Projects</span></RouterLink>
             </li>
             <li>
-                <a href="/team"><b-icon icon="people-fill"></b-icon><span class="menu-title">Team</span></a>
+                <RouterLink :to="'/team'"><b-icon icon="people-fill"></b-icon><span class="menu-title">Team</span></RouterLink>
             </li>
             <li>
-                <a href="/users"><b-icon icon="people-circle"></b-icon><span class="menu-title">Users</span></a>
+                <RouterLink :to="'/users'"><b-icon icon="people-circle"></b-icon><span class="menu-title">Users</span></RouterLink>
             </li>
             <li>
-                <a href="#"><b-icon icon="power"></b-icon><span class="menu-title">Logout</span></a>
+                <a href="javascript:void(0)" v-on:click="logoutAction"><b-icon icon="power"></b-icon><span class="menu-title">Logout</span></a>
             </li>
         </ul>
 
@@ -36,8 +36,17 @@
 </template>
 
 <script>
+import router from '../../router'
 export default {
-    name:"Leftbar"
+    name:"Leftbar",
+    methods:{
+      logoutAction(){
+          //logout the current user and reset all the local storage
+          localStorage.removeItem('token')
+          localStorage.removeItem('userId')
+          router.push({ name: "Login"}) 
+      }
+    },
 }
 </script>
 
