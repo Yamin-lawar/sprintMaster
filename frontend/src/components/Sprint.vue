@@ -1,11 +1,15 @@
 <template>
+    <div class="wrapper" id="wrapper">
      <div role="tablist">
     <b-card no-body class="mb-1">
       <b-card-header header-tag="header" class="p-1" role="tab">
         <b-button block v-b-toggle.accordion-1 variant="info">Project 1 (AX-454-DF)</b-button>
       </b-card-header>
       <b-collapse id="accordion-1" visible accordion="my-accordion" role="tabpanel">
-        <input type="button" value="Add More Task">  
+        <div class="align-right">
+           <input class="button" type="button" value="Add More Task"> 
+        </div>
+         
         <b-card-body>
          <table class="table table-striped">
             <thead>
@@ -193,7 +197,8 @@
         </b-card-body>
       </b-collapse>
     </b-card>
-  </div>    
+  </div> 
+  </div>   
 </template>
 
 <script>

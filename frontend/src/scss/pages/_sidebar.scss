@@ -1,0 +1,146 @@
+#navbar {
+
+    .nav {
+        position: fixed;
+        background-color: var(--white);
+        overflow: scroll;
+        border-right: 2px solid var(--border);
+        @include transition(.5s);
+        z-index: var(--z-fixed);
+
+        @include mq('phone') {
+            bottom: 0px;
+            width: 100vw;
+
+            span {
+                display: none;
+            }
+        }
+
+        @media only screen and (min-width: 768px) {
+            top: 65px;
+            width: 60px;
+            height: 100vh;
+        }
+
+        /*Show menu*/
+        &.show {
+            width: 60px + 120px;
+        }
+
+        &__navbar {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+
+            @include mq('phone') {
+                flex-direction: row;
+            }
+        }
+
+        &__item {
+            width: 100%;
+        }
+
+        &__link {
+            display: flex;
+            align-items: center;
+            padding: 18px;
+            border-radius: 2px;
+            color: var(--icon-gray);
+            @include transition(.3s);
+            cursor: pointer;
+            height: 60px;
+            font-weight: $semi-bold;
+            text-decoration: none;
+            width: 100%;
+            position: relative;
+
+            @include mq('phone') {
+                justify-content: center;
+            }
+
+            &:hover {
+
+                //background-color:rgba(var(--rgb),0.3);
+                //color: var(--black);
+                svg {
+                    color: var(--main);
+                }
+            }
+
+            &.active {
+                color: var(--black);
+                font-weight: $semi-bold;
+                background-color: rgba(var(--rgb), 0.3);
+
+                svg {
+                    color: var(--main);
+                }
+
+                &:after {
+                    content: "";
+                    display: block;
+                    height: 100%;
+                    width: 3px;
+                    background: var(--main);
+                    border-radius: 2px;
+                    ;
+                    position: absolute;
+                    left: 0px;
+                    @include transition(all 0.3s cubic-bezier(0.4, 0, 0.2, 1));
+
+                    @include mq('phone') {
+                        height: 3px;
+                        width: 100%;
+                        bottom: 0px;
+                    }
+                }
+            }
+
+            svg {
+                margin-right: 20px;
+                @include transition(fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms);
+                flex-shrink: 0;
+                user-select: none;
+                font-size: 1.5rem;
+
+                @include mq('phone') {
+                    margin-right: 0rem;
+                }
+            }
+        }
+
+        //When page refresh
+        .router-link-exact-active {
+            color: var(--black);
+            font-weight: $semi-bold;
+            background-color: rgba(var(--rgb), 0.3);
+
+            svg {
+                color: var(--main);
+            }
+
+            &:after {
+                content: "";
+                display: block;
+                height: 100%;
+                width: 3px;
+                background: var(--main);
+                border-radius: 2px;
+                ;
+                position: absolute;
+                left: 0px;
+                @include transition(all 0.3s cubic-bezier(0.4, 0, 0.2, 1));
+            }
+        }
+
+        &__text {
+            font-weight: $semi-bold;
+        }
+    }
+}

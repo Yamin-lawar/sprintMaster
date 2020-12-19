@@ -1,0 +1,21 @@
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: 10px;
+    background-color: var(--white);
+    color: var(--main);
+    text-align: center;
+    @include transition(all 0.3s ease-in-out);
+
+    span {
+        font-weight: $semi-bold;
+        margin-right: 10px;
+    }
+
+    svg {
+        margin-right: 10px;
+        cursor: pointer;
+    }
+}
