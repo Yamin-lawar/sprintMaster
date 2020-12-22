@@ -1,7 +1,7 @@
 <template>
-    <div class="wrapper">
+    <div class="wrapper" id="wrapper">
           <b-spinner variant="primary" style="width: 3rem; height: 3rem;" class="m-5 loader" label="Spinning" v-if="teamLoader"></b-spinner>
-         <div><input type="button" v-on:click="openAddTeam('open')" value="Add Team"></div>
+         <div class="align-right"><input class="button" type="button" v-on:click="openAddTeam('open')" value="Add Team"></div>
          <modal name="hello-world" height="400">
             <AddTeam v-on:closeAddTeam="openAddTeam('close')" v-on:handleEditTeamForm="editTeamForm"  v-on:handleTeamForm="saveTeam" :currentData="currentData" />
          </modal>

@@ -12,7 +12,7 @@
           <div class="notes">Please add multiple skills with comma seprated</div>
         </b-form-group>
         <input type="submit" value="Save">
-        <input type="button" value="Cancel" v-on:click="closePopup">
+        <input type="button" value="Cancel" class="button" v-on:click="closePopup">
     </form>
   </div>          
 </template>

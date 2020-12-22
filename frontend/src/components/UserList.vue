@@ -1,7 +1,7 @@
 <template>
-    <div class="wrapper">
+    <div class="wrapper" id="wrapper">
           <b-spinner variant="primary" style="width: 3rem; height: 3rem;" class="m-5 loader" label="Spinning" v-if="userLoader"></b-spinner>
-         <div><input type="button" v-on:click="openAddUser('open')" value="Add User"></div>
+         <div class="align-right"><input class="button" type="button" v-on:click="openAddUser('open')" value="Add User"></div>
          <modal name="user-popup" height="auto" :scrollable="true">
             <AddUser v-on:closeAddUser="openAddUser('close')" v-on:handleEditUserForm="editUserForm"  v-on:handleUserForm="saveUser" :currentData="currentData" />
          </modal>

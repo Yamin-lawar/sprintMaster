@@ -1,7 +1,7 @@
 <template>
     <div>
       <div>Logo here</div>    
-      <div class="wrapper fadeInDown">
+      <div class="wrapper fadeInDown" id="wrapper">
         <b-spinner variant="primary" style="width: 3rem; height: 3rem;" class="m-5 loader" label="Spinning" v-if="loader"></b-spinner>
         <div id="formContent">
         
