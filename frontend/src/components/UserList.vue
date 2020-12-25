@@ -1,13 +1,16 @@
 <template>
-    <div class="wrapper">
+    <div class="wrapper" >
           <b-spinner variant="primary" style="width: 3rem; height: 3rem;" class="m-5 loader" label="Spinning" v-if="userLoader"></b-spinner>
          <div><input type="button" v-on:click="openAddUser('open')" value="Add User"></div>
          <modal name="user-popup" height="auto" :scrollable="true">
             <AddUser v-on:closeAddUser="openAddUser('close')" v-on:handleEditUserForm="editUserForm"  v-on:handleUserForm="saveUser" :currentData="currentData" />
          </modal>
+         <div>{{rows}}</div>
          <vue-good-table
+            ref="table"
             :columns="columns"
             :rows="rows"
+            mode="remote"
             :search-options="{
                 enabled: true
             }"
@@ -17,6 +20,7 @@
                 perPage: 5,
             }"
          >
+         
          <template slot="table-row" slot-scope="props">              
           <span v-if="props.column.field == 'option'">
             <span><b-icon icon="pencil-square" v-on:click="editUserPoup(props.formattedRow)"></b-icon></span> 
@@ -40,8 +44,12 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
     name: "UserList",
     computed: {...mapGetters(["allUsers","userLoader","creationUserFlag"]),
+    
     trackAddFlag () {
        return this.$store.getters.creationUserFlag
+    },
+    trackListFlag () {
+       return this.$store.getters.allUsers
     }
     },
     watch:{
@@ -51,63 +59,71 @@ export default {
              this.resetUserCreationFlag();
 
         }
+      },
+      allUsers(newValue, oldValue){
+          console.log(JSON.parse(JSON.stringify(newValue)),'JSON.parse(JSON.stringify(newValue))')
+          this.rows = newValue
+          //console.log(JSON.parse(JSON.stringify(newValue)),'newValue')
+          //Vue.set(this.rows, rodws);
       }
     },
     components:{
       AddUser
     },
     data(){
-    return {
-      currentData: {},
-      columns: [
-        {
-          label: 'FirstName',
-          field: 'firstName'
-        },
-        {
-          label: 'LastName',
-          field: 'lastName',
-        },
-        {
-          label: 'Email',
-          field: 'email'
-        },
-        {
-          label: 'Skills',
-          field: 'skills'
-        },
-        {
-          label: 'Mobile No',
-          field: 'mobileNo'
-        },
-        {
-          label: 'Avtaar',
-          field: 'avtaar'
-        },
-        {
-          label: 'Team',
-          field: 'team'
-        },
-        {
-          label: 'Option',
-          field: 'option',
-          width: '150px'
-        }
-        ,{
-          label: 'id',
-          field: 'id',
-          hidden: true
-        }
-      ],
-      rows: [
-        { id:1, firstName:"Yamin", lastName:"Lawar", email:"yamin@o2h.com", skills: 'React, Vue, Javascipt, Node, PHP, Laravel, Nest, Mysql, Mongo',mobileNo: '+91 9725763162', avtaar:'', team: 'Frontend', option:''},
-        { id:1, firstName:"Disha", lastName:"Thakkar", email:"disha@o2h.com", skills: 'React, Javascipt, Laravel',mobileNo: '+91 9725763162', avtaar:'https://placekitten.com/300/300', team: 'Frontend', option:''},
-        { id:1, firstName:"Akshay", lastName:"Soni", email:"axay@o2h.com", skills: 'React, PHP, Javascipt, Node, Mysql, Firebase, React native, Python',mobileNo: '+91 9725763162', avtaar:'www.google.com', team: 'Frontend', option:''},
-        { id:1, firstName:"Nitin", lastName:"Kachaadiya", email:"nitin@o2h.com", skills: 'IOS, React native, Nest',mobileNo: '+91 9725763162', avtaar:'www.google.com', team: 'Backend', option:''},
-        { id:1, firstName:"Priyanka", lastName:"Patel", email:"priyanka@o2h.com", skills: 'React, PHP, Javascipt, Laravel, Mysql',mobileNo: '+91 9725763162', avtaar:'www.google.com', team: 'Frontend', option:''},
-        { id:1, firstName:"Sadik", lastName:"Dhantrelia", email:"sadik@o2h.com", skills: 'HTML, CSS, Jquery',mobileNo: '+91 9725763162', avtaar:'www.google.com', team: 'HTML', option:''}
-      ],
-    };
+    const allUserData = JSON.parse(JSON.stringify(this.$store.getters.allUsers))
+    console.log(allUserData,'allUserData')
+    if(Object.keys(allUserData).length > 0){
+          return {
+        currentData: {},
+        mainRows: [],
+        columns: [
+          {
+            label: 'FirstName',
+            field: 'firstName'
+          },
+          {
+            label: 'LastName',
+            field: 'lastName',
+          },
+          {
+            label: 'Email',
+            field: 'email'
+          },
+          {
+            label: 'Skills',
+            field: 'skills'
+          },
+          {
+            label: 'Mobile No',
+            field: 'mobileNo'
+          },
+          {
+            label: 'Avtaar',
+            field: 'avtaar'
+          },
+          {
+            label: 'Option',
+            field: 'option',
+            width: '150px'
+          }
+          ,{
+            label: 'id',
+            field: '_id',
+            hidden: true
+          }
+        ],
+        rows: this.$store.getters.allUsers
+      };
+    }else{
+      return {
+        componentKey: 0,
+        currentData: {},
+        columns: [],
+        rows: []
+      }
+    }
+    
   },
   methods:{
     ...mapActions(['addUser', 'resetUserCreationFlag', 'getUser', 'editUser','deleteUser']),
@@ -138,7 +154,7 @@ export default {
     }
     
   },
-  created() {
+  mounted() {
     this.getUser();
   }
   
