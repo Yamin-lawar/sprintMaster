@@ -1,7 +1,7 @@
 <template>
-    <div class="wrapper">
+    <div class="wrapper" id="wrapper">
           <b-spinner variant="primary" style="width: 3rem; height: 3rem;" class="m-5 loader" label="Spinning" v-if="projectLoader"></b-spinner>
-         <div><input type="button" v-on:click="openAddProject('open')" value="Add Project"></div>
+         <div class="align-right"><input class="button" type="button" v-on:click="openAddProject('open')" value="Add Project"></div>
          <modal name="project-popup" height="auto" :scrollable="true">
             <AddProject v-on:closeAddProject="openAddProject('close')" v-on:handleEditProjectForm="editProjectForm"  v-on:handleProjectForm="saveProject" :currentData="currentData" />
          </modal>

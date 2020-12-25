@@ -1,8 +1,6 @@
 <template>
-    <div class="header">
-        <b-nav small>
-            
-        </b-nav>
+    <div class="header" id="header">
+        <RouterLink :to="'/'" class="logo link"><span>SprintMaster</span></RouterLink>
     </div>
 </template>
 <script>
@@ -11,8 +9,5 @@ export default {
 }
 </script>
 <style scoped>
-.header{
-    border-bottom: 1px solid #dfe2e2;
-    height: 45px;
-}
+
 </style>
