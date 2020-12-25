@@ -64,10 +64,9 @@ const actions = {
       apolloClient.query({
         query: All_USERS
       }).then(data => {
-         console.log(data,'data')
-         var parsedobj = data
          commit('setLoader', false); 
-         commit('setUserList', parsedobj.data.users); 
+         commit('setUserList', data.data.users); 
+         
      }).catch(err =>{
        commit('setLoader', false); 
      })

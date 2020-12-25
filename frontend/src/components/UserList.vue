@@ -5,12 +5,10 @@
          <modal name="user-popup" height="auto" :scrollable="true">
             <AddUser v-on:closeAddUser="openAddUser('close')" v-on:handleEditUserForm="editUserForm"  v-on:handleUserForm="saveUser" :currentData="currentData" />
          </modal>
-         <div>{{rows}}</div>
+
          <vue-good-table
-            ref="table"
             :columns="columns"
             :rows="rows"
-            mode="remote"
             :search-options="{
                 enabled: true
             }"
@@ -61,10 +59,7 @@ export default {
         }
       },
       allUsers(newValue, oldValue){
-          console.log(JSON.parse(JSON.stringify(newValue)),'JSON.parse(JSON.stringify(newValue))')
-          this.rows = newValue
-          //console.log(JSON.parse(JSON.stringify(newValue)),'newValue')
-          //Vue.set(this.rows, rodws);
+            this.rows = JSON.parse(JSON.stringify(newValue))
       }
     },
     components:{
@@ -72,12 +67,7 @@ export default {
     },
     data(){
     const allUserData = JSON.parse(JSON.stringify(this.$store.getters.allUsers))
-    console.log(allUserData,'allUserData')
-    if(Object.keys(allUserData).length > 0){
-          return {
-        currentData: {},
-        mainRows: [],
-        columns: [
+    const columnData = [
           {
             label: 'FirstName',
             field: 'firstName'
@@ -112,15 +102,18 @@ export default {
             field: '_id',
             hidden: true
           }
-        ],
-        rows: this.$store.getters.allUsers
-      };
+        ]
+    if(Object.keys(allUserData).length > 0){
+        return {
+            currentData: {},
+            columns: columnData,
+            rows: this.$store.getters.allUsers
+        };
     }else{
       return {
-        componentKey: 0,
         currentData: {},
-        columns: [],
-        rows: []
+        columns: columnData,
+        rows: [],
       }
     }
     
