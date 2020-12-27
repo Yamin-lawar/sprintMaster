@@ -1,0 +1,70 @@
+@mixin transform($transforms) {
+    transform: $transforms;
+    -moz-transform: $transforms;
+    -o-transform: $transforms;
+    -ms-transform: $transforms;
+    -webkit-transform: $transforms;
+}
+
+@mixin transition($transition) {
+    transition: $transition;
+    -moz-transition: $transition;
+    -o-transition: $transition;
+    -ms-transition: $transition;
+    -webkit-transition: $transition;
+}
+
+/* MIXIN : MEDIA QUERIES
+ *    EX : @include mq( 'lap-and-up' ) { CODE }
+ * ------------------------------------------------------------------------- */
+$phone: "screen and (max-width: 767px)";
+$tablet: "screen and (min-width: 768px) and (max-width: 1024px)";
+$phone-and-tab: "screen and (max-width: 1024px )";
+$tablet-and-up: "screen and (min-width: 768px)";
+$tablet-portrait: "screen and (min-width: 768px) and (max-width: 959px)";
+$tablet-landscape: "screen and (min-width: 960px) and (max-width: 1024px)";
+$lap: "screen and (min-width: 1025px) and (max-width: 1219px)";
+
+@mixin mq($alias) {
+    @if $alias=="phone" {
+        @media #{$phone} {
+            @content;
+        }
+    }
+
+    @else if $alias=="tablet" {
+        @media #{$tablet} {
+            @content;
+        }
+    }
+
+    @else if $alias=="phone-and-tab" {
+        @media #{$phone-and-tab} {
+            @content;
+        }
+    }
+
+    @else if $alias=="tablet-and-up" {
+        @media #{$tablet-and-up} {
+            @content;
+        }
+    }
+
+    @else if $alias=="tablet-portrait" {
+        @media #{$tablet-portrait} {
+            @content;
+        }
+    }
+
+    @else if $alias=="tablet-landscape" {
+        @media #{$tablet-landscape} {
+            @content;
+        }
+    }
+
+    @else if $alias=="lap" {
+        @media #{$lap} {
+            @content;
+        }
+    }
+}

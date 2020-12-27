@@ -1,4 +1,5 @@
-
+import { All_USERS } from '../queries/userQuery'
+import { apolloClient} from '../../main'
 const state = {
     allUsers:{},
     userLoader: false,
@@ -59,15 +60,17 @@ const actions = {
       commit('setCreationFlag', false);
    },
    getUser({commit}){
-      console.log('this is get function')
       commit('setLoader', true);
-      fetch('https://jsonplaceholder.cypress.io/todos?limit=10')
-        .then(response => response.json())
-        .then(json => {
-                commit('setUserList', json); 
-                commit('setLoader', false);
-        })
-      .catch(err => { throw err; });
+      apolloClient.query({
+        query: All_USERS
+      }).then(data => {
+         commit('setLoader', false); 
+         commit('setUserList', data.data.users); 
+         
+     }).catch(err =>{
+       commit('setLoader', false); 
+     })
+      
    }
    
 }

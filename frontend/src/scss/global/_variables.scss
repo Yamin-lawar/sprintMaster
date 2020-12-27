@@ -1,0 +1,37 @@
+//color pallete
+body {
+    --main: #7498FB;
+    --rgb: 116, 152, 251;
+    --white: #ffffff;
+    --black: #141437;
+    --icon-gray: #ADB1CC;
+    --background: #F7F8FB;
+    --border: #ECEFF5;
+}
+
+// Fonts
+$font-family: Avenir,Helvetica,Arial,sans-serif;
+
+// Font weights and sizes
+$normal : 16px;
+$medium: 18px;
+$small : 14px;
+$big: 24px;
+
+
+$extra-light : 200;
+$light :300;
+$regular : 400;
+$semi-bold : 600;
+$bold : 700;
+$extra-bold : 800;
+
+
+//z index 
+:root {
+    --z-back: -10;
+    --z-normal: 1;
+    --z-tooltip: 10;
+    --z-fixed: 100;
+    --z-modal: 1000;
+}

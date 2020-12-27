@@ -1,0 +1,11 @@
+//Global styles
+@import "./global/variables";
+@import './global/mixin';
+@import './global/reset';
+
+//Pages
+@import './pages/common';
+@import './pages/header';
+@import './pages/sidebar';
+@import './pages/footer';
+

@@ -1,7 +1,7 @@
 <template>
-    <div class="wrapper">
+    <div class="wrapper" id="wrapper">
           <b-spinner variant="primary" style="width: 3rem; height: 3rem;" class="m-5 loader" label="Spinning" v-if="sprintLoader"></b-spinner>
-         <div><input type="button" v-on:click="openAddSprint('open')" value="Add Sprint"></div>
+         <div class="align-right"><input class="button" type="button" v-on:click="openAddSprint('open')" value="Add Sprint"></div>
          <modal name="sprint-popup" height="auto" :scrollable="true">
             <AddSprint v-on:closeAddSprint="openAddSprint('close')" v-on:handleEditSprintForm="editSprintForm"  v-on:handleSprintForm="saveSprint" :currentData="currentData" />
          </modal>

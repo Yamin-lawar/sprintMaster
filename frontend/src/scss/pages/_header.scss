@@ -1,0 +1,17 @@
+#header {
+    border-bottom: 3px solid var(--border);
+    position: fixed;
+    top: 0px;
+    left: 0;
+    width: 100vw;
+    z-index: var(--z-fixed);
+    background: var(--white);
+    padding: 15px 55px;
+    font-size: $big;
+    font-weight: $semi-bold;
+
+    .link {
+        text-decoration: none;
+        margin: 0 15px;
+    }
+}
