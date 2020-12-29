@@ -76,7 +76,7 @@ module.exports = {
                         emailBody = `${emailBody} Regards  <br/>Sprint Master`;
                         const emailSent = await sendEmail(email,'Welcome to sprint master',emailBody);
                         if(!emailSent){
-                          logger('user',`Create User: Problem in adding user`);  
+                          logger('user',`Create User: Problem in sending email`);  
                           throw customErrorHandler('Problem in adding user', 500); 
                         }
                         return {user: result._doc}

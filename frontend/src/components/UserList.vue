@@ -14,15 +14,15 @@
             }"
             :pagination-options="{
                 enabled: true,
-                mode: 'records',
-                perPage: 5,
+                mode: 'pages',
+                perPage: 10,
             }"
          >
          
          <template slot="table-row" slot-scope="props">              
           <span v-if="props.column.field == 'option'">
             <span><b-icon icon="pencil-square" v-on:click="editUserPoup(props.formattedRow)"></b-icon></span> 
-            <span><b-icon icon="trash" v-on:click="deleteUserAction(props.formattedRow['id'])"></b-icon></span>
+            <span><b-icon icon="trash" v-on:click="deleteUserAction(props.formattedRow['_id'])"></b-icon></span>
           </span>
           <span v-else-if="props.column.field == 'avtaar'">
             <span>
@@ -51,7 +51,8 @@ export default {
     }
     },
     watch:{
-      trackAddFlag(newValue, oldValue) {
+      creationUserFlag(newValue, oldValue) {
+        console.log(newValue,'newValue',oldValue)
         if(newValue == true && newValue !== oldValue){
              this.$modal.hide('user-popup'); 
              this.resetUserCreationFlag();
@@ -130,7 +131,7 @@ export default {
     },
     saveUser(resObj){
       console.log(resObj,'resObj in add')
-      this.addUser(resObj);
+      this.addUser(resObj)
     },
     editUserForm(resObj){
       console.log(resObj,'resObj')
