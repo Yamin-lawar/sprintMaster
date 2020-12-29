@@ -2,7 +2,9 @@
     font-weight: $extra-bold;
     color: var(--main);
 }
-
+.loader{
+    z-index: 1000;
+}
 .wrapper {
     position: relative;
     margin: 0;

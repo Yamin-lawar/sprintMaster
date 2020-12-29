@@ -1,6 +1,6 @@
 <template>
   <div>
-     Add User 
+     <span>{{formType}} User</span>
      <form @submit="saveUser">
         <b-form-group label-cols="4" label-cols-lg="2" label="Name" label-for="input-default">
             <input type="hidden" id="id" v-model="id" name="id" />
@@ -9,11 +9,11 @@
         </b-form-group> 
         <b-form-group label-cols="4" label-cols-lg="2" label="Last Name" label-for="input-default">
             <input type="text" id="lastName" v-model="lastName" name="lastName" placeholder="Last Name"  class="normalBox">
-            <!-- <div class="error" v-if="$v.lastName.$dirty && !$v.lastName.required">Please enter last name</div> -->
+             <div class="error" v-if="$v.lastName.$dirty && !$v.lastName.required">Please enter last name</div> 
         </b-form-group> 
         <b-form-group label-cols="4" label-cols-lg="2" label="Email" label-for="input-default">
             <input type="text" id="email" v-model="email" name="email" placeholder="Email"  class="normalBox">
-            <!--<div class="error" v-if="$v.email.$dirty && !$v.email.required">Please enter email</div>-->
+            <div class="error" v-if="$v.email.$dirty && !$v.email.required || !$v.email.email">Please enter proper email</div>
         </b-form-group> 
         <b-form-group label-cols="4" label-cols-lg="2" label="Skills" label-for="input-default">
           <textarea id="skills" v-model="skills" name="skills" placeholder="skills" class="normalBox"/>
@@ -21,7 +21,7 @@
         </b-form-group>
         <b-form-group label-cols="4" label-cols-lg="2" label="Mobile no" label-for="input-default">
             <input type="text" id="mobileNo" v-model="mobileNo" name="mobileNo" placeholder="Mobile No"  class="normalBox">
-          <!--  <div class="error" v-if="$v.mobileNo.$dirty && !$v.mobileNo.required">Please enter mobile number</div>-->
+            <div class="error" v-if="$v.mobileNo.$dirty && !$v.mobileNo.required">Please enter mobile number</div>
         </b-form-group> 
         <b-form-group label-cols="4" label-cols-lg="2" label="Avtaar" label-for="input-default">
             <b-form-file
@@ -32,11 +32,10 @@
                 accept="image/jpeg, image/png, image/gif"
             ></b-form-file>
             <div class="mt-3">Selected file: {{ avtaar ? avtaar.name : '' }}</div>
-            <!--<div class="error" v-if="$v.avtaar.$dirty && !$v.avtaar.required">Please enter Avtaar</div>-->
         </b-form-group>
          <b-form-group label-cols="4" label-cols-lg="2" label="Team" label-for="input-default">
              <b-form-select v-model="selected" :options="options"></b-form-select>
-            <!--<div class="error" v-if="$v.team.$dirty && !$v.team.required">Please Select team</div>-->
+            <!--<div class="error" v-if="$v.team.$dirty && !$v.team.required">Please Select team</div> -->
         </b-form-group> 
         <input type="submit" value="Save">
         <input type="button" value="Cancel" class="button" v-on:click="closePopup">
@@ -45,7 +44,7 @@
 </template>
 
 <script>
-import { required } from 'vuelidate/lib/validators'
+import { required, email } from 'vuelidate/lib/validators'
 export default {
     name: "AddUser",
     props:['currentData'],
@@ -65,23 +64,24 @@ export default {
             email: this.email,
             skills: this.skills,
             mobileNo: this.mobileNo,
-            avtaar: this.avtaar,
-            team: this.team
-
+            avtaar: "www.google.com",//this.avtaar,
+            team: "5ee8f85d4fe17c47a8d17b24"//this.team
         };
         if(this.id !== undefined){
-          requestObj.id = this.id
+          requestObj._id = this.id
+          delete requestObj.email
           this.$emit('handleEditUserForm', requestObj)
         }else{
           this.$emit('handleUserForm', requestObj)
         }
         
       },
-      
+     
     },
     data(){
+      console.log(this.currentData.id,'this.currentData.id')
       return {
-         id: this.currentData.id,
+         id: this.currentData._id,
          firstName: this.currentData.firstName, 
          lastName: this.currentData.lastName,
          email: this.currentData.email,
@@ -94,13 +94,25 @@ export default {
             { value: 'a', text: 'This is First option' },
             { value: 'b', text: 'Selected Option' },
             { value: 'c', text: 'This is an option with object value' },
-         ]
+         ],
+         formType: !this.currentData._id ? "Add" : "Edit"
       }
     },
     validations: {
       firstName: {
         required
-      }
+      },
+      lastName: {
+        required
+      },
+      email: {
+        required,
+        email
+      },
+      mobileNo: {
+        required
+      },
+      
      
     }
 }
