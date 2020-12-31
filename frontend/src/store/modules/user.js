@@ -1,4 +1,4 @@
-import { All_USERS, ADD_USER, EDIT_USER } from '../queries/userQuery'
+import { All_USERS, ADD_USER, EDIT_USER, DELETE_USER } from '../queries/userQuery'
 import { apolloClient} from '../../main'
 import {notify} from '../../utils/Helper'
 
@@ -57,17 +57,24 @@ const actions = {
    },
    deleteUser({commit}, id){
       commit('setLoader', true);
-      console.log(id,'teamData')
-      fetch('https://jsonplaceholder.cypress.io/todos',{
-       method:'post',
-       body: JSON.stringify({title: 'sdgf', completed: false}),
-       headers: {
-         "Content-type": "application/json; charset=UTF-8"
-       }
-     })
-     .then(response => response.json())
-     .then(json =>  {actions.getUser({commit})}) //this.todos = json)
-     .catch(err => { throw err; });
+      apolloClient.mutate({
+        mutation: DELETE_USER,
+        variables: {
+            "input": {
+              "_id": id
+            }
+        }
+      }) 
+      .then(json =>  {
+        console.log('success',json)
+        commit('setLoader', false); 
+        this.dispatch('getUser',{commit})
+        notify(json.data.removeUser.message,'Success','success')
+      }) //this.todos = json)
+      .catch(err => { 
+        commit('setLoader', false); 
+      });
+      
    },
    resetUserCreationFlag({commit}){
       commit('setCreationFlag', false);

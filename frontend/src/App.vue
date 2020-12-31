@@ -3,6 +3,7 @@
     <div> 
       <Header/>
       <notifications group="sprint" position='top' width="300px"/>
+      <vue-confirm-dialog></vue-confirm-dialog>
     </div>
     <div v-if="$route.name != 'Login'">
       <Leftbar/>

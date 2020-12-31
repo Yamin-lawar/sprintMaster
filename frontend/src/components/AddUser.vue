@@ -12,7 +12,7 @@
              <div class="error" v-if="$v.lastName.$dirty && !$v.lastName.required">Please enter last name</div> 
         </b-form-group> 
         <b-form-group label-cols="4" label-cols-lg="2" label="Email" label-for="input-default">
-            <input type="text" id="email" v-model="email" name="email" placeholder="Email"  class="normalBox">
+            <input type="text" id="email" v-model="email" name="email" placeholder="Email"  class="normalBox" :disabled="formType == 'Edit'">
             <div class="error" v-if="$v.email.$dirty && !$v.email.required || !$v.email.email">Please enter proper email</div>
         </b-form-group> 
         <b-form-group label-cols="4" label-cols-lg="2" label="Skills" label-for="input-default">
