@@ -9,6 +9,7 @@ import VModal from 'vue-js-modal'
 import ApolloClient from 'apollo-boost'
 import VueApollo from 'vue-apollo'
 import Notifications from 'vue-notification'
+import VueConfirmDialog from 'vue-confirm-dialog'
 import { onError } from "apollo-link-error";
 
 
@@ -58,6 +59,9 @@ Vue.use(VueGoodTablePlugin);
 Vue.use(VModal)
 Vue.use(VueApollo)
 Vue.use(Notifications)
+Vue.use(VueConfirmDialog)
+
+Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
 
 
 const apolloProvider = new VueApollo({

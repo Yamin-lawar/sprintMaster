@@ -38,6 +38,7 @@
 <script>
 import AddUser from './AddUser'
 import { mapGetters, mapActions } from 'vuex';
+import Vue from 'vue'
 
 export default {
     name: "UserList",
@@ -130,21 +131,29 @@ export default {
       }
     },
     saveUser(resObj){
-      console.log(resObj,'resObj in add')
       this.addUser(resObj)
     },
     editUserForm(resObj){
-      console.log(resObj,'resObj')
       this.editUser(resObj);
     },
     editUserPoup(userObj){
       this.currentData = userObj;
       this.$modal.show('user-popup');    
-      console.log(userObj,'edit user')
     },
     deleteUserAction(id){
-      this.deleteUser(id)
-      console.log(id,'ods')
+      Vue.$confirm({
+        title: 'Are you sure?',
+        message: 'Are you sure you want to delete user?',
+        button: {
+          yes: 'Yes',
+          no: 'Cancel'
+        },
+        callback: confirm => {
+           confirm ? this.deleteUser(id) : ''
+           
+        }
+      })
+      
     }
     
   },

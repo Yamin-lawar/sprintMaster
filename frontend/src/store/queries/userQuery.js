@@ -56,3 +56,15 @@ export const EDIT_USER = gql`
     }
 `
 
+export const DELETE_USER = gql`
+    mutation removeUser($input: RemoveUserInput!){
+        removeUser(input:$input){
+            message,
+            error{
+                name,
+                message
+            }
+        }
+    }
+`
+
