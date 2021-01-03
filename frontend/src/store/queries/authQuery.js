@@ -10,7 +10,6 @@ export const LOGIN = gql`
                 email,
                 mobileNo,
                 avtaar
-                
             },
             token,
             error{
@@ -30,7 +29,11 @@ export const CURRENT_USER = gql`
             lastName,
             skills,
             mobileNo,
-            avtaar
+            avtaar,
+            team{
+                _id,
+                name
+            }
         }
     }
 `
