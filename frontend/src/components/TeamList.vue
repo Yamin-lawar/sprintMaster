@@ -14,13 +14,13 @@
             :pagination-options="{
                 enabled: true,
                 mode: 'records',
-                perPage: 5,
+                perPage: 10,
             }"
          >
          <template slot="table-row" slot-scope="props">
           <span v-if="props.column.field == 'option'">
             <span><b-icon icon="pencil-square" v-on:click="editTeamPoup(props.formattedRow)"></b-icon></span> 
-            <span><b-icon icon="trash" v-on:click="deleteTeamAction(props.formattedRow['id'])"></b-icon></span>
+            <span><b-icon icon="trash" v-on:click="deleteTeamAction(props.formattedRow['_id'])"></b-icon></span>
           </span>
           
         </template>
@@ -31,31 +31,36 @@
 <script>
 import AddTeam from './AddTeam'
 import { mapGetters, mapActions } from 'vuex';
+import Vue from 'vue'
 
 export default {
     name: "TeamList",
     computed: {...mapGetters(["teams","teamLoader","creationFlag"]),
-    trackAddFlag () {
-       return this.$store.getters.creationFlag
-    }
+      trackAddFlag () {
+        return this.$store.getters.creationFlag
+      },
+      trackListFlag () {
+       return this.$store.getters.teams
+      }
     },
     watch:{
-      trackAddFlag(newValue, oldValue) {
+      creationFlag(newValue, oldValue) {
         if(newValue == true && newValue !== oldValue){
              this.$modal.hide('hello-world'); 
              this.resetCreationFlag();
 
         }
-        console.log(`My store value for 'doneTodosCount' changed to ${newValue}, new value ${oldValue} old value`);
+      },
+      teams(newValue, oldValue){
+            this.rows = JSON.parse(JSON.stringify(newValue))
       }
     },
     components:{
       AddTeam
     },
     data(){
-    return {
-      currentData: {},
-      columns: [
+      const allTeamData = JSON.parse(JSON.stringify(this.$store.getters.teams))  
+      const columnData = [
         {
           label: 'Name',
           field: 'name',
@@ -63,16 +68,14 @@ export default {
         },
         {
           label: 'Skills',
-          field: 'skill',
+          field: 'skills',
           width: '400px'
         },
         {
           label: 'Created On',
           field: 'createdAt',
-          type: 'date',
-          dateInputFormat: 'yyyy-mm-dd',
-          dateOutputFormat: 'yyyy-mm-dd',
-          width: '200px'
+          width: '200px',
+          formatFn: this.formatDateFn
         },
         {
           label: 'Option',
@@ -81,19 +84,23 @@ export default {
         }
         ,{
           label: 'id',
-          field: 'id',
+          field: '_id',
           hidden: true
         }
-      ],
-      rows: [
-        { id:1, name:"Frontend", skill: 'React, Vue, Javascipt', createdAt: '2011-10-31',option:''},
-        { id:2, name:"Backend", skill: 'PHP, Laravel, NodeJs NestJS', createdAt: '2011-10-31',option:''},
-        { id:3, name:"Mobile", skill: 'Native IOS, Native Android, Flutter, React native', createdAt: '2011-10-30',option:''},
-        { id:4, name:"HTML", skill: 'HTML, CSS, SCSS', createdAt: '2011-10-11',option:''},
-        { id:5, name:"Design", skill: 'Photoshop, Indesign, Illustration', createdAt: '2011-10-21',option:''},
-        { id:6, name:"BA", skill: 'Documentation, Requerment gathering, JIRA, Agile', createdAt: '2011-10-31',option:''},
-      ],
-    };
+      ]
+      if(Object.keys(allTeamData).length > 0){
+        return {
+            currentData: {},
+            columns: columnData,
+            rows: this.$store.getters.teams
+        };
+      }else{
+        return {
+          currentData: {},
+          columns: columnData,
+          rows: [],
+        }
+      }
   },
   methods:{
     ...mapActions(['addTeam', 'resetCreationFlag', 'getTeam', 'editTeam','deleteTeam']),
@@ -119,8 +126,22 @@ export default {
       console.log(teamObj,'edit team')
     },
     deleteTeamAction(id){
-      this.deleteTeam(id)
-      console.log(id,'ods')
+      Vue.$confirm({
+        title: 'Are you sure?',
+        message: 'Are you sure you want to delete team?',
+        button: {
+          yes: 'Yes',
+          no: 'Cancel'
+        },
+        callback: confirm => {
+           confirm ? this.deleteTeam(id) : ''
+           
+        }
+      })  
+      
+    },
+    formatDateFn(value){
+      return new Date(value * 1).toLocaleDateString("en-GB")
     }
     
   },

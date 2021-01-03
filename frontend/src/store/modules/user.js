@@ -80,7 +80,6 @@ const actions = {
       commit('setCreationFlag', false);
    },
    getUser({commit}){
-      console.log('get all users')
       commit('setLoader', true);
       apolloClient.query({
         query: All_USERS,

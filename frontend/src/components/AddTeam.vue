@@ -1,6 +1,6 @@
 <template>
   <div>
-     Add team
+     {{formType}} team
      <form @submit="saveTeam">
         <b-form-group label-cols="4" label-cols-lg="2" label="Name" label-for="input-default">
             <input type="hidden" id="id" v-model="id" name="id" />
@@ -34,7 +34,7 @@ export default {
         }
         let requestObj =  {name: this.name, skills: this.skills};
         if(this.id !== undefined){
-          requestObj.id = this.id
+          requestObj._id = this.id
           this.$emit('handleEditTeamForm', requestObj)
         }else{
           this.$emit('handleTeamForm', requestObj)
@@ -46,9 +46,10 @@ export default {
     },
     data(){
       return {
-        id: this.currentData.id,
+        id: this.currentData._id,
         name: this.currentData.name,
-        skills: this.currentData.skill
+        skills: this.currentData.skills,
+        formType: !this.currentData._id ? "Add" : "Edit"
       }
     },
     validations: {
