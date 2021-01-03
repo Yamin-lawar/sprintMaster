@@ -1,8 +1,12 @@
+import { All_TEAMS, ADD_TEAM, EDIT_TEAM, DELETE_TEAM} from '../queries/teamQuery'
+import { apolloClient} from '../../main' 
+import {notify} from '../../utils/Helper'
 const state = {
     teams:{},
     teamLoader: false,
     creationFlag: false
 }
+
 
 const getters = {
    teams: (state) => state.teams,
@@ -12,61 +16,78 @@ const getters = {
 
 const actions = {
    addTeam({commit}, teamData){
-       commit('setLoader', true);
-       console.log(teamData,'teamData')
-       fetch('https://jsonplaceholder.cypress.io/todos',{
-        method:'post',
-        body: JSON.stringify({title: 'sdgf', completed: false}),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8"
+      commit('setLoader', true);
+        console.log(teamData,'teamData')
+        apolloClient.mutate({
+        mutation: ADD_TEAM,
+        variables: {
+            "input": teamData
         }
-      })
-      .then(response => response.json())
-      .then(json =>  {commit('setLoader', false); commit('setCreationFlag', true); actions.getTeam({commit})}) //this.todos = json)
-      .catch(err => { throw err; });
+      }) 
+      .then(json =>  {
+        console.log('success',json)
+        commit('setLoader', false); 
+        commit('setCreationFlag', true); 
+        this.dispatch('getTeam',{commit})
+        notify('Team created successfully','Success','success')
+      }) //this.todos = json)
+      .catch(err => { 
+        commit('setLoader', false); 
+      }); 
+       
    },
    editTeam({commit}, teamData){
       commit('setLoader', true);
-      console.log(teamData,'teamData')
-      fetch('https://jsonplaceholder.cypress.io/todos',{
-       method:'post',
-       body: JSON.stringify({title: 'sdgf', completed: false}),
-       headers: {
-         "Content-type": "application/json; charset=UTF-8"
-       }
-     })
-     .then(response => response.json())
-     .then(json =>  {commit('setLoader', false); commit('setCreationFlag', true); actions.getTeam({commit})}) //this.todos = json)
-     .catch(err => { throw err; });
+        apolloClient.mutate({
+        mutation: EDIT_TEAM,
+        variables: {
+            "input": teamData
+        }
+      }).then(json =>  {
+        commit('setLoader', false); 
+        commit('setCreationFlag', true); 
+        this.dispatch('getTeam',{commit})
+        notify('Team updated successfully','Success','success')
+      }) //this.todos = json)
+      .catch(err => { 
+        commit('setLoader', false); 
+      });
+      
    },
    deleteTeam({commit}, id){
       commit('setLoader', true);
-      console.log(id,'teamData')
-      fetch('https://jsonplaceholder.cypress.io/todos',{
-       method:'post',
-       body: JSON.stringify({title: 'sdgf', completed: false}),
-       headers: {
-         "Content-type": "application/json; charset=UTF-8"
-       }
-     })
-     .then(response => response.json())
-     .then(json =>  {actions.getTeam({commit})}) //this.todos = json)
-     .catch(err => { throw err; });
+      apolloClient.mutate({
+        mutation: DELETE_TEAM,
+        variables: {
+            "input": {
+              "_id": id
+            }
+        }
+      }).then(json =>  {
+        console.log('success',json)
+        commit('setLoader', false); 
+        this.dispatch('getTeam',{commit})
+        notify(json.data.removeTeam.message,'Success','success')
+      }).catch(err => { 
+        commit('setLoader', false); 
+      });
+     
    },
    resetCreationFlag({commit}){
       console.log('setCreationFlag')
       commit('setCreationFlag', false);
    },
    getTeam({commit}){
-      console.log('this is get function')
-      commit('setLoader', true);
-      fetch('https://jsonplaceholder.cypress.io/todos?limit=10')
-        .then(response => response.json())
-        .then(json => {
-                commit('setTeamList', json); 
-                commit('setLoader', false);
-        })
-      .catch(err => { throw err; });
+      apolloClient.query({
+        query: All_TEAMS,
+        fetchPolicy: 'network-only'
+      }).then(data => {
+        console.log(data,'data')
+         commit('setLoader', false); 
+         commit('setTeamList', data.data.teams); 
+     }).catch(err =>{
+       commit('setLoader', false); 
+     })
    }
 }
 
