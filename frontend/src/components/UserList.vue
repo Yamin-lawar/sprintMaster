@@ -3,9 +3,8 @@
           <b-spinner variant="primary" style="width: 3rem; height: 3rem;" class="m-5 loader" label="Spinning" v-if="userLoader"></b-spinner>
          <div class="align-right"><input class="button" type="button" v-on:click="openAddUser('open')" value="Add User"></div>
          <modal name="user-popup" height="auto" :scrollable="true">
-            <AddUser v-on:closeAddUser="openAddUser('close')" v-on:handleEditUserForm="editUserForm"  v-on:handleUserForm="saveUser" :currentData="currentData" />
+            <AddUser v-on:closeAddUser="openAddUser('close')" v-on:handleEditUserForm="editUserForm"  v-on:handleUserForm="saveUser" :currentData="currentData" :teamData="this.$store.getters.teams" />
          </modal>
-
          <vue-good-table
             :columns="columns"
             :rows="rows"
@@ -42,7 +41,7 @@ import Vue from 'vue'
 
 export default {
     name: "UserList",
-    computed: {...mapGetters(["allUsers","userLoader","creationUserFlag"]),
+    computed: {...mapGetters(["allUsers","userLoader","creationUserFlag","teams"]),
     
     trackAddFlag () {
        return this.$store.getters.creationUserFlag
@@ -91,6 +90,10 @@ export default {
             field: 'mobileNo'
           },
           {
+            label: 'Team',
+            field: 'team.name'
+          },
+          {
             label: 'Avtaar',
             field: 'avtaar'
           },
@@ -102,6 +105,11 @@ export default {
           ,{
             label: 'id',
             field: '_id',
+            hidden: true
+          },
+          {
+            label: 'teamId',
+            field: 'team._id',
             hidden: true
           }
         ]
@@ -121,7 +129,7 @@ export default {
     
   },
   methods:{
-    ...mapActions(['addUser', 'resetUserCreationFlag', 'getUser', 'editUser','deleteUser']),
+    ...mapActions(['addUser', 'resetUserCreationFlag', 'getUser', 'editUser','deleteUser','getTeam']),
     openAddUser(action){
       if(action == 'open'){
          this.currentData = {};
@@ -159,6 +167,7 @@ export default {
   },
   mounted() {
     this.getUser();
+    this.getTeam();
   }
   
 }

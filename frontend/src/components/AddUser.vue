@@ -34,7 +34,7 @@
             <div class="mt-3">Selected file: {{ avtaar ? avtaar.name : '' }}</div>
         </b-form-group>
          <b-form-group label-cols="4" label-cols-lg="2" label="Team" label-for="input-default">
-             <b-form-select v-model="selected" :options="options"></b-form-select>
+             <b-form-select v-model="userTeam" :options="options"></b-form-select>
             <!--<div class="error" v-if="$v.team.$dirty && !$v.team.required">Please Select team</div> -->
         </b-form-group> 
         <input type="submit" value="Save">
@@ -47,7 +47,7 @@
 import { required, email } from 'vuelidate/lib/validators'
 export default {
     name: "AddUser",
-    props:['currentData'],
+    props:['currentData','teamData'],
     methods:{
       closePopup(){
          this.$emit('closeAddUser', 'close')
@@ -65,7 +65,7 @@ export default {
             skills: this.skills,
             mobileNo: this.mobileNo,
             avtaar: "www.google.com",//this.avtaar,
-            team: "5ee8f85d4fe17c47a8d17b24"//this.team
+            team: this.userTeam
         };
         if(this.id !== undefined){
           requestObj._id = this.id
@@ -79,7 +79,16 @@ export default {
      
     },
     data(){
-      console.log(this.currentData.id,'this.currentData.id')
+        let teamOption = [{
+           "value": null,
+           "text": "Please select team"
+        }]
+        this.teamData.map((teamArray) =>{
+         teamOption.push({
+            "value": teamArray._id,
+            "text": teamArray.name
+         })
+        })
       return {
          id: this.currentData._id,
          firstName: this.currentData.firstName, 
@@ -88,13 +97,8 @@ export default {
          skills: this.currentData.skills,
          mobileNo: this.currentData.mobileNo,
          avtaar: this.currentData.avtaar,
-         selected: this.currentData.team !== undefined ? this.currentData.team : null ,
-         options: [
-            { value: null, text: 'Please select an option' },
-            { value: 'a', text: 'This is First option' },
-            { value: 'b', text: 'Selected Option' },
-            { value: 'c', text: 'This is an option with object value' },
-         ],
+         userTeam: !this.currentData['team.name'] ? null : this.currentData['team._id'],
+         options: teamOption,
          formType: !this.currentData._id ? "Add" : "Edit"
       }
     },
