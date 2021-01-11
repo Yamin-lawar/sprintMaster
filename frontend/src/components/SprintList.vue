@@ -37,6 +37,9 @@ export default {
     computed: {...mapGetters(["sprints","sprintLoader","creationSprintFlag"]),
     trackAddFlag () {
        return this.$store.getters.creationSprintFlag
+    },
+    trackListFlag () {
+       return this.$store.getters.sprints
     }
     },
     watch:{
@@ -46,15 +49,17 @@ export default {
              this.resetSprintCreationFlag();
 
         }
+      },
+      sprints(newValue, oldValue){
+            this.rows = JSON.parse(JSON.stringify(newValue))
       }
     },
     components:{
       AddSprint
     },
     data(){
-    return {
-      currentData: {},
-      columns: [
+    const allSprintData = JSON.parse(JSON.stringify(this.$store.getters.sprints)) 
+    const columnData = [
         {
           label: 'Name',
           field: 'name'
@@ -66,20 +71,16 @@ export default {
         {
           label: 'Start Date',
           field: 'startDate',
-          type: 'date',
-          dateInputFormat: 'yyyy-mm-dd',
-          dateOutputFormat: 'yyyy-mm-dd'
+          formatFn: this.formatDateFn
         },
         {
           label: 'End Date',
           field: 'endDate',
-          type: 'date',
-          dateInputFormat: 'yyyy-mm-dd',
-          dateOutputFormat: 'yyyy-mm-dd',
+          formatFn: this.formatDateFn
         },
         {
           label: 'No of Hours',
-          field: 'noOfHours'
+          field: 'sprintHours'
         },
         {
           label: 'Status',
@@ -95,16 +96,21 @@ export default {
           field: 'id',
           hidden: true
         }
-      ],
-      rows: [
-        { id:1, name:"April-1", code:"SP-1-RT5", startDate:"2020-04-11", endDate: '2020-04-18',noOfHours: 40, status:'Schedule', option:''},
-        { id:2, name:"April-2", code:"SP-1-RT5", startDate:"2020-04-11", endDate: '2020-04-18',noOfHours: 40, status:'Active', option:''},
-        { id:3, name:"April-3", code:"SP-1-RT5", startDate:"2020-04-11", endDate: '2020-04-18',noOfHours: 40, status:'Completed', option:''},
-        { id:4, name:"April-4", code:"SP-1-RT5", startDate:"2020-04-11", endDate: '2020-04-18',noOfHours: 40, status:'Completed',option:''},
-        { id:5, name:"April-5", code:"SP-1-RT5", startDate:"2020-04-11", endDate: '2020-04-18',noOfHours: 40, status:'Completed',option:''},
-        { id:6, name:"April-6", code:"SP-1-RT5", startDate:"2020-04-11", endDate: '2020-04-18',noOfHours: 40, status:'Completed',option:''}
-      ],
-    };
+    ]
+    if(Object.keys(allSprintData).length > 0){
+        return {
+            currentData: {},
+            columns: columnData,
+            rows: this.$store.getters.sprints
+        };
+    }else{
+        return {
+          currentData: {},
+          columns: columnData,
+          rows: [],
+        }
+    }
+    
   },
   methods:{
     ...mapActions(['addSprint', 'resetSprintCreationFlag', 'getSprint', 'editSprint','deleteSprint']),
@@ -133,6 +139,10 @@ export default {
     deleteSprintAction(id){
       this.deleteSprint(id)
       console.log(id,'ods')
+    },
+    formatDateFn(value){
+      
+      return new Date(value).toLocaleDateString("en-GB")
     }
     
   },

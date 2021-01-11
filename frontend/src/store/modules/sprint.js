@@ -1,3 +1,5 @@
+import { All_SPRINT} from '../queries/sprintQuery'
+import { apolloClient} from '../../main' 
 const state = {
     sprints:{},
     sprintLoader: false,
@@ -58,15 +60,16 @@ const actions = {
       commit('setCreationFlag', false);
    },
    getSprint({commit}){
-      console.log('this is get function')
-      commit('setLoader', true);
-      fetch('https://jsonplaceholder.cypress.io/todos?limit=10')
-        .then(response => response.json())
-        .then(json => {
-                commit('setSprintList', json); 
-                commit('setLoader', false);
-        })
-      .catch(err => { throw err; });
+      apolloClient.query({
+        query: All_SPRINT,
+        fetchPolicy: 'network-only'
+      }).then(data => {
+        console.log(data,'data')
+         commit('setLoader', false); 
+         commit('setSprintList', data.data.sprints); 
+     }).catch(err =>{
+       commit('setLoader', false); 
+     })
    }
 }
 
