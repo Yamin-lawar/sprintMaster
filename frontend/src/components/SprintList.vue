@@ -20,7 +20,7 @@
          <template slot="table-row" slot-scope="props">              
           <span v-if="props.column.field == 'option'">
             <span><b-icon icon="pencil-square" v-on:click="editSprintPopup(props.formattedRow)"></b-icon></span> 
-            <span><b-icon icon="trash" v-on:click="deleteSprintAction(props.formattedRow['id'])"></b-icon></span>
+            <span><b-icon icon="trash" v-on:click="deleteSprintAction(props.formattedRow['_id'])"></b-icon></span>
           </span>
         </template>
         
@@ -31,6 +31,7 @@
 <script>
 import AddSprint from './AddSprint'
 import { mapGetters, mapActions } from 'vuex';
+import Vue from 'vue'
 
 export default {
     name: "SprintList",
@@ -80,7 +81,7 @@ export default {
         },
         {
           label: 'No of Hours',
-          field: 'sprintHours'
+          field: 'hours'
         },
         {
           label: 'Status',
@@ -93,7 +94,7 @@ export default {
         }
         ,{
           label: 'id',
-          field: 'id',
+          field: '_id',
           hidden: true
         }
     ]
@@ -137,7 +138,18 @@ export default {
       console.log(sprintObj,'edit sprint')
     },
     deleteSprintAction(id){
-      this.deleteSprint(id)
+      Vue.$confirm({
+        title: 'Are you sure?',
+        message: 'Are you sure you want to delete sprint?',
+        button: {
+          yes: 'Yes',
+          no: 'Cancel'
+        },
+        callback: confirm => {
+           confirm ? this.deleteSprint(id) : ''
+        }
+      })  
+     
       console.log(id,'ods')
     },
     formatDateFn(value){

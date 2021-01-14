@@ -45,7 +45,7 @@ type Sprint{
   code: String
   startDate: Date!
   endDate: Date!
-  sprintHours: Float
+  hours: Float
   createdBy: User!
   projects: [SprintProject]
   status: projectStatusType!

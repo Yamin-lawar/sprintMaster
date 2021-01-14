@@ -1,5 +1,6 @@
-import { All_SPRINT} from '../queries/sprintQuery'
+import { All_SPRINT, ADD_SPRINT, EDIT_SPRINT, DELETE_SPRINT} from '../queries/sprintQuery'
 import { apolloClient} from '../../main' 
+import {notify} from '../../utils/Helper'
 const state = {
     sprints:{},
     sprintLoader: false,
@@ -14,46 +15,65 @@ const getters = {
 
 const actions = {
    addSprint({commit}, sprintData){
-       commit('setLoader', true);
-       console.log(sprintData,'sprintData')
-       fetch('https://jsonplaceholder.cypress.io/todos',{
-        method:'post',
-        body: JSON.stringify({title: 'sdgf', completed: false}),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8"
+       
+
+      commit('setLoader', true);
+        apolloClient.mutate({
+        mutation: ADD_SPRINT,
+        variables: {
+            "input": sprintData
         }
-      })
-      .then(response => response.json())
-      .then(json =>  {commit('setLoader', false); commit('setCreationFlag', true); actions.getSprint({commit})}) //this.todos = json)
-      .catch(err => { throw err; });
+      }) 
+      .then(json =>  {
+        console.log('success',json)
+        commit('setLoader', false); 
+        commit('setCreationFlag', true); 
+        this.dispatch('getSprint',{commit})
+        notify(json.data.createSprint.message,'Success','success')
+      }) //this.todos = json)
+      .catch(err => { 
+        commit('setLoader', false); 
+      }); 
    },
    editSprint({commit}, sprintData){
-      commit('setLoader', true);
-      console.log(sprintData,'sprintData')
-      fetch('https://jsonplaceholder.cypress.io/todos',{
-       method:'post',
-       body: JSON.stringify({title: 'sdgf', completed: false}),
-       headers: {
-         "Content-type": "application/json; charset=UTF-8"
-       }
-     })
-     .then(response => response.json())
-     .then(json =>  {commit('setLoader', false); commit('setCreationFlag', true); actions.getSprint({commit})}) //this.todos = json)
-     .catch(err => { throw err; });
+      
+
+     commit('setLoader', true);
+        apolloClient.mutate({
+        mutation: EDIT_SPRINT,
+        variables: {
+            "input": sprintData
+        }
+      }).then(json =>  {
+        console.log(json,'edit sptiny')
+        commit('setLoader', false); 
+        commit('setCreationFlag', true); 
+        this.dispatch('getSprint',{commit})
+        notify(json.data.updateSprint.message,'Success','success')
+      }) //this.todos = json)
+      .catch(err => { 
+        commit('setLoader', false); 
+      });
    },
    deleteSprint({commit}, id){
-      commit('setLoader', true);
-      console.log(id,'sprintData')
-      fetch('https://jsonplaceholder.cypress.io/todos',{
-       method:'post',
-       body: JSON.stringify({title: 'sdgf', completed: false}),
-       headers: {
-         "Content-type": "application/json; charset=UTF-8"
-       }
-     })
-     .then(response => response.json())
-     .then(json =>  {actions.getSprint({commit})}) //this.todos = json)
-     .catch(err => { throw err; });
+     
+
+     commit('setLoader', true);
+      apolloClient.mutate({
+        mutation: DELETE_SPRINT,
+        variables: {
+            "input": {
+              "_id": id
+            }
+        }
+      }).then(json =>  {
+        console.log('success',json)
+        commit('setLoader', false); 
+        this.dispatch('getSprint',{commit})
+        notify(json.data.removeSprint.message,'Success','success')
+      }).catch(err => { 
+        commit('setLoader', false); 
+      });
    },
    resetSprintCreationFlag({commit}){
       console.log('setCreationFlag')

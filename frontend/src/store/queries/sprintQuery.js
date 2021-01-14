@@ -8,7 +8,7 @@ export const All_SPRINT = gql`
                     code,
                     startDate,
                     endDate,
-                    sprintHours,
+                    hours,
                     createdBy{
                     firstName,
                     lastName
@@ -17,4 +17,39 @@ export const All_SPRINT = gql`
                 }
             }
 `
+export const ADD_SPRINT = gql`
+    mutation createSprint($input: SprintInput){
+        createSprint(input:$input){
+            message,
+            error{
+            name,
+            message
+            }
+        }
+    }
+`
+export const EDIT_SPRINT = gql`
+    mutation updateSprint($input: updateSprintInput){
+        updateSprint(input:$input){
+            message,
+            error{
+                name,
+                message
+            }
+        }
+    }
+`
+
+export const DELETE_SPRINT = gql`
+    mutation removeSprint($input: deleteSprintInput!){
+        removeSprint(input:$input){
+                message,
+            error{
+                name,
+                message
+            }
+        }
+    }
+`
+
 
