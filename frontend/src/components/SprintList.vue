@@ -14,7 +14,7 @@
             :pagination-options="{
                 enabled: true,
                 mode: 'records',
-                perPage: 5,
+                perPage: 10,
             }"
          >
          <template slot="table-row" slot-scope="props">              
@@ -154,7 +154,7 @@ export default {
     },
     formatDateFn(value){
       
-      return new Date(value).toLocaleDateString("en-GB")
+      return new Date(value).toLocaleDateString("en-CA")
     }
     
   },

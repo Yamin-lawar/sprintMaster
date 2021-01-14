@@ -12,11 +12,11 @@
           <div class="error" v-if="$v.code.$dirty && !$v.code.required">Please enter code</div>
         </b-form-group>
         <b-form-group label-cols="4" label-cols-lg="2" label="Start Date" label-for="input-default">
-          <input type="text" id="startDate" v-model="startDate" name="startDate" placeholder="Starting date"  class="normalBox">
+          <date-picker v-model="startDate" valueType="format" format="YYYY-MM-DD" class="normalBox"></date-picker>
           <div class="error" v-if="$v.startDate.$dirty && !$v.startDate.required">Please enter start date</div>
         </b-form-group>
         <b-form-group label-cols="4" label-cols-lg="2" label="End Date" label-for="input-default">
-          <input type="text" id="endDate" v-model="endDate" name="endDate" placeholder="End date"  class="normalBox">
+          <date-picker v-model="endDate" valueType="format" format="YYYY-MM-DD" class="normalBox"></date-picker>
           <div class="error" v-if="$v.endDate.$dirty && !$v.endDate.required">Please enter end date</div>
         </b-form-group>
          <b-form-group label-cols="4" label-cols-lg="2" label="Hours" label-for="input-default">
@@ -31,8 +31,11 @@
 
 <script>
 import { required, decimal } from 'vuelidate/lib/validators'
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
 export default {
     name: "AddSprint",
+    components: { DatePicker },
     props:['currentData'],
     methods:{
       closePopup(){
@@ -67,7 +70,7 @@ export default {
         startDate: this.currentData.startDate,
         endDate: this.currentData.endDate,
         hours: this.currentData.hours,
-        formType: !this.currentData._id ? "Add" : "Edit"
+        formType: !this.currentData._id ? "Add" : "Edit",
       }
     },
     validations: {

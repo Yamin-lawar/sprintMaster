@@ -53,6 +53,7 @@ export const apolloClient = new ApolloClient({
 
 
 Vue.use(BootstrapVue)
+Vue.use(require('vue-moment'));
 Vue.use(IconsPlugin)
 Vue.use(Vuelidate)
 Vue.use(VueGoodTablePlugin);
