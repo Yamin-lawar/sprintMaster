@@ -15,8 +15,6 @@ const getters = {
 
 const actions = {
    addSprint({commit}, sprintData){
-       
-
       commit('setLoader', true);
         apolloClient.mutate({
         mutation: ADD_SPRINT,
@@ -36,8 +34,6 @@ const actions = {
       }); 
    },
    editSprint({commit}, sprintData){
-      
-
      commit('setLoader', true);
         apolloClient.mutate({
         mutation: EDIT_SPRINT,
@@ -56,8 +52,6 @@ const actions = {
       });
    },
    deleteSprint({commit}, id){
-     
-
      commit('setLoader', true);
       apolloClient.mutate({
         mutation: DELETE_SPRINT,

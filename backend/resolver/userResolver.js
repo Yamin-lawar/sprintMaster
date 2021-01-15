@@ -23,7 +23,6 @@ module.exports = {
                     queryCondition = {team: args.team}
                   }
                   const userList = await User.find(queryCondition).populate('team');
-                  console.log(userList,'userList')
                   return userList;
               }catch(err){
                 logger('user',`Get User: Problem in getting all user: ${err}`);

@@ -37,7 +37,7 @@ module.exports = {
             users: async() => {
               try{
                   const userList = await User.find().populate('team');
-                  console.log(userList,'userList')
+      
                   return userList;
               }catch(err){
                 logger('user',`Get User: Problem in getting all user: ${err}`);
