@@ -21,13 +21,13 @@ Vue.use(VueRouter)
   {
     path: '/sprint/active',
     name: 'Sprint',
-    component: Sprint,
+    component: ActiveSprint,
     beforeEnter: AuthGuard
   },
   {
     path: '/team',
     name: 'TeamList',
-    component: ActiveSprint,
+    component: TeamList,
     beforeEnter: AuthGuard
   },
   {
