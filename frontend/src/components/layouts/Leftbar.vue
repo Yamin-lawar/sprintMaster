@@ -32,7 +32,7 @@
         </li>
         <li class="nav__item" v-on:click="applyActive('project')">
           <RouterLink
-            :to="'/project'"
+            :to="'/projects'"
             :class="['nav__link', activeMenu == 'project' ? 'active' : '']"
           >
             <b-icon icon="layout-text-sidebar"></b-icon>
