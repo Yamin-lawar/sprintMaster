@@ -2,9 +2,11 @@
     font-weight: $extra-bold;
     color: var(--main);
 }
-.loader{
-    z-index: 1000;
+
+.loader {
+    z-index: var(--z-modal);
 }
+
 .wrapper {
     position: relative;
     margin: 0;
@@ -38,7 +40,7 @@
 
 .align-right {
     float: right;
-    z-index: 2;
+    z-index: var(--z-before);
     position: relative;
 }
 
@@ -51,18 +53,78 @@ input[type=reset] {
     color: var(--white);
     padding: 15px 30px;
     text-align: center;
-    text-decoration: none;
-    text-transform: uppercase;
+    font-weight: $bold;
     box-shadow: none;
     border-radius: 5px;
     margin: 5px;
     border: 1px solid var(--main);
     @include transition(all 0.3s ease-in-out);
     cursor: pointer;
+    text-decoration: none !important;
 
     &:hover {
+        color: var(--white);
         background-color: var(--main);
         border: 1px solid var(--main);
-        box-shadow: rgba(45, 45, 45, .03) 0 2px 2px, rgba(49, 49, 49, .03) 0 4px 4px, rgba(42, 42, 42, .03) 0 8px 8px, rgba(32, 32, 32, .03) 0 16px 16px, rgba(49, 49, 49, .03) 0 32px 32px, rgba(35, 35, 35, .03) 0 64px 64px;
+        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
     }
+}
+
+.highlight-text {
+    color: var(--main);
+}
+
+.score-card {
+    border-radius: 5px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 10px rgba(163, 163, 163, 0.2);
+    @include transition(0.4s ease);
+
+    &:hover {
+        box-shadow: 0 8px 14px rgba(87, 87, 87, 0.2);
+    }
+}
+
+table {
+    thead {
+        .th-lg {
+            width: 300px;
+            min-width: 300px;
+        }
+
+        .th-md {
+            width: 200px;
+            min-width: 200px;
+        }
+
+        .th-sm {
+            width: 150px;
+            min-width: 150px;
+        }
+
+        .th-xs {
+            width: 90px;
+        }
+    }
+}
+
+
+input[type=text],
+input[type=password],
+textarea,
+select,
+.custom-select,
+.custom-file {
+    border: none;
+    padding: 5px 12px;
+    border: 1.5px solid var(--border);
+    transition: all 0.5s ease-in-out;
+    border-radius: 5px;
+    background: var(--white);
+}
+
+input[type=text]:focus,
+textarea:focus,
+input:active {
+    box-shadow: 0 0 0 2px rgba(var(--rgb), 0.3);
 }

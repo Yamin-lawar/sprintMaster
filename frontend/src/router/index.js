@@ -8,6 +8,7 @@ import UserList from '../components/UserList.vue'
 import Projects from '../components/Projects.vue'
 import SprintList from '../components/SprintList.vue'
 import AuthGuard from '../utils/AuthGuard'
+import ActiveSprint from '../components/ActiveSprint.vue'
 
 Vue.use(VueRouter)
 
@@ -20,7 +21,7 @@ Vue.use(VueRouter)
   {
     path: '/sprint/active',
     name: 'Sprint',
-    component: Sprint,
+    component: ActiveSprint,
     beforeEnter: AuthGuard
   },
   {

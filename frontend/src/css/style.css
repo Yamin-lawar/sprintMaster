@@ -62,7 +62,6 @@ input[type=button], input[type=submit], input[type=reset]  {
     border: none;
     color: #0d0d0d;
     padding: 15px 32px;
-    text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
@@ -78,6 +77,11 @@ input[type=button], input[type=submit], input[type=reset]  {
     border-radius: 5px 5px 5px 5px;
   }
 
+  select{
+    padding:0;
+    margin:0;
+  }
+
   .custom-select{
     padding: 0px;
   }
@@ -85,12 +89,6 @@ input[type=button], input[type=submit], input[type=reset]  {
   .normalBox{
     text-align: left !important;
     padding: 15px 5px !important;
-  }
-
-  
-  input[type=text]:focus, textarea:focus {
-    background-color: #fff;
-    border-bottom: 2px solid #5fbae9;
   }
   
   input[type=text]:placeholder {

@@ -7,6 +7,12 @@ body {
     --icon-gray: #ADB1CC;
     --background: #F7F8FB;
     --border: #ECEFF5;
+    --text-light: #5a5b60;
+
+    --pink: #faa5d6;
+    --red:#fd8585;
+    --green:#67d694;
+    --blue:#87c2fd;
 }
 
 // Fonts
@@ -31,6 +37,7 @@ $extra-bold : 800;
 :root {
     --z-back: -10;
     --z-normal: 1;
+    --z-before:2;
     --z-tooltip: 10;
     --z-fixed: 100;
     --z-modal: 1000;

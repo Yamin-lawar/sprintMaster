@@ -1,0 +1,324 @@
+#active-sprint {
+    font-size: 14px;
+
+    .cards-container {
+        padding: 30px 0;
+
+        .score-card {
+            padding: 20px;
+            min-height: 135px;
+
+            .person-container {
+                display: inline-block;
+                width: 50%;
+                vertical-align: top;
+
+                .person-image {
+                    img {
+                        width: 40px;
+                        border-radius: 50%;
+                        margin-bottom: 10px;
+                    }
+                }
+
+                .person-name {
+                    font-weight: $bold;
+                    color: var(--text-light);
+                }
+
+                .person-position {
+                    color: var(--text-light);
+                    font-size: $small;
+                }
+            }
+
+            .score-container {
+                display: inline-block;
+                width: 50%;
+                text-align: center;
+                color: var(--text-light);
+                margin: 5px auto;
+
+                .score {
+                    font-size: $big;
+                    font-weight: $bold;
+
+                    img {
+                        width: 10px;
+                        display: inline-block;
+                        margin-left: 5px;
+                        margin-bottom: 4px;
+                        cursor: pointer;
+
+                        &:hover {
+                            opacity: 0.8;
+                            animation: jiggle 0.3s infinite;
+                        }
+                    }
+                }
+            }
+
+            .allocation-container {
+                .team {
+                    float: none;
+                    padding: 0px 0px;
+
+                    div {
+                        margin-right: -12px;
+
+                        img {
+                            height: 30px;
+                            width: 30px;
+                        }
+
+                        &:hover {
+                            margin-right: -5px;
+                        }
+                    }
+                }
+
+                .title {
+                    color: var(--text-light);
+                    font-weight: $semi-bold;
+                }
+
+                .allocation-percentage {
+                    font-size: $small;
+                }
+
+                .allocation-bar {
+                    margin-top: -6px;
+                }
+            }
+
+            .task-container {
+                font-size: $small;
+
+                .title {
+                    color: var(--text-light);
+                    font-weight: $semi-bold;
+                }
+
+                .completion-bar,
+                .completion-percentage {
+                    display: inline-block;
+                }
+
+                .completion-bar {
+                    width: 35%;
+                    vertical-align: bottom;
+
+                    img {
+                        width: 80px;
+                        margin: 0 auto;
+                    }
+                }
+
+                .completion-percentage {
+                    width: 65%;
+                }
+            }
+        }
+    }
+
+    .button-container {
+        padding: 10px 0 20px;
+        float: right;
+
+        .button {
+            padding: 10px 25px;
+
+            .icon {
+                width: 12px;
+                height: 12px;
+                display: inline-block;
+                margin-left: 5px;
+                margin-bottom: 1px;
+            }
+        }
+    }
+
+    .assignee-select {
+        padding: 0.45rem 0;
+
+        .custom-select-wrapper {
+            position: relative;
+
+            select {
+                width: 120px;
+                padding: 13px 10px 12px 40px;
+                cursor: pointer;
+                font-size: 14px;
+                display: inline-block;
+                border: 1.5px solid var(--border);
+                border-radius: 30px;
+                margin: 0;
+                outline: none;
+                /* remove focus ring from Webkit */
+                line-height: 1.2;
+                background: var(--white);
+                appearance: none;
+
+                &::-moz-focusring {
+                    color: transparent;
+                    text-shadow: 0 0 0 var(--black);
+                }
+            }
+
+            &:after {
+                content: "▾";
+                position: absolute;
+                top: 12px;
+                right: 40px;
+                bottom: 15px;
+                background: var(--white);
+                color: var(--border);
+                pointer-events: none;
+                border-left: none;
+            }
+
+            img#selectedPerson,
+            img.selectedPerson {
+                display: block;
+                position: absolute;
+                top: 20%;
+                right: 115px;
+                height: 25px;
+                width: 25px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+        }
+
+        .view-only {
+            .person {
+                padding: 10px 10px 10px 45px;
+            }
+
+            &.custom-select-wrapper {
+                &:after {
+                    display: none;
+                }
+            }
+        }
+
+    }
+
+    .status-select {
+        padding: 0.45rem 0;
+
+        .custom-select-wrapper {
+            position: relative;
+
+            #statusList {
+                appearance: none;
+
+                &.color {
+                    text-align: center;
+                    width: 120px;
+                    padding: 10px 14px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    border: 1.5px solid var(--border);
+                    border-radius: 30px;
+                    margin: 0;
+                    outline: none;
+                    background: var(--white);
+                }
+
+                &.pink,
+                &.blue,
+                &.red,
+                &.green {
+                    background-size: 15px 15px;
+                    color: var(--white);
+                    font-weight: $bold;
+                }
+
+                &.pink {
+                    color: var(--pink);
+                }
+
+                &.blue {
+                    color: var(--blue);
+                }
+
+                &.red {
+                    color: var(--red);
+                }
+
+                &.green {
+                    color: var(--green);
+                }
+
+            }
+
+            &:after {
+                content: "▾";
+                position: absolute;
+                top: 12px;
+                right: 40px;
+                bottom: 15px;
+                color: var(--border);
+                pointer-events: none;
+                border-left: none;
+            }
+        }
+
+        .view-only {
+
+            .red,
+            .green,
+            .blue,
+            .pink {
+                color: var(--white);
+                font-weight: $semi-bold;
+                border-radius: 5px;
+                padding: 3px 5px;
+                width: 65%;
+                text-align: center;
+            }
+
+            .red {
+                background: var(--red);
+            }
+
+            .green {
+                background: var(--green);
+            }
+
+            .blue {
+                background: var(--blue);
+            }
+
+            .pink {
+                background: var(--pink);
+            }
+
+            &.custom-select-wrapper {
+                &:after {
+                    display: none;
+                }
+            }
+        }
+
+    }
+
+    table {
+        td {
+            vertical-align: middle;
+            padding: 0.95rem;
+        }
+
+        .action {
+            .icon {
+                width: 15px;
+                height: 15px;
+                display: inline-block;
+                margin-left: 5px;
+                cursor: pointer;
+            }
+        }
+    }
+
+}

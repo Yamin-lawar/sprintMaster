@@ -68,3 +68,12 @@ $lap: "screen and (min-width: 1025px) and (max-width: 1219px)";
         }
     }
 }
+
+@keyframes jiggle {
+    0% {
+        transform: rotate(-10deg);
+    }
+    50% {
+        transform: rotate(10deg);
+    }
+}

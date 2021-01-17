@@ -1,0 +1,111 @@
+.accordion {
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    overflow: hidden;
+
+    &__label {
+        display: block;
+        color: var(--black);
+        font-weight: 500;
+        cursor: pointer;
+        position: relative;
+        @include transition(background-color 1s);
+        padding: 15px 25px;
+        background: var(--white);
+        margin: 0;
+        border: 1px solid var(--border);
+
+        &::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 20px;
+            width: 12px;
+            height: 6px;
+            background-image: url('data:image/svg+xml;utf8,<svg width="100" height="50" xmlns="http://www.w3.org/2000/svg"><polygon points="0,0 100,0 50,50" style="fill:%23141437;" /></svg>');
+            background-size: contain;
+            @include transition(transform 0.4s);
+        }
+
+        img {
+            width: 40px;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .project-info {
+            display: inline-block;
+
+            .project-name,
+            .project-code {
+                display: block;
+                font-size: 14px;
+            }
+
+            .project-name {
+                font-weight: $semi-bold;
+            }
+
+            .project-code {
+                color: var(--text-light);
+            }
+        }
+    }
+
+    .team {
+        float: right;
+        padding: 5px 10px;
+
+        div,
+        span {
+            cursor: pointer;
+            margin-right: -20px;
+            @include transition(0.4s ease);
+            display: inline-block;
+            max-height: 40px;
+
+            &:hover {
+                margin-right: -5px;
+            }
+
+            img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                object-fit: cover;
+                display: inline-block;
+                border: 5px solid var(--white);
+            }
+
+            &:last-child {
+                margin-right: -5px;
+            }
+        }
+    }
+
+    &__content {
+        margin: 0px auto;
+        background: var(--white);
+        padding: 0px 25px;
+        overflow: hidden;
+        max-height: 0;
+        @include transition(max-height 0.5s ease-out);
+    }
+
+    &__input {
+        display: none;
+
+        &:checked {
+            ~.accordion__content {
+                max-height: 600px;
+                @include transition(max-height .5s ease-in-out);
+            }
+
+            ~.accordion__label::after {
+                @include transform(translateY(-50%) rotate(0.5turn));
+            }
+        }
+    }
+
+}
