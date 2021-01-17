@@ -63,8 +63,8 @@ module.exports = {
                     return {message: "Sprint created successfully"}
 
                  }catch(err){
-                       logger('project',`Create Project: Problem in adding project: ${err}`);
-                       throw customErrorHandler(err.name == 'customError' ? err.message :  'Problem in adding project', 500);
+                       logger('sprint',`Create Sprint: Problem in adding sprint: ${err}`);
+                       throw customErrorHandler(err.name == 'customError' ? err.message :  'Problem in adding sprint', 500);
                  }    
             }, 
 
@@ -141,7 +141,7 @@ module.exports = {
                     const sprintOutput = module.exports.updateSprintCompletionAndGetSprintData(tasksData.sprintId)
                     return {"sprint": sprintOutput}
                   }catch(err){
-                    logger('project',`Update Task: Problem in updating task: ${err}`);
+                    logger('sprint',`Update Task: Problem in updating task: ${err}`);
                     throw customErrorHandler(err.name == 'customError' ? err.message :  'Problem in updating task', 500);
                   }  
             },
@@ -209,7 +209,7 @@ module.exports = {
                   return {"sprint": sprintOutput}
                 }catch(err){
                   console.log(err,'err')
-                  logger('project',`Update Task status: Problem in updating task status: ${err}`);
+                  logger('sprint',`Update Task status: Problem in updating task status: ${err}`);
                   throw customErrorHandler(err.name == 'customError' ? err.message :  'Problem in updating task status', 500);
                 }
             },
@@ -301,7 +301,7 @@ module.exports = {
                 )
                 return {message: "Sprint updated successfully"}
               }catch(err){
-                logger('project',`Update sprint: Problem in updating sprint: ${err}`);
+                logger('sprint',`Update sprint: Problem in updating sprint: ${err}`);
                 throw customErrorHandler(err.name == 'customError' ? err.message :  'Problem in updating sprint', 500);
               }
             },
@@ -328,7 +328,7 @@ module.exports = {
                 } 
                 return {message: "Sprint removed successfully"}
               }catch(err){
-                logger('project',`Delete sprint: Problem in deleting sprint: ${err}`);
+                logger('sprint',`Delete sprint: Problem in deleting sprint: ${err}`);
                 throw customErrorHandler(err.name == 'customError' ? err.message :  'Problem in deleting sprint', 500);
               }
             },
@@ -577,7 +577,7 @@ module.exports = {
                 .populate('projects.task.comments.user')
                 .sort({ createdAt: -1});
                 return sprintData
-                
+                 
               }catch(err){
                 console.log(err,'err')
                 logger('sprint',`Sprint list: Problem in getting sprint data: ${err}`);

@@ -17,6 +17,7 @@ module.exports = {
                     queryCondition = {_id: args._id}
                   }
                   const projectList = await Project.find(queryCondition).populate('smj').populate('dsmj').populate('po').populate('spo');
+                  console.log(projectList,'projectList')
                   return projectList
                 }catch(err){
                   logger('team',`Get Team: Problem in getting all team: ${err}`);

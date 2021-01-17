@@ -141,7 +141,7 @@ export default {
       
     },
     formatDateFn(value){
-      return new Date(value * 1).toLocaleDateString("en-GB")
+      return new Date(value * 1).toLocaleDateString("en-CA")
     }
     
   },

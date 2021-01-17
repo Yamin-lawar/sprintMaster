@@ -3,7 +3,7 @@
           <b-spinner variant="primary" style="width: 3rem; height: 3rem;" class="m-5 loader" label="Spinning" v-if="projectLoader"></b-spinner>
          <div class="align-right"><input class="button" type="button" v-on:click="openAddProject('open')" value="Add Project"></div>
          <modal name="project-popup" height="auto" :scrollable="true">
-            <AddProject v-on:closeAddProject="openAddProject('close')" v-on:handleEditProjectForm="editProjectForm"  v-on:handleProjectForm="saveProject" :currentData="currentData" />
+            <AddProject v-on:closeAddProject="openAddProject('close')" v-on:handleEditProjectForm="editProjectForm"  v-on:handleProjectForm="saveProject" :currentData="currentData" :userData="this.$store.getters.allUsers" />
          </modal>
          <vue-good-table
             :columns="columns"
@@ -14,13 +14,13 @@
             :pagination-options="{
                 enabled: true,
                 mode: 'records',
-                perPage: 5,
+                perPage: 10,
             }"
          >
          <template slot="table-row" slot-scope="props">              
           <span v-if="props.column.field == 'option'">
             <span><b-icon icon="pencil-square" v-on:click="editProjectPopup(props.formattedRow)"></b-icon></span> 
-            <span><b-icon icon="trash" v-on:click="deleteProjectAction(props.formattedRow['id'])"></b-icon></span>
+            <span><b-icon icon="trash" v-on:click="deleteProjectAction(props.formattedRow['_id'])"></b-icon></span>
           </span>
         </template>
         
@@ -31,12 +31,16 @@
 <script>
 import AddProject from './AddProject'
 import { mapGetters, mapActions } from 'vuex';
+import Vue from 'vue'
 
 export default {
     name: "Projects",
-    computed: {...mapGetters(["projects","projectLoader","creationProjectFlag"]),
+    computed: {...mapGetters(["projects","projectLoader","creationProjectFlag","allUsers"]),
     trackAddFlag () {
        return this.$store.getters.creationProjectFlag
+    },
+    trackListFlag () {
+       return this.$store.getters.projects
     }
     },
     watch:{
@@ -46,15 +50,18 @@ export default {
              this.resetProjectCreationFlag();
 
         }
+      },
+      projects(newValue, oldValue){
+            this.rows = JSON.parse(JSON.stringify(newValue))
       }
     },
     components:{
       AddProject
     },
     data(){
-    return {
-      currentData: {},
-      columns: [
+      
+      const allProjectData = JSON.parse(JSON.stringify(this.$store.getters.projects)) 
+      const columnData = [
         {
           label: 'Name',
           field: 'name'
@@ -65,23 +72,19 @@ export default {
         },
         {
           label: 'SMJ',
-          field: 'smj'
+          field: 'smj.firstName'
         },
         {
           label: 'Deputy SMJ',
-          field: 'deputySMJ'
+          field: 'dsmj.firstName'
         },
         {
           label: 'PO',
-          field: 'po'
+          field: 'po.firstName'
         },
         {
           label: 'SPO',
-          field: 'spo'
-        },
-        {
-          label: 'Sub Projects',
-          field: 'subProjects'
+          field: 'spo.firstName'
         },
         {
           label: 'Status',
@@ -94,22 +97,46 @@ export default {
         }
         ,{
           label: 'id',
-          field: 'id',
+          field: '_id',
+          hidden: true
+        },
+        {
+          label: 'smjId',
+          field: 'smj._id',
+          hidden: true
+        },
+        {
+          label: 'dsmjId',
+          field: 'dsmj._id',
+          hidden: true
+        },
+        {
+          label: 'poId',
+          field: 'po._id',
+          hidden: true
+        },
+        {
+          label: 'spoId',
+          field: 'spo._id',
           hidden: true
         }
-      ],
-      rows: [
-        { id:1, name:"Visibly", code:"VS-1-RT5", smj:"Disha", deputySMJ: 'Axay',po: 'Chris Heron', spo:'', subProjects: 3, status: 'Active', option:''},
-        { id:1, name:"AICITC", code:"CI-1-RT5", smj:"Nitin", deputySMJ: 'Nikunj',po: 'Nilesh Dagia', spo:'Hemal', subProjects: 1,status: 'Active',option:''},
-        { id:1, name:"Zephx", code:"ZX-1-RT5", smj:"Nitin", deputySMJ: 'Yamin',po: 'James sore', spo:'Sunil', subProjects: 2, status: 'Active',option:''},
-        { id:1, name:"SMV", code:"SM-1-RT5", smj:"Yuvraj", deputySMJ: 'Himani',po: 'Archa', spo:'', subProjects: 1, status: 'Active',option:''},
-        { id:1, name:"Warushka", code:"WX-1-RT5", smj:"Sadik", deputySMJ: 'Payal',po: 'Archa', spo:'', subProjects: 1, status: 'Active',option:''},
-        { id:1, name:"O2h Tech", code:"O2-1-RT5", smj:"Nisarg", deputySMJ: 'Adarsh',po: 'Craig', spo:'Prashant', subProjects: 1,status: 'Active',option:''}
-      ],
-    };
+      ]
+    if(Object.keys(allProjectData).length > 0){
+        return {
+            currentData: {},
+            columns: columnData,
+            rows: this.$store.getters.projects
+        };
+    }else{
+        return {
+          currentData: {},
+          columns: columnData,
+          rows: [],
+        }
+    }
   },
   methods:{
-    ...mapActions(['addProject', 'resetProjectCreationFlag', 'getProject', 'editProject','deleteProject']),
+    ...mapActions(['addProject', 'resetProjectCreationFlag', 'getProject', 'editProject','deleteProject','getUser']),
     openAddProject(action){
       if(action == 'open'){
          this.currentData = {};
@@ -133,13 +160,27 @@ export default {
       console.log(projectObj,'edit project')
     },
     deleteProjectAction(id){
-      this.deleteProject(id)
-      console.log(id,'ods')
+      Vue.$confirm({
+        title: 'Are you sure?',
+        message: 'Are you sure you want to delete project?',
+        button: {
+          yes: 'Yes',
+          no: 'Cancel'
+        },
+        callback: confirm => {
+           confirm ? this.deleteProject(id) : ''
+        }
+      })  
     }
     
   },
   created() {
     this.getProject();
+    const allUserData = JSON.parse(JSON.stringify(this.$store.getters.allUsers))
+    if(Object.keys(allUserData).length == 0){
+       this.getUser();
+    }
+   
   }
   
 }

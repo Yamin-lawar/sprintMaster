@@ -1,3 +1,6 @@
+import { All_PROJECTS, ADD_PROJECT, EDIT_PROJECT, DELETE_PROJECT} from '../queries/projectQuery'
+import { apolloClient} from '../../main' 
+import {notify} from '../../utils/Helper'
 const state = {
     projects:{},
     projectLoader: false,
@@ -11,62 +14,82 @@ const getters = {
 }
 
 const actions = {
+  
    addProject({commit}, projectData){
-       commit('setLoader', true);
-       console.log(projectData,'userData')
-       fetch('https://jsonplaceholder.cypress.io/todos',{
-        method:'post',
-        body: JSON.stringify({title: 'sdgf', completed: false}),
-        headers: {
-          "Content-type": "application/json; charset=UTF-8"
+        commit('setLoader', true);
+        apolloClient.mutate({
+        mutation: ADD_PROJECT,
+        variables: {
+            "input": projectData
         }
-      })
-      .then(response => response.json())
-      .then(json =>  {commit('setLoader', false); commit('setCreationFlag', true); actions.getProject({commit})}) //this.todos = json)
-      .catch(err => { throw err; });
+      }) 
+      .then(json =>  {
+        console.log('success',json)
+        commit('setLoader', false); 
+        commit('setCreationFlag', true); 
+        this.dispatch('getProject',{commit})
+        notify('Project created successfully','Success','success')
+      }) //this.todos = json)
+      .catch(err => { 
+        commit('setLoader', false); 
+      }); 
+      
    },
    editProject({commit}, projectData){
       commit('setLoader', true);
-      console.log(projectData,'projectData')
-      fetch('https://jsonplaceholder.cypress.io/todos',{
-       method:'post',
-       body: JSON.stringify({title: 'sdgf', completed: false}),
-       headers: {
-         "Content-type": "application/json; charset=UTF-8"
-       }
-     })
-     .then(response => response.json())
-     .then(json =>  {commit('setLoader', false); commit('setCreationFlag', true); actions.getProject({commit})}) //this.todos = json)
-     .catch(err => { throw err; });
+        apolloClient.mutate({
+        mutation: EDIT_PROJECT,
+        variables: {
+            "input": projectData
+        }
+      }).then(json =>  {
+        console.log(json,'edit sptiny')
+        commit('setLoader', false); 
+        commit('setCreationFlag', true); 
+        this.dispatch('getProject',{commit})
+        notify('Project updated successfully','Success','success')
+      }) //this.todos = json)
+      .catch(err => { 
+        commit('setLoader', false); 
+      });
+     
    },
    deleteProject({commit}, id){
+      console.log('here1')
       commit('setLoader', true);
-      console.log(id,'teamData')
-      fetch('https://jsonplaceholder.cypress.io/todos',{
-       method:'post',
-       body: JSON.stringify({title: 'sdgf', completed: false}),
-       headers: {
-         "Content-type": "application/json; charset=UTF-8"
-       }
-     })
-     .then(response => response.json())
-     .then(json =>  {actions.getProject({commit})}) //this.todos = json)
-     .catch(err => { throw err; });
+      apolloClient.mutate({
+        mutation: DELETE_PROJECT,
+        variables: {
+            "input": {
+              "_id": id
+            }
+        }
+      }).then(json =>  {
+        console.log('here2',json)
+        console.log('success',json)
+        commit('setLoader', false); 
+        this.dispatch('getProject',{commit})
+        notify(json.data.removeProject.message,'Success','success')
+      }).catch(err => { 
+        commit('setLoader', false); 
+      });
    },
    resetProjectCreationFlag({commit}){
       console.log('setCreationFlag')
       commit('setCreationFlag', false);
    },
    getProject({commit}){
-      console.log('this is get function')
-      commit('setLoader', true);
-      fetch('https://jsonplaceholder.cypress.io/todos?limit=10')
-        .then(response => response.json())
-        .then(json => {
-                commit('setProjectList', json); 
-                commit('setLoader', false);
-        })
-      .catch(err => { throw err; });
+     
+      apolloClient.query({
+        query: All_PROJECTS,
+        fetchPolicy: 'network-only'
+      }).then(data => {
+        console.log(data,'data')
+         commit('setLoader', false); 
+         commit('setProjectList', data.data.projects); 
+     }).catch(err =>{
+       commit('setLoader', false); 
+     })
    }
 }
 
