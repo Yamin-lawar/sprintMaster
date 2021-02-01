@@ -4,8 +4,8 @@
         <div class="accordion">
 
             <div>
-                <input type="checkbox" name="accordion" id="project1" class="accordion__input">
-                <label for="project1" class="accordion__label">
+                <input type="checkbox" name="accordion" id="project1" class="accordion-input">
+                <label for="project1" class="accordion-label">
                     <img src="../assets/Visibly.png">
                     <div class="project-info">
                         <span class="project-name">Visibly</span>
@@ -18,7 +18,7 @@
                         <div><img src="../assets/user2.jpeg"></div>
                     </div>
                 </label>
-                <div class="accordion__content">
+                <div class="accordion-content">
                     <!-- cards container starts -->
                     <div class="cards-container">
                         <div class="row">
@@ -219,8 +219,8 @@
             </div>
 
             <div>
-                <input type="checkbox" name="accordion" id="project2" class="accordion__input">
-                <label for="project2" class="accordion__label"> 
+                <input type="checkbox" name="accordion" id="project2" class="accordion-input">
+                <label for="project2" class="accordion-label"> 
                     <img src="../assets/JA.png">
                     <div class="project-info">
                         <span class="project-name">Joint Analytics</span>
@@ -232,7 +232,7 @@
                         <div><img src="../assets/user5.png"></div>
                     </div>
                 </label>
-                <div class="accordion__content">
+                <div class="accordion-content">
                 <div class="cards-container">
                         <div class="row">
                             <div class="col-md-3 col-sm-6 col-xs-12">
@@ -399,8 +399,8 @@
             </div>
 
             <div>
-                <input type="checkbox" name="accordion" id="project3" class="accordion__input">
-                <label for="project3" class="accordion__label">
+                <input type="checkbox" name="accordion" id="project3" class="accordion-input">
+                <label for="project3" class="accordion-label">
                     <img src="../assets/ot.png">
                     <div class="project-info">
                         <span class="project-name">o2h Tech</span>
@@ -413,7 +413,7 @@
                         <div><img src="../assets/user1.jpeg"></div>
                     </div>
                 </label>
-                <div class="accordion__content">
+                <div class="accordion-content">
                 <p>o2h tech</p>
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam sit reiciendis, ipsam quaerat,
@@ -424,8 +424,8 @@
             </div>
 
             <div>
-                <input type="checkbox" name="accordion" id="project4" class="accordion__input">
-                <label for="project4" class="accordion__label"> 
+                <input type="checkbox" name="accordion" id="project4" class="accordion-input">
+                <label for="project4" class="accordion-label"> 
                     <img src="../assets/JA.png">
                     <div class="project-info">
                         <span class="project-name">Joint Analytics</span>
@@ -437,7 +437,7 @@
                         <div><img src="../assets/user5.png"></div>
                     </div>
                 </label>
-                <div class="accordion__content">
+                <div class="accordion-content">
                 <p>Joint Analytics</p>
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam sit reiciendis, ipsam quaerat,

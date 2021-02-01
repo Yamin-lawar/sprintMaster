@@ -1,9 +1,9 @@
 .accordion {
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 4px rgba(var(--normal-shadow), 0.2);
     border-radius: 5px;
     overflow: hidden;
 
-    &__label {
+    &-label {
         display: block;
         color: var(--black);
         font-weight: 500;
@@ -84,7 +84,7 @@
         }
     }
 
-    &__content {
+    &-content {
         margin: 0px auto;
         background: var(--white);
         padding: 0px 25px;
@@ -93,16 +93,16 @@
         @include transition(max-height 0.5s ease-out);
     }
 
-    &__input {
+    &-input {
         display: none;
 
         &:checked {
-            ~.accordion__content {
+            ~.accordion-content {
                 max-height: 600px;
                 @include transition(max-height .5s ease-in-out);
             }
 
-            ~.accordion__label::after {
+            ~.accordion-label::after {
                 @include transform(translateY(-50%) rotate(0.5turn));
             }
         }

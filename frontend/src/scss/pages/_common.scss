@@ -66,7 +66,7 @@ input[type=reset] {
         color: var(--white);
         background-color: var(--main);
         border: 1px solid var(--main);
-        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
+        box-shadow: 0 0 5px 0 rgba(var(--normal-shadow), 0.4);
     }
 }
 
@@ -77,11 +77,11 @@ input[type=reset] {
 .score-card {
     border-radius: 5px;
     border: 1px solid var(--border);
-    box-shadow: 0 4px 10px rgba(163, 163, 163, 0.2);
+    box-shadow: 0 4px 10px rgba(var(--card-shadow), 0.2);
     @include transition(0.4s ease);
 
     &:hover {
-        box-shadow: 0 8px 14px rgba(87, 87, 87, 0.2);
+        box-shadow: 0 8px 14px rgba(var(--card-hover-shadow), 0.2);
     }
 }
 
