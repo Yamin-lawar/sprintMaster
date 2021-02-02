@@ -10,8 +10,43 @@
     font-size: $big;
     font-weight: $semi-bold;
 
+    @include mq('phone') {
+        padding: 15px 20px;
+    }
+
     .link {
         text-decoration: none;
         margin: 0 15px;
+
+        @include mq('phone') {
+            margin: 0;
+        }
+    }
+
+    .user-details {
+        margin-bottom: -10px;
+
+        .user-image {
+            display: inline-block;
+            margin-right: 10px;
+
+            .image {
+                border-radius: 50%;
+                height: 38px;
+                width: 38px;
+                object-fit: cover;
+            }
+        }
+    }
+
+    .user-info {
+        display: inline-block;
+        vertical-align: top;
+        font-size: $small;
+
+        .user-mail {
+            color: var(--text-light);
+            font-weight: $regular;
+        }
     }
 }

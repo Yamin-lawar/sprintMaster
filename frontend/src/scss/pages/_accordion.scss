@@ -30,8 +30,10 @@
 
         img {
             width: 40px;
+            height:40px;
             display: inline-block;
             margin-right: 10px;
+            object-fit: contain;
         }
 
         .project-info {
@@ -40,11 +42,12 @@
             .project-name,
             .project-code {
                 display: block;
-                font-size: 14px;
+                font-size: $small;
             }
 
             .project-name {
                 font-weight: $semi-bold;
+                font-size:$normal;
             }
 
             .project-code {
@@ -56,6 +59,10 @@
     .team {
         float: right;
         padding: 5px 10px;
+
+        @include mq('phone') {
+            display: none;
+        }
 
         div,
         span {
@@ -98,7 +105,7 @@
 
         &:checked {
             ~.accordion-content {
-                max-height: 600px;
+                max-height: 1000px;
                 @include transition(max-height .5s ease-in-out);
             }
 

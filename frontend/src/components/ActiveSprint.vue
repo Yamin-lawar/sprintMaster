@@ -1,6 +1,19 @@
 <template>
     <div class="wrapper" id="wrapper">
         <div id="active-sprint">
+            <div class="sprint-header clearfix">
+                <div class="sprint-info">
+                    <div class="page-title">Active Sprint</div>
+                    <div class="current-sprint-week">December 28 - January 1</div>
+                </div>
+                <div class="search-container align-right">
+                    <input
+                        placeholder="Search"
+                        class="search"
+                    />
+                    <b-icon icon="search"></b-icon>
+                </div>
+            </div>
         <div class="accordion">
 
             <div>
@@ -58,7 +71,7 @@
                                 <div class="score-card">
                                     <div class="allocation-container">
                                         <div class="title">Allocation</div>
-                                        <div class="team">
+                                        <div class="team allocated-team">
                                             <div><img src="../assets/user1.jpeg"></div>
                                             <div><img src="../assets/user5.png"></div>
                                             <div><img src="../assets/user4.jpeg"></div>
@@ -85,7 +98,7 @@
                                         </div>
                                         <div class="completion-percentage">
                                             85% of targeted tasks completed
-                                            <p>Days left: 1</p>
+                                            <div>Days left: 1</div>
                                         </div>
                                     </div>
                                 </div>
@@ -106,7 +119,7 @@
                             <th class="th-xs">Hours</th>
                             <th class="th-sm">Status</th>
                             <th class="th-md">Target Achievement</th>
-                            <th class="th-xs">Action</th>
+                            <!-- <th class="th-xs">Action</th> -->
                         </tr>
                         </thead>
                         <!--Table head-->
@@ -131,11 +144,11 @@
                             </div>
                             </td>
                             <td>71%</td>
-                            <td>
+                            <!-- <td>
                                 <div class="action">
                                     <img class="icon" src="../assets/chat.svg">
                                 </div>
-                            </td>
+                            </td> -->
                         </tr>
 
                         <tr>
@@ -155,11 +168,11 @@
                             </div>
                             </td>
                             <td>100%</td>
-                            <td>
+                            <!-- <td>
                                 <div class="action">
                                     <img class="icon" src="../assets/chat.svg">
                                 </div>
-                            </td>
+                            </td> -->
                         </tr>
 
                         <tr>
@@ -179,11 +192,11 @@
                             </div>
                             </td>
                             <td>25%</td>
-                            <td>
+                            <!-- <td>
                                 <div class="action">
                                     <img class="icon" src="../assets/chat.svg">
                                 </div>
-                            </td>
+                            </td> -->
                         </tr>
 
                         <tr>
@@ -203,11 +216,11 @@
                             </div>
                             </td>
                             <td>88%</td>
-                            <td>
+                            <!-- <td>
                                 <div class="action">
                                     <img class="icon" src="../assets/chat.svg">
                                 </div>
-                            </td>
+                            </td> -->
                         </tr>
 
                         </tbody>
@@ -372,7 +385,7 @@
                             <td><input type="text" name="task" value="71"></td>
                             <td>
                                 <div class="action">
-                                    <img class="icon" src="../assets/chat.svg">
+                                    <!-- <img class="icon" src="../assets/chat.svg"> -->
                                     <img class="icon" src="../assets/delete.svg">
                                 </div>
                             </td>
