@@ -44,32 +44,6 @@
     position: relative;
 }
 
-.button,
-input[type=button],
-input[type=submit],
-input[type=reset] {
-    background-color: var(--main);
-    border: none;
-    color: var(--white);
-    padding: 15px 30px;
-    text-align: center;
-    font-weight: $bold;
-    box-shadow: none;
-    border-radius: 5px;
-    margin: 5px;
-    border: 1px solid var(--main);
-    @include transition(all 0.3s ease-in-out);
-    cursor: pointer;
-    text-decoration: none !important;
-
-    &:hover {
-        color: var(--white);
-        background-color: var(--main);
-        border: 1px solid var(--main);
-        box-shadow: 0 0 5px 0 rgba(var(--normal-shadow), 0.4);
-    }
-}
-
 .highlight-text {
     color: var(--main);
 }
@@ -107,28 +81,8 @@ table {
         }
     }
 }
-
-
-input[type=text],
-input[type=password],
-textarea,
-select,
-.custom-select,
-.custom-file {
-    border: none;
-    padding: 5px 12px;
-    border: 1.5px solid var(--border);
-    transition: all 0.5s ease-in-out;
-    border-radius: 5px;
-    background: var(--white);
-}
-
-input[type=text]:focus,
-textarea:focus,
-input:active {
-    box-shadow: 0 0 0 2px rgba(var(--rgb), 0.3);
-}
-    
+ 
+//Search box
 .search-container {
     position: relative;
     @include transition(all 1s);
@@ -198,4 +152,29 @@ input:active {
             color: var(--white);
         }
     }
+}
+
+/* Background color for autofills in froms */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: var(--dark-border);
+    font-weight: $semi-bold;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    color:var(--dark-border);
+    font-weight: $semi-bold;
+}
+:-ms-input-placeholder { /* IE 10+ */
+    color: var(--dark-border);
+    font-weight: $semi-bold;
+}
+:-moz-placeholder { /* Firefox 18- */
+    color: var(--dark-border);
+    font-weight: $semi-bold;
 }

@@ -1,0 +1,90 @@
+//common form elements style accros the project
+form {
+    font-size: $small;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    appearance: none;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    border: 2px solid var(--border);
+    border-radius: 5px;
+    @include transition(all 0.3s ease-in-out);
+
+    &:active,
+    &:focus {
+        border: 2px solid rgba(var(--rgb), 0.3);
+        //box-shadow: 0 0 0 2px rgba(var(--rgb), 0.3);
+    }
+
+    &.display-error {
+        border: 2px solid var(--red);
+    }
+
+    &.display-success {
+        //border: 2px solid var(--green);
+    }
+}
+
+label {
+    font-weight: $semi-bold;
+    color: var(--text-light);
+    margin-bottom: 5px;
+}
+
+.button,
+input[type=button],
+input[type=submit],
+input[type=reset] {
+    background-color: var(--main);
+    border: none;
+    color: var(--white);
+    padding: 15px 30px;
+    text-align: center;
+    font-weight: $bold;
+    box-shadow: none;
+    border-radius: 5px;
+    margin: 5px 0px;
+    border: 1px solid var(--main);
+    @include transition(all 0.3s ease-in-out);
+    cursor: pointer;
+    text-decoration: none !important;
+
+    &:hover {
+        color: var(--white);
+        background-color: var(--main);
+        border: 1px solid var(--main);
+        box-shadow: 0 0 5px 0 rgba(var(--normal-shadow), 0.4);
+    }
+}
+
+textarea,
+select,
+.custom-select,
+.custom-file {
+    border: none;
+    padding: 5px 12px;
+    border: 1.5px solid var(--border);
+    transition: all 0.5s ease-in-out;
+    border-radius: 5px;
+    background: var(--white);
+}
+
+.form-input {
+    position: relative;
+    padding: 0 0 20px;
+
+    .error {
+        position: absolute;
+        bottom: 2px;
+        font-size: 12px;
+    }
+}
+
+.form-footer {
+    padding: 25px;
+    text-align: center;
+}

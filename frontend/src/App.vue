@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div> 
-      <Header/>
+      <Header v-if="$route.name != 'Login'"/>
       <notifications group="sprint" position='top' width="300px"/>
       <vue-confirm-dialog></vue-confirm-dialog>
     </div>
@@ -11,7 +11,7 @@
     <div>
       <router-view/>
     </div>  
-    <Footer/>
+    <Footer v-if="$route.name != 'Login'"/>
   </div>
 </template>
 
