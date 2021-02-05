@@ -17,6 +17,81 @@ export const All_SPRINT = gql`
                 }
             }
 `
+export const ACTIVE_SPRINT = gql`
+     query{
+        activeSprint{
+            _id,
+            name,
+            code,
+            startDate,
+            endDate,
+            hours,
+            createdBy{
+            firstName,
+            lastName
+            },
+            status,
+            completion,
+            status,
+            createdAt,
+            projects{
+            _id,
+            name,
+            code,
+            smj{
+                firstName,
+                lastName
+            },
+            dsmj{
+                firstName,
+                lastName
+            },
+            po{
+                firstName,
+                lastName
+            },
+            spo{
+                firstName,
+                lastName
+            },
+            poRanking,
+            gurujiRanking,
+            completion,
+            task{
+                _id,
+                name,
+                user{
+                _id
+                firstName,
+                lastName,
+                avtaar
+                },
+                hours,
+                createdAt,
+                createdBy{
+                _id,
+                firstName,
+                lastName
+                },
+                completion,
+                status,
+                comments{
+                _id,
+                user{
+                    _id,
+                    firstName,
+                    lastName
+                },
+                comment,
+                createdAt
+                }
+            }
+            }
+            
+        }
+     }
+`
+
 export const ADD_SPRINT = gql`
     mutation createSprint($input: SprintInput){
         createSprint(input:$input){

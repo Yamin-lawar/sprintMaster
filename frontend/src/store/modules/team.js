@@ -78,6 +78,7 @@ const actions = {
       commit('setCreationFlag', false);
    },
    getTeam({commit}){
+    commit('setLoader', true);
       apolloClient.query({
         query: All_TEAMS,
         fetchPolicy: 'network-only'

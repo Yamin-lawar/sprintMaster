@@ -10,7 +10,8 @@ import ApolloClient from 'apollo-boost'
 import VueApollo from 'vue-apollo'
 import Notifications from 'vue-notification'
 import VueConfirmDialog from 'vue-confirm-dialog'
-import { onError } from "apollo-link-error";
+import VueApexCharts from 'vue-apexcharts'
+
 
 
 export const apolloClient = new ApolloClient({
@@ -60,8 +61,10 @@ Vue.use(VModal)
 Vue.use(VueApollo)
 Vue.use(Notifications)
 Vue.use(VueConfirmDialog)
+Vue.use(VueApexCharts)
 
 Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
+Vue.component('apexchart', VueApexCharts)
 
 
 const apolloProvider = new VueApollo({

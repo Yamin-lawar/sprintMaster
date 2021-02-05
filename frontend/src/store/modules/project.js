@@ -79,7 +79,7 @@ const actions = {
       commit('setCreationFlag', false);
    },
    getProject({commit}){
-     
+    commit('setLoader', true);
       apolloClient.query({
         query: All_PROJECTS,
         fetchPolicy: 'network-only'
