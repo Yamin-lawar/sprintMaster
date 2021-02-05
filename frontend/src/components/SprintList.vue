@@ -59,7 +59,11 @@ export default {
       AddSprint
     },
     data(){
-    const allSprintData = JSON.parse(JSON.stringify(this.$store.getters.sprints)) 
+    let allSprintData = {}  
+    if(this.$store.getters.sprints !== undefined){
+        allSprintData = JSON.parse(JSON.stringify(this.$store.getters.sprints)) 
+    }
+    
     const columnData = [
         {
           label: 'Name',
@@ -98,7 +102,7 @@ export default {
           hidden: true
         }
     ]
-    if(Object.keys(allSprintData).length > 0){
+    if(allSprintData !== undefined && Object.keys(allSprintData).length > 0){
         return {
             currentData: {},
             columns: columnData,
