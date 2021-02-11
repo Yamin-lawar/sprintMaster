@@ -1,44 +1,86 @@
 <template>
-  <div>
-     <span>{{formType}} User</span>
+  <div class="popup">
+    <!-- header -->
+    <div class="popup-header">
+      <b-icon icon="person-fill" class="rounded-circle header-icon"></b-icon>
+      <span class="popup-title">{{formType}} User</span>
+      <span class="align-right close" v-on:click="closePopup">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/></svg>
+      </span>
+    </div>
+
      <form @submit="saveUser">
-        <b-form-group label-cols="4" label-cols-lg="2" label="Name" label-for="input-default">
-            <input type="hidden" id="id" v-model="id" name="id" />
-            <input type="text" id="firstName" v-model="firstName" name="firstName" placeholder="First Name"  class="normalBox">
-            <div class="error" v-if="$v.firstName.$dirty && !$v.firstName.required">Please enter first name</div>
-        </b-form-group> 
-        <b-form-group label-cols="4" label-cols-lg="2" label="Last Name" label-for="input-default">
-            <input type="text" id="lastName" v-model="lastName" name="lastName" placeholder="Last Name"  class="normalBox">
-             <div class="error" v-if="$v.lastName.$dirty && !$v.lastName.required">Please enter last name</div> 
-        </b-form-group> 
-        <b-form-group label-cols="4" label-cols-lg="2" label="Email" label-for="input-default">
-            <input type="text" id="email" v-model="email" name="email" placeholder="Email"  class="normalBox" :disabled="formType == 'Edit'">
-            <div class="error" v-if="$v.email.$dirty && !$v.email.required || !$v.email.email">Please enter proper email</div>
-        </b-form-group> 
-        <b-form-group label-cols="4" label-cols-lg="2" label="Skills" label-for="input-default">
-          <textarea id="skills" v-model="skills" name="skills" placeholder="skills" class="normalBox"/>
-          <div class="notes">Please add multiple skills with comma seprated</div>
-        </b-form-group>
-        <b-form-group label-cols="4" label-cols-lg="2" label="Mobile no" label-for="input-default">
-            <input type="text" id="mobileNo" v-model="mobileNo" name="mobileNo" placeholder="Mobile No"  class="normalBox">
-            <div class="error" v-if="$v.mobileNo.$dirty && !$v.mobileNo.required">Please enter mobile number</div>
-        </b-form-group> 
-        <b-form-group label-cols="4" label-cols-lg="2" label="Avtaar" label-for="input-default">
-            <b-form-file
-                v-model="avtaar"
-                :state="Boolean(avtaar)"
-                placeholder="Choose a file or drop it here..."
-                drop-placeholder="Drop file here..."
-                accept="image/jpeg, image/png, image/gif"
-            ></b-form-file>
-            <div class="mt-3">Selected file: {{ avtaar ? avtaar.name : '' }}</div>
-        </b-form-group>
-         <b-form-group label-cols="4" label-cols-lg="2" label="Team" label-for="input-default">
-             <b-form-select v-model="userTeam" :options="options"></b-form-select>
-            <!--<div class="error" v-if="$v.team.$dirty && !$v.team.required">Please Select team</div> -->
-        </b-form-group> 
-        <input type="submit" value="Save">
-        <input type="button" value="Cancel" class="button" v-on:click="closePopup">
+       <!-- body -->
+      <div class="popup-body">
+        <div class="row">
+          <div class="col-md-6">
+            <b-form-group label="Name" label-for="firstName">
+              <input type="hidden" id="id" v-model="id" name="id" />
+              <input type="text" id="firstName" v-model="firstName" name="firstName" placeholder="First Name"  class="normalBox">
+              <div class="error" v-if="$v.firstName.$dirty && !$v.firstName.required">Please enter first name</div>
+            </b-form-group> 
+          </div>
+          <div class="col-md-6">
+            <b-form-group label="Last Name" label-for="lastName">
+              <input type="text" id="lastName" v-model="lastName" name="lastName" placeholder="Last Name"  class="normalBox">
+              <div class="error" v-if="$v.lastName.$dirty && !$v.lastName.required">Please enter last name</div> 
+            </b-form-group> 
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <b-form-group label="Email" label-for="email">
+              <input type="text" id="email" v-model="email" name="email" placeholder="Email"  class="normalBox" :disabled="formType == 'Edit'">
+              <div class="error" v-if="$v.email.$dirty && !$v.email.required || !$v.email.email">Please enter proper email</div>
+            </b-form-group>
+          </div>
+          <div class="col-md-6">
+            <b-form-group label="Mobile no" label-for="mobileNo">
+              <input type="text" id="mobileNo" v-model="mobileNo" name="mobileNo" placeholder="Mobile No"  class="normalBox">
+              <div class="error" v-if="$v.mobileNo.$dirty && !$v.mobileNo.required">Please enter mobile number</div>
+            </b-form-group> 
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <b-form-group label="Skills" label-for="skills" description="Please add multiple skills with comma seprated">
+              <textarea id="skills" v-model="skills" name="skills" placeholder="skills" class="normalBox"/>
+            </b-form-group>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+            <b-form-group label="Avtaar" label-for="avatar">
+              <b-form-file
+                  v-model="avtaar"
+                  :state="Boolean(avtaar)"
+                  placeholder="Choose a file or drop it here..."
+                  drop-placeholder="Drop file here..."
+                  accept="image/jpeg, image/png, image/gif"
+                  id="avatar"
+              ></b-form-file>
+              <div class="mt-3">Selected file: {{ avtaar ? avtaar.name : '' }}</div>
+            </b-form-group>
+          </div>
+          <div class="col-md-6">
+            <b-form-group label="Team" label-for="team">
+              <b-form-select v-model="userTeam" :options="options" id="team"></b-form-select>
+              <!--<div class="error" v-if="$v.team.$dirty && !$v.team.required">Please Select team</div> -->
+            </b-form-group> 
+          </div>
+        </div>
+      </div>
+
+      <!-- footer -->
+      <div class="popup-footer clearfix">
+        <div class="button-wrapper align-right">
+          <input type="submit" value="Save" class="button">
+          <input type="button" value="Cancel" class="button" v-on:click="closePopup">
+        </div>
+      </div>
     </form>
   </div>          
 </template>

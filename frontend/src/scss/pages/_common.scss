@@ -10,10 +10,11 @@
 .wrapper {
     position: relative;
     margin: 0;
-    padding: 90px 15px 40px 75px;
+    padding: 90px 15px 55px 75px;
     font-family: $font-family;
     background-color: var(--background);
     @include transition(.5s);
+    min-height:100vh;
 
     @include mq('phone') {
         padding: 100px 15px 70px;
@@ -44,6 +45,41 @@
     position: relative;
 }
 
+.page-wrapper {
+    .page-header {
+        .align-left {
+            float: left;
+
+            @include mq('phone') {
+                float: none;
+            }
+        }
+
+        .align-right {
+            margin-right: 15px;
+
+            @include mq('phone') {
+                float: none;
+            }
+        }
+
+        .page-title {
+            padding: 5px 10px;
+
+            .title {
+                font-size: $medium;
+                font-weight: $semi-bold;
+            }
+
+            .description {
+                color: var(--text-light);
+                font-size: $small;
+            }
+        }
+
+    }
+}
+
 .highlight-text {
     color: var(--main);
 }
@@ -60,6 +96,8 @@
 }
 
 table {
+    color: var(--black) !important;
+
     thead {
         .th-lg {
             width: 300px;
@@ -81,8 +119,8 @@ table {
         }
     }
 }
- 
-//Search box
+
+/* Search box */
 .search-container {
     position: relative;
     @include transition(all 1s);
@@ -110,7 +148,8 @@ table {
         color: var(--black);
     }
 
-    svg {
+    svg,
+    .svg {
         box-sizing: border-box;
         padding: 12px;
         width: 41px;
@@ -124,21 +163,7 @@ table {
         @include transition(all 1s);
     }
 
-    &:hover {
-        width: 200px;
-        cursor: pointer;
-
-        .search {
-            display: block;
-        }
-
-        svg {
-            background: var(--main);
-            color: var(--white);
-            ;
-        }
-    }
-
+    &:hover,
     &:focus-within {
         width: 200px;
         cursor: pointer;
@@ -147,7 +172,8 @@ table {
             display: block;
         }
 
-        svg {
+        svg,
+        .svg {
             background: var(--main);
             color: var(--white);
         }
@@ -156,25 +182,45 @@ table {
 
 /* Background color for autofills in froms */
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus, 
-input:-webkit-autofill:active  {
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 30px white inset !important;
+    box-shadow: 0 0 0 30px white inset !important;
 }
 
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
-    color: var(--dark-border);
+
+/* Placeholder compatibility */
+::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: var(--placeholder);
     font-weight: $semi-bold;
 }
-::-moz-placeholder { /* Firefox 19+ */
-    color:var(--dark-border);
+
+::-moz-placeholder {
+    /* Firefox 19+ */
+    color: var(--placeholder);
     font-weight: $semi-bold;
 }
-:-ms-input-placeholder { /* IE 10+ */
-    color: var(--dark-border);
+
+:-ms-input-placeholder {
+    /* IE 10+ */
+    color: var(--placeholder);
     font-weight: $semi-bold;
 }
-:-moz-placeholder { /* Firefox 18- */
-    color: var(--dark-border);
+
+:-moz-placeholder {
+    /* Firefox 18- */
+    color: var(--placeholder);
     font-weight: $semi-bold;
+}
+
+/*loader*/
+.loader {
+    position: absolute;
+    left: 45%;
+    top: 32%;
+    z-index: 10;
+    height: 31px;
+    width: 31px;
 }

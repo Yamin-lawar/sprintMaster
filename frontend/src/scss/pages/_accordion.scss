@@ -42,7 +42,6 @@
             .project-name,
             .project-code {
                 display: block;
-                font-size: $small;
             }
 
             .project-name {
@@ -52,6 +51,7 @@
 
             .project-code {
                 color: var(--text-light);
+                font-size: $small;
             }
         }
     }
@@ -114,5 +114,4 @@
             }
         }
     }
-
 }

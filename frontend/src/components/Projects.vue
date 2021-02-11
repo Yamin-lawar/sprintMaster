@@ -1,15 +1,27 @@
 <template>
     <div class="wrapper" id="wrapper">
+        <div class="page-wrapper">
           <b-spinner variant="primary" style="width: 3rem; height: 3rem;" class="m-5 loader" label="Spinning" v-if="projectLoader"></b-spinner>
-         <div class="align-right"><input class="button" type="button" v-on:click="openAddProject('open')" value="Add Project"></div>
-         <modal name="project-popup" height="auto" :scrollable="true">
+          <div class="page-header">
+            <div class="page-title align-left">
+              <div class="title">Projects</div>
+              <div class="description align-left">Lorem ipsum dolor sit amet consectetur.</div>
+            </div>
+            
+            <div class="align-right add-button">
+              <input class="button" type="button" v-on:click="openAddProject('open')" value="Add Project">
+            </div>
+          </div>
+          
+         <modal name="project-popup" height="auto" width="80%" :maxWidth="600" :scrollable="true" :adaptive="true" class="vue-modal">
             <AddProject v-on:closeAddProject="openAddProject('close')" v-on:handleEditProjectForm="editProjectForm"  v-on:handleProjectForm="saveProject" :currentData="currentData" :userData="this.$store.getters.allUsers" />
          </modal>
          <vue-good-table
             :columns="columns"
             :rows="rows"
             :search-options="{
-                enabled: true
+                enabled: true,
+                placeholder: 'Search'
             }"
             :pagination-options="{
                 enabled: true,
@@ -20,11 +32,11 @@
          <template slot="table-row" slot-scope="props">              
           <span v-if="props.column.field == 'option'">
             <span><b-icon icon="pencil-square" v-on:click="editProjectPopup(props.formattedRow)"></b-icon></span> 
-            <span><b-icon icon="trash" v-on:click="deleteProjectAction(props.formattedRow['_id'])"></b-icon></span>
+            <span><b-icon icon="trash-fill" v-on:click="deleteProjectAction(props.formattedRow['_id'])"></b-icon></span>
           </span>
         </template>
-        
-         </vue-good-table>
+        </vue-good-table>
+      </div>
     </div>    
 </template>
 
@@ -64,36 +76,43 @@ export default {
       const columnData = [
         {
           label: 'Name',
-          field: 'name'
+          field: 'name',
+          width: '150px'
         },
         {
           label: 'Code',
           field: 'code',
+          width: '150px'
         },
         {
           label: 'SMJ',
-          field: 'smj.firstName'
+          field: 'smj.firstName',
+          width: '150px'
         },
         {
           label: 'Deputy SMJ',
-          field: 'dsmj.firstName'
+          field: 'dsmj.firstName',
+          width: '150px'
         },
         {
           label: 'PO',
-          field: 'po.firstName'
+          field: 'po.firstName',
+          width: '150px'
         },
         {
           label: 'SPO',
-          field: 'spo.firstName'
+          field: 'spo.firstName',
+          width: '150px'
         },
         {
           label: 'Status',
-          field: 'status'
+          field: 'status',
+          width: '150px'
         },
         {
           label: 'Option',
           field: 'option',
-          width: '150px'
+          width: '120px'
         }
         ,{
           label: 'id',
