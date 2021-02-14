@@ -30,9 +30,9 @@
             }"
          >
          <template slot="table-row" slot-scope="props">              
-          <span v-if="props.column.field == 'option'">
-            <span><b-icon icon="pencil-square" v-on:click="editSprintPopup(props.formattedRow)"></b-icon></span> 
-            <span><b-icon icon="trash-fill" v-on:click="deleteSprintAction(props.formattedRow['_id'])"></b-icon></span>
+          <span v-if="props.column.field == 'option'" class="option">
+            <a><b-icon icon="pencil-square" v-on:click="editSprintPopup(props.formattedRow)"></b-icon></a> 
+            <a><b-icon icon="trash-fill" v-on:click="deleteSprintAction(props.formattedRow['_id'])"></b-icon></a>
           </span>
         </template>
         </vue-good-table>
@@ -71,7 +71,11 @@ export default {
       AddSprint
     },
     data(){
-    const allSprintData = JSON.parse(JSON.stringify(this.$store.getters.sprints)) 
+    let allSprintData = {}  
+    if(this.$store.getters.sprints !== undefined){
+        allSprintData = JSON.parse(JSON.stringify(this.$store.getters.sprints)) 
+    }
+    
     const columnData = [
         {
           label: 'Name',
@@ -110,7 +114,7 @@ export default {
           hidden: true
         }
     ]
-    if(Object.keys(allSprintData).length > 0){
+    if(allSprintData !== undefined && Object.keys(allSprintData).length > 0){
         return {
             currentData: {},
             columns: columnData,
@@ -151,10 +155,10 @@ export default {
     },
     deleteSprintAction(id){
       Vue.$confirm({
-        title: 'Are you sure?',
-        message: 'Are you sure you want to delete sprint?',
+        title: 'Delete sprint?',
+        message: 'If you delete the sprint data will be gone forever. Are you sure you want to proceed?',
         button: {
-          yes: 'Yes',
+          yes: 'Delete',
           no: 'Cancel'
         },
         callback: confirm => {

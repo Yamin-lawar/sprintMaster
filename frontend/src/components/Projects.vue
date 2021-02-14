@@ -30,9 +30,9 @@
             }"
          >
          <template slot="table-row" slot-scope="props">              
-          <span v-if="props.column.field == 'option'">
-            <span><b-icon icon="pencil-square" v-on:click="editProjectPopup(props.formattedRow)"></b-icon></span> 
-            <span><b-icon icon="trash-fill" v-on:click="deleteProjectAction(props.formattedRow['_id'])"></b-icon></span>
+          <span v-if="props.column.field == 'option'" class="option">
+            <a><b-icon icon="pencil-square" v-on:click="editProjectPopup(props.formattedRow)"></b-icon></a> 
+            <a><b-icon icon="trash-fill" v-on:click="deleteProjectAction(props.formattedRow['_id'])"></b-icon></a>
           </span>
         </template>
         </vue-good-table>
@@ -112,7 +112,7 @@ export default {
         {
           label: 'Option',
           field: 'option',
-          width: '120px'
+          width: '130px'
         }
         ,{
           label: 'id',
@@ -180,10 +180,10 @@ export default {
     },
     deleteProjectAction(id){
       Vue.$confirm({
-        title: 'Are you sure?',
-        message: 'Are you sure you want to delete project?',
+        title: 'Delete project?',
+        message: 'If you delete the project data will be gone forever. Are you sure you want to proceed?',
         button: {
-          yes: 'Yes',
+          yes: 'Delete',
           no: 'Cancel'
         },
         callback: confirm => {

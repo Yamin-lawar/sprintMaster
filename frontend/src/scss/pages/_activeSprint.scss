@@ -64,6 +64,7 @@
                 .person-name {
                     font-weight: $bold;
                     color: var(--text-light);
+                    color: var(--black);
                 }
 
                 .person-position {
@@ -86,6 +87,7 @@
                 .score {
                     font-size: $big;
                     font-weight: $bold;
+                    color: var(--black);
 
                     img {
                         width: 10px;
@@ -110,6 +112,13 @@
                     &.allocated-team {
                         @include mq('phone') {
                             display: block;
+                        }
+                    }
+
+                    .team-member {
+                        .tooltip-text {
+                            margin-top: 35px;
+                            margin-left: -62px;
                         }
                     }
 
@@ -142,6 +151,7 @@
 
                 .allocation-bar {
                     margin-top: -6px;
+
                     @include mq('tablet') {
                         margin-top: 10px;
                     }
@@ -178,6 +188,10 @@
 
                 .completion-percentage {
                     width: 65%;
+
+                    p {
+                        font-size: $small;
+                    }
 
                     @include mq('tablet') {
                         width: 100%;
@@ -262,6 +276,21 @@
             }
 
             &.custom-select-wrapper {
+                img{
+                    display:inline-block;
+                    vertical-align: middle;
+                }
+                .selectedPerson {
+                    height: 30px;
+                    width: 30px;
+                    position:unset;
+                }
+
+                .person {
+                    padding: 10px;
+                    display: inline-block;
+                }
+
                 &:after {
                     display: none;
                 }
@@ -275,7 +304,7 @@
 
         .custom-select-wrapper {
             position: relative;
-            font-size:$small;
+            font-size: $small;
 
             #statusList {
                 appearance: none;

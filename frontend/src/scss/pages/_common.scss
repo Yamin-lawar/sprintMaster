@@ -14,7 +14,7 @@
     font-family: $font-family;
     background-color: var(--background);
     @include transition(.5s);
-    min-height:100vh;
+    min-height: 100vh;
 
     @include mq('phone') {
         padding: 100px 15px 70px;
@@ -223,4 +223,44 @@ input:-webkit-autofill:active {
     z-index: 10;
     height: 31px;
     width: 31px;
+}
+
+/* Bootstrap avatar in users table */
+.vgt-table {
+    .b-avatar {
+        height: 30px;
+        width: 30px;
+        margin: -10px auto;
+    }
+
+    /* Options style in table*/
+    td.vgt-left-align:last-child {
+        .option {
+            text-align: center;
+
+            a {
+                //background:var(--background);
+                padding: 10px 12px;
+                margin-right: 8px;
+                cursor: pointer;
+                border-radius: 5px;
+                border:1px solid transparent;
+
+                svg {
+                    height: 15px;
+                    width: 15px;
+                }
+
+                &:hover {
+                    //box-shadow: 0 4px 10px rgba(var(--card-shadow), 0.2);
+                    background: var(--background);
+                    border:1px solid var(--border);
+
+                    svg {
+                        fill: var(--main);
+                    }
+                }
+            }
+        }
+    }
 }

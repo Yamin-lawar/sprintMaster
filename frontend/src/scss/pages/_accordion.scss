@@ -30,7 +30,7 @@
 
         img {
             width: 40px;
-            height:40px;
+            height: 40px;
             display: inline-block;
             margin-right: 10px;
             object-fit: contain;
@@ -46,13 +46,38 @@
 
             .project-name {
                 font-weight: $semi-bold;
-                font-size:$normal;
+                font-size: $normal;
             }
 
             .project-code {
                 color: var(--text-light);
                 font-size: $small;
             }
+        }
+
+        .sprint-task-status{
+            font-weight:$semi-bold;
+            float:right;
+            padding:8px 15px;
+            border-radius:5px;
+            margin:5px 10px;
+            min-width:95px;
+            text-align:center;
+
+            &.approved{
+                color:var(--main);
+                background:rgba(var(--rgb),0.1);
+            }
+
+            &.pending{
+                color:var(--text-light);
+                background:rgba(var(--card-shadow),0.2);
+            }
+        }
+
+        .team{
+            min-width: 170px;
+            text-align: right;
         }
     }
 
@@ -89,6 +114,53 @@
                 margin-right: -5px;
             }
         }
+
+        .team-member {
+            position: relative;
+
+            &:hover {
+                .tooltip-text {
+                    visibility: visible;
+                    opacity: 1;
+                }
+            }
+
+            .tooltip-text {
+                visibility: hidden;
+                opacity: 0;
+                border-radius: 5px;
+                padding: 5px 10px;
+                position: absolute;
+                z-index: var(--z-modal);
+                color: var(--text-light);
+                background: var(--white);
+                box-shadow: 1px 1px 12px -3px rgba(var(--normal-shadow), 0.2);
+                border: 1px solid var(--border);
+                margin-top: 45px;
+                margin-left: -80px;
+                max-height: unset;
+                @include transition(opacity 0.3s ease-out);
+                font-size: 10px;
+
+                .name {
+                    font-weight: $semi-bold;
+                    color: var(--black);
+                }
+
+                &:after {
+                    content: "";
+                    position: absolute;
+                    bottom: 100%;
+                    left: 50%;
+                    margin-left: -7px;
+                    border-width: 7px;
+                    border-style: solid;
+                    border-color: transparent transparent var(--white) transparent;
+                }
+            }
+        }
+
+
     }
 
     &-content {

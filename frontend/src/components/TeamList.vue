@@ -31,9 +31,9 @@
             }"
          >
          <template slot="table-row" slot-scope="props">
-          <span v-if="props.column.field == 'option'">
-            <span><b-icon icon="pencil-square" v-on:click="editTeamPoup(props.formattedRow)"></b-icon></span> 
-            <span><b-icon icon="trash-fill" v-on:click="deleteTeamAction(props.formattedRow['_id'])"></b-icon></span>
+          <span v-if="props.column.field == 'option'" class="option">
+            <a><b-icon icon="pencil-square" v-on:click="editTeamPoup(props.formattedRow)"></b-icon></a> 
+            <a><b-icon icon="trash-fill" v-on:click="deleteTeamAction(props.formattedRow['_id'])"></b-icon></a>
           </span>
           
         </template>
@@ -141,10 +141,10 @@ export default {
     },
     deleteTeamAction(id){
       Vue.$confirm({
-        title: 'Are you sure?',
-        message: 'Are you sure you want to delete team?',
+        title: 'Delete team?',
+        message: 'If you delete the team data will be gone forever. Are you sure you want to proceed?',
         button: {
-          yes: 'Yes',
+          yes: 'Delete',
           no: 'Cancel'
         },
         callback: confirm => {

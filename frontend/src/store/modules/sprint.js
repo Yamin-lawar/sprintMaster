@@ -1,14 +1,16 @@
-import { All_SPRINT, ADD_SPRINT, EDIT_SPRINT, DELETE_SPRINT} from '../queries/sprintQuery'
+import { All_SPRINT, ADD_SPRINT, EDIT_SPRINT, DELETE_SPRINT, ACTIVE_SPRINT} from '../queries/sprintQuery'
 import { apolloClient} from '../../main' 
 import {notify} from '../../utils/Helper'
 const state = {
     sprints:{},
+    activeSprint:{},
     sprintLoader: false,
     creationSprintFlag: false
 }
 
 const getters = {
    sprints: (state) => state.sprints,
+   activeSprint: (state) => state.activeSprint,
    sprintLoader: (state) => state.sprintLoader,
    creationSprintFlag: (state) => state.creationSprintFlag
 }
@@ -74,6 +76,7 @@ const actions = {
       commit('setCreationFlag', false);
    },
    getSprint({commit}){
+     commit('setLoader', true);
       apolloClient.query({
         query: All_SPRINT,
         fetchPolicy: 'network-only'
@@ -84,6 +87,19 @@ const actions = {
      }).catch(err =>{
        commit('setLoader', false); 
      })
+   },
+   getActiveSprint({commit}){
+     commit('setLoader', true);
+      apolloClient.query({
+        query: ACTIVE_SPRINT,
+        fetchPolicy: 'network-only'
+      }).then(data => {
+       
+        commit('setLoader', false); 
+        commit('setActiveSprint', data.data.activeSprint); 
+      }).catch(err =>{
+        commit('setLoader', false); 
+      })
    }
 }
 
@@ -91,6 +107,7 @@ const mutations = {
     setLoader: (state, sprintLoader) => (state.sprintLoader = sprintLoader),
     setCreationFlag: (state, creationSprintFlag) => (state.creationSprintFlag = creationSprintFlag),
     setSprintList: (state, sprints) => (state.sprints = sprints),
+    setActiveSprint: (state, activeSprint) => (state.activeSprint = activeSprint)
   
 }
 
