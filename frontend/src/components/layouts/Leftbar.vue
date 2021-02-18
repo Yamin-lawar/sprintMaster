@@ -5,62 +5,62 @@
       @click="show = !show;openSideMenu();"
     ></b-icon>
     <nav id="sidebar" class="nav" v-bind:class="{ show: show }">
-      <ul class="list-unstyled components nav__list nav__navbar">
-        <li class="nav__item">
-          <a class="nav__link">
+      <ul class="list-unstyled components nav-list nav-navbar">
+        <li class="nav-item">
+          <a class="nav-link">
             <b-icon icon="display"></b-icon>
             <span class="menu-title">Dashboard</span>
           </a>
         </li>
-        <li class="nav__item" v-on:click="applyActive('activeSprint')">
+        <li class="nav-item" v-on:click="applyActive('activeSprint')">
           <RouterLink
             :to="'/sprint/active'"
-            :class="['nav__link', activeMenu == 'activeSprint' ? 'active' : '']"
+            :class="['nav-link', activeMenu == 'activeSprint' ? 'active' : '']"
           >
             <b-icon icon="bullseye"></b-icon>
             <span class="menu-title">Active Sprint</span>
           </RouterLink>
         </li>
-        <li class="nav__item" v-on:click="applyActive('sprint')">
+        <li class="nav-item" v-on:click="applyActive('sprint')">
           <RouterLink
             :to="'/sprint'"
-            :class="['nav__link', activeMenu == 'sprint' ? 'active' : '']"
+            :class="['nav-link', activeMenu == 'sprint' ? 'active' : '']"
           >
             <b-icon icon="card-checklist"></b-icon>
             <span class="menu-title">Sprints</span>
           </RouterLink>
         </li>
-        <li class="nav__item" v-on:click="applyActive('project')">
+        <li class="nav-item" v-on:click="applyActive('project')">
           <RouterLink
             :to="'/projects'"
-            :class="['nav__link', activeMenu == 'project' ? 'active' : '']"
+            :class="['nav-link', activeMenu == 'project' ? 'active' : '']"
           >
             <b-icon icon="layout-text-sidebar"></b-icon>
             <span class="menu-title">Projects</span>
           </RouterLink>
         </li>
-        <li class="nav__item" v-on:click="applyActive('team')">
+        <li class="nav-item" v-on:click="applyActive('team')">
           <RouterLink
             :to="'/team'"
-            :class="['nav__link', activeMenu == 'team' ? 'active' : '']"
+            :class="['nav-link', activeMenu == 'team' ? 'active' : '']"
           >
             <b-icon icon="people-fill"></b-icon>
             <span class="menu-title">Team</span>
           </RouterLink>
         </li>
-        <li class="nav__item" v-on:click="applyActive('user')">
+        <li class="nav-item" v-on:click="applyActive('user')">
           <RouterLink
             :to="'/users'"
-            :class="['nav__link', activeMenu == 'user' ? 'active' : '']"
+            :class="['nav-link', activeMenu == 'user' ? 'active' : '']"
           >
             <b-icon icon="person-circle"></b-icon>
             <span class="menu-title">Users</span>
           </RouterLink>
         </li>
-        <li class="nav__item">
+        <li class="nav-item">
           <a
             href="javascript:void(0)"
-            class="nav__link"
+            class="nav-link"
             v-on:click="logoutAction"
           >
             <b-icon icon="power"></b-icon>

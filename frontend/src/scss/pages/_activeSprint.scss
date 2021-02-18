@@ -1,34 +1,74 @@
 #active-sprint {
-    font-size: 14px;
+    font-size: $small;
+
+    .sprint-header {
+        padding: 15px 15px;
+
+        .sprint-info {
+            display: inline-block;
+
+            .page-title {
+                font-size: $medium;
+                font-weight: $semi-bold;
+            }
+
+            .current-sprint-week {
+                color: var(--text-light);
+            }
+        }
+
+        .search-container {
+            margin-top: 5px;
+        }
+    }
 
     .cards-container {
-        padding: 30px 0;
+        padding: 35px 0;
 
         .score-card {
             padding: 20px;
             min-height: 135px;
+
+            @include mq('phone') {
+                margin: 10px 0;
+            }
+
+            @include mq('tablet') {
+                padding: 15px;
+                min-height: 210px;
+            }
 
             .person-container {
                 display: inline-block;
                 width: 50%;
                 vertical-align: top;
 
+                @include mq('tablet') {
+                    width: 100%;
+                    display: block;
+                    text-align: center;
+                }
+
                 .person-image {
                     img {
                         width: 40px;
                         border-radius: 50%;
                         margin-bottom: 10px;
+
+                        @include mq('tablet') {
+                            margin: 0px auto 10px;
+                        }
                     }
                 }
 
                 .person-name {
                     font-weight: $bold;
                     color: var(--text-light);
+                    color: var(--black);
                 }
 
                 .person-position {
                     color: var(--text-light);
-                    font-size: $small;
                 }
             }
 
@@ -39,9 +79,15 @@
                 color: var(--text-light);
                 margin: 5px auto;
 
+                @include mq('tablet') {
+                    width: 100%;
+                    display: block;
+                }
+
                 .score {
                     font-size: $big;
                     font-weight: $bold;
+                    color: var(--black);
 
                     img {
                         width: 10px;
@@ -62,6 +108,19 @@
                 .team {
                     float: none;
                     padding: 0px 0px;
+
+                    &.allocated-team {
+                        @include mq('phone') {
+                            display: block;
+                        }
+                    }
+
+                    .team-member {
+                        .tooltip-text {
+                            margin-top: 35px;
+                            margin-left: -62px;
+                        }
+                    }
 
                     div {
                         margin-right: -12px;
@@ -84,10 +143,18 @@
 
                 .allocation-percentage {
                     font-size: $small;
+
+                    @include mq('tablet') {
+                        margin-top: 10px;
+                    }
                 }
 
                 .allocation-bar {
                     margin-top: -6px;
+
+                    @include mq('tablet') {
+                        margin-top: 10px;
+                    }
                 }
             }
 
@@ -108,6 +175,11 @@
                     width: 35%;
                     vertical-align: bottom;
 
+                    @include mq('tablet') {
+                        width: 100%;
+                        display: block;
+                    }
+
                     img {
                         width: 80px;
                         margin: 0 auto;
@@ -116,6 +188,15 @@
 
                 .completion-percentage {
                     width: 65%;
+
+                    p {
+                        font-size: $small;
+                    }
+
+                    @include mq('tablet') {
+                        width: 100%;
+                        display: block;
+                    }
                 }
             }
         }
@@ -146,12 +227,11 @@
 
             select {
                 width: 120px;
-                padding: 13px 10px 12px 40px;
+                padding: 11px 10px 10px 40px;
                 cursor: pointer;
-                font-size: 14px;
                 display: inline-block;
                 border: 1.5px solid var(--border);
-                border-radius: 30px;
+                border-radius: 5px;
                 margin: 0;
                 outline: none;
                 /* remove focus ring from Webkit */
@@ -168,8 +248,8 @@
             &:after {
                 content: "▾";
                 position: absolute;
-                top: 12px;
-                right: 40px;
+                top: 9px;
+                right: 43px;
                 bottom: 15px;
                 background: var(--white);
                 color: var(--border);
@@ -181,8 +261,8 @@
             img.selectedPerson {
                 display: block;
                 position: absolute;
-                top: 20%;
-                right: 115px;
+                top: 21%;
+                right: 120px;
                 height: 25px;
                 width: 25px;
                 border-radius: 50%;
@@ -196,6 +276,21 @@
             }
 
             &.custom-select-wrapper {
+                img{
+                    display:inline-block;
+                    vertical-align: middle;
+                }
+                .selectedPerson {
+                    height: 30px;
+                    width: 30px;
+                    position:unset;
+                }
+
+                .person {
+                    padding: 10px;
+                    display: inline-block;
+                }
+
                 &:after {
                     display: none;
                 }
@@ -205,10 +300,11 @@
     }
 
     .status-select {
-        padding: 0.45rem 0;
+        padding: 5px 0;
 
         .custom-select-wrapper {
             position: relative;
+            font-size: $small;
 
             #statusList {
                 appearance: none;
@@ -216,11 +312,10 @@
                 &.color {
                     text-align: center;
                     width: 120px;
-                    padding: 10px 14px;
+                    padding: 7px 14px;
                     cursor: pointer;
-                    font-size: 14px;
                     border: 1.5px solid var(--border);
-                    border-radius: 30px;
+                    border-radius: 5px;
                     margin: 0;
                     outline: none;
                     background: var(--white);
@@ -256,8 +351,8 @@
             &:after {
                 content: "▾";
                 position: absolute;
-                top: 12px;
-                right: 40px;
+                top: 9px;
+                right: 43px;
                 bottom: 15px;
                 color: var(--border);
                 pointer-events: none;
@@ -320,5 +415,4 @@
             }
         }
     }
-
 }

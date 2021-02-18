@@ -3,16 +3,21 @@ body {
     --main: #7498FB;
     --rgb: 116, 152, 251;
     --white: #ffffff;
-    --black: #141437;
+    --black: #3D414B;
     --icon-gray: #ADB1CC;
     --background: #F7F8FB;
     --border: #ECEFF5;
-    --text-light: #5a5b60;
+    --placeholder:#B5BCC8;
+    --text-light: #85868C;
 
     --pink: #faa5d6;
     --red:#fd8585;
     --green:#67d694;
     --blue:#87c2fd;
+
+    --normal-shadow: 0,0,0;
+    --card-shadow : 163,163,163;
+    --card-hover-shadow: 87,87,87;
 }
 
 // Fonts

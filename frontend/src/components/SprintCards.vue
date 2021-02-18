@@ -39,13 +39,13 @@
                                     <div class="allocation-container">
                                         <div class="title">Allocation</div>
                                         <div class="team">
-                                            <div><img src="../assets/user1.jpeg"></div>
-                                            <div><img src="../assets/user5.png"></div>
-                                            <div><img src="../assets/user4.jpeg"></div>
-                                            <div><img src="../assets/user2.jpeg"></div>
-                                            <div><img src="../assets/user1.jpeg"></div>
-                                            <div><img src="../assets/user5.png"></div>
-                                            <div><img src="../assets/user4.jpeg"></div>
+                                            <div class="team-member"><img src="../assets/user1.jpeg"><span class="tooltip-text"><div class="name">Joey Tribbiani</div>joey@o2h.com</span></div>
+                                            <div class="team-member"><img src="../assets/user5.png"><span class="tooltip-text"><div class="name">Rachel Green</div> rachel@o2h.com</span></div>
+                                            <div class="team-member"><img src="../assets/user4.jpeg"><span class="tooltip-text"><div class="name">Monica Geller</div> monica@o2h.com</span></div>
+                                            <div class="team-member"><img src="../assets/user2.jpeg"><span class="tooltip-text"><div class="name">Chandler Bing</div> chandler@o2h.com</span></div>
+                                            <div class="team-member"><img src="../assets/user1.jpeg"><span class="tooltip-text"><div class="name">Joey Tribbiani</div>joey@o2h.com</span></div>
+                                            <div class="team-member"><img src="../assets/user5.png"><span class="tooltip-text"><div class="name">Rachel Green</div> rachel@o2h.com</span></div>
+                                            <div class="team-member"><img src="../assets/user4.jpeg"><span class="tooltip-text"><div class="name">Monica Geller</div> monica@o2h.com</span></div>
                                         </div>
                                         <div class="allocation-bar">
                                             <img src="../assets/allocation.png">

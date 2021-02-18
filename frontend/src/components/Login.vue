@@ -1,30 +1,44 @@
 <template>
-    <div>
-      <div>Logo here</div>    
-      <div class="wrapper fadeInDown" id="wrapper">
-        <b-spinner variant="primary" style="width: 3rem; height: 3rem;" class="m-5 loader" label="Spinning" v-if="loader"></b-spinner>
-        <div id="formContent">
-        
-        <!-- Top text -->
-        <div class="fadeIn first">
-          Enter your credential to login into the system
-        </div>
+    <div id="login">
+      <div class="login-wrapper">
 
-        <!-- Login Form -->
-        <form @submit="loginAuth">
-          <input type="text" id="email" v-model="email" class="fadeIn second" name="email" placeholder="email">
-          <div class="error" v-if="$v.email.$dirty && !$v.email.required || !$v.email.email">Please enter proper email</div>
-          <input type="password" id="password" v-model="password" class="fadeIn third" name="password" placeholder="password">
-          <div class="error" v-if="$v.password.$dirty && !$v.password.required">Please enter password</div>
-          <input type="submit" class="fadeIn fourth" value="Log In">
-        </form>
+        <header class="logo">
+          <RouterLink :to="'/'" class="logo link"><span>SprintMaster</span></RouterLink>
+        </header> 
 
-        <!-- Remind Passowrd -->
-        <div id="formFooter">
-          <a class="underlineHover" href="#">Forgot Password?</a>
+        <div class="fadeInDown">
+          <b-spinner variant="primary" style="width: 3rem; height: 3rem;" class="m-5 loader" label="Spinning" v-if="loader"></b-spinner>
+          <div id="formContent">
+
+            <!-- Top text -->
+            <div class="fadeIn first top-title">
+              Sign in to your account
+            </div>
+
+            <!-- Login Form -->
+            <form @submit="loginAuth">
+              <div class="form-input">
+                <label for="email">Email</label>
+                <input type="text" id="email" v-model="email" class="fadeIn second" name="email" placeholder="Enter email">
+                <span class="error" v-if="$v.email.$dirty && !$v.email.required || !$v.email.email">Please enter email</span>
+              </div>
+              
+              <div class="form-input">
+                <label for="password">Password</label>
+                <input type="password" id="password" v-model="password" class="fadeIn third" name="password" placeholder="Enter password">
+                <span class="error" v-if="$v.password.$dirty && !$v.password.required">Please enter password</span>
+              </div>
+              
+              <input type="submit" class="fadeIn fourth" value="Log In">
+            </form>
+
+            <!-- Remind Passowrd -->
+            <div id="formFooter" class="form-footer">
+              <a class="link" href="#">Forgot Password?</a>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
   </div>    
 </template>
 

@@ -1,0 +1,42 @@
+#login {
+    height: 100vh;
+
+    .login-wrapper {
+        background-image: url('~@/assets/team3.png'), url('~@/assets/team1.png');
+        background-repeat: no-repeat, no-repeat;
+        background-attachment: fixed, fixed;
+        background-size: 400px, 400px;
+        background-position: left bottom, right bottom;
+        height: 100vh;
+
+        @include mq('phone') {
+            background-image: none;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0px;
+            font-size: $big;
+        }
+
+        #formContent {
+            display: flex;
+            flex-direction: column;
+            margin: 0px auto 24px;
+            width: 400px;
+            padding: 32px 40px;
+            background: var(--white);
+            border-radius: 3px;
+            box-shadow: rgba(var(--normal-shadow), 0.1) 0px 0px 10px;
+            box-sizing: border-box;
+
+            .top-title{
+                font-size:$medium;
+                color:var(--black);
+                font-weight: $semi-bold;
+                text-align: center;
+                padding: 20px 0;
+            }
+        }
+    }
+}

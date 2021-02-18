@@ -18,7 +18,7 @@
         }
 
         @media only screen and (min-width: 768px) {
-            top: 65px;
+            top: 70px;
             width: 60px;
             height: 100vh;
         }
@@ -28,7 +28,7 @@
             width: 60px + 120px;
         }
 
-        &__navbar {
+        &-navbar {
             list-style: none;
             padding: 0;
             margin: 0;
@@ -42,11 +42,11 @@
             }
         }
 
-        &__item {
+        &-item {
             width: 100%;
         }
 
-        &__link {
+        &-link {
             display: flex;
             align-items: center;
             padding: 18px;
@@ -132,15 +132,16 @@
                 width: 3px;
                 background: var(--main);
                 border-radius: 2px;
-                ;
                 position: absolute;
                 left: 0px;
                 @include transition(all 0.3s cubic-bezier(0.4, 0, 0.2, 1));
-            }
-        }
 
-        &__text {
-            font-weight: $semi-bold;
+                @include mq('phone') {
+                    height: 3px;
+                    width: 100%;
+                    bottom: 0px;
+                }
+            }
         }
     }
 }

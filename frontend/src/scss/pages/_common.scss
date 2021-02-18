@@ -10,10 +10,11 @@
 .wrapper {
     position: relative;
     margin: 0;
-    padding: 90px 15px 40px 75px;
+    padding: 90px 15px 55px 75px;
     font-family: $font-family;
     background-color: var(--background);
     @include transition(.5s);
+    min-height: 100vh;
 
     @include mq('phone') {
         padding: 100px 15px 70px;
@@ -44,29 +45,38 @@
     position: relative;
 }
 
-.button,
-input[type=button],
-input[type=submit],
-input[type=reset] {
-    background-color: var(--main);
-    border: none;
-    color: var(--white);
-    padding: 15px 30px;
-    text-align: center;
-    font-weight: $bold;
-    box-shadow: none;
-    border-radius: 5px;
-    margin: 5px;
-    border: 1px solid var(--main);
-    @include transition(all 0.3s ease-in-out);
-    cursor: pointer;
-    text-decoration: none !important;
+.page-wrapper {
+    .page-header {
+        .align-left {
+            float: left;
 
-    &:hover {
-        color: var(--white);
-        background-color: var(--main);
-        border: 1px solid var(--main);
-        box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.4);
+            @include mq('phone') {
+                float: none;
+            }
+        }
+
+        .align-right {
+            margin-right: 15px;
+
+            @include mq('phone') {
+                float: none;
+            }
+        }
+
+        .page-title {
+            padding: 5px 10px;
+
+            .title {
+                font-size: $medium;
+                font-weight: $semi-bold;
+            }
+
+            .description {
+                color: var(--text-light);
+                font-size: $small;
+            }
+        }
+
     }
 }
 
@@ -77,15 +87,17 @@ input[type=reset] {
 .score-card {
     border-radius: 5px;
     border: 1px solid var(--border);
-    box-shadow: 0 4px 10px rgba(163, 163, 163, 0.2);
+    box-shadow: 0 4px 10px rgba(var(--card-shadow), 0.2);
     @include transition(0.4s ease);
 
     &:hover {
-        box-shadow: 0 8px 14px rgba(87, 87, 87, 0.2);
+        box-shadow: 0 8px 14px rgba(var(--card-hover-shadow), 0.2);
     }
 }
 
 table {
+    color: var(--black) !important;
+
     thead {
         .th-lg {
             width: 300px;
@@ -108,23 +120,147 @@ table {
     }
 }
 
+/* Search box */
+.search-container {
+    position: relative;
+    @include transition(all 1s);
+    width: 45px;
+    height: 45px;
+    background: rgba(var(--rgb), 0.3);
+    box-sizing: border-box;
+    border: 2px solid var(--main);
+    border-radius: 10px;
+    padding: 5px;
 
-input[type=text],
-input[type=password],
-textarea,
-select,
-.custom-select,
-.custom-file {
-    border: none;
-    padding: 5px 12px;
-    border: 1.5px solid var(--border);
-    transition: all 0.5s ease-in-out;
-    border-radius: 5px;
-    background: var(--white);
+    .search {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 41px;
+        outline: 0;
+        border: 0;
+        display: none;
+        font-size: $small;
+        border-radius: 10px;
+        padding: 0 20px;
+        background: var(--white);
+        color: var(--black);
+    }
+
+    svg,
+    .svg {
+        box-sizing: border-box;
+        padding: 12px;
+        width: 41px;
+        height: 41px;
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: var(--main);
+        border-radius: 10px;
+        text-align: center;
+        @include transition(all 1s);
+    }
+
+    &:hover,
+    &:focus-within {
+        width: 200px;
+        cursor: pointer;
+
+        .search {
+            display: block;
+        }
+
+        svg,
+        .svg {
+            background: var(--main);
+            color: var(--white);
+        }
+    }
 }
 
-input[type=text]:focus,
-textarea:focus,
-input:active {
-    box-shadow: 0 0 0 2px rgba(var(--rgb), 0.3);
+/* Background color for autofills in froms */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+    box-shadow: 0 0 0 30px white inset !important;
+}
+
+
+/* Placeholder compatibility */
+::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: var(--placeholder);
+    font-weight: $semi-bold;
+}
+
+::-moz-placeholder {
+    /* Firefox 19+ */
+    color: var(--placeholder);
+    font-weight: $semi-bold;
+}
+
+:-ms-input-placeholder {
+    /* IE 10+ */
+    color: var(--placeholder);
+    font-weight: $semi-bold;
+}
+
+:-moz-placeholder {
+    /* Firefox 18- */
+    color: var(--placeholder);
+    font-weight: $semi-bold;
+}
+
+/*loader*/
+.loader {
+    position: absolute;
+    left: 45%;
+    top: 32%;
+    z-index: 10;
+    height: 31px;
+    width: 31px;
+}
+
+/* Bootstrap avatar in users table */
+.vgt-table {
+    .b-avatar {
+        height: 30px;
+        width: 30px;
+        margin: -10px auto;
+    }
+
+    /* Options style in table*/
+    td.vgt-left-align:last-child {
+        .option {
+            text-align: center;
+
+            a {
+                //background:var(--background);
+                padding: 10px 12px;
+                margin-right: 8px;
+                cursor: pointer;
+                border-radius: 5px;
+                border:1px solid transparent;
+
+                svg {
+                    height: 15px;
+                    width: 15px;
+                }
+
+                &:hover {
+                    //box-shadow: 0 4px 10px rgba(var(--card-shadow), 0.2);
+                    background: var(--background);
+                    border:1px solid var(--border);
+
+                    svg {
+                        fill: var(--main);
+                    }
+                }
+            }
+        }
+    }
 }

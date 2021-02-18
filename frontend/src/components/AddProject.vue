@@ -1,37 +1,69 @@
 <template>
-  <div>
-     Add Project 
+  <div class="popup">
+
+    <div class="popup-header">
+      <b-icon icon="layout-text-sidebar" class="rounded-circle header-icon"></b-icon>
+      <span class="popup-title">{{formType}} Project</span>
+      <span class="align-right close" v-on:click="closePopup">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/></svg>
+      </span>
+    </div>
+     <!-- Add Project  -->
      <form @submit="saveProject">
-        <b-form-group label-cols="4" label-cols-lg="2" label="Name" label-for="input-default">
-            <input type="hidden" id="id" v-model="id" name="id" />
-            <input type="text" id="name" v-model="name" name="name" placeholder="Name"  class="normalBox">
-            <div class="error" v-if="$v.name.$dirty && !$v.name.required">Please enter project name</div>
-        </b-form-group> 
-        <b-form-group label-cols="4" label-cols-lg="2" label="code" label-for="input-default">
-            <input type="text" id="code" v-model="code" name="code" placeholder="Code"  class="normalBox">
-             <div class="error" v-if="$v.code.$dirty && !$v.code.required">Please enter project code</div>
-        </b-form-group> 
-        <b-form-group label-cols="4" label-cols-lg="2" label="SMJ" label-for="input-default">
-             <b-form-select v-model="smj" :options="smjOptions"></b-form-select>
-             <div class="error" v-if="$v.smj.$dirty && !$v.smj.required">Please select SMJ</div>
-        </b-form-group>  
-        <b-form-group label-cols="4" label-cols-lg="2" label="Deputy SMJ" label-for="input-default">
-             <b-form-select v-model="deputySmj" :options="dsmjOptions"></b-form-select>
-        </b-form-group> 
-        <b-form-group label-cols="4" label-cols-lg="2" label="PO" label-for="input-default">
-             <b-form-select v-model="po" :options="poOptions"></b-form-select>
-            <div class="error" v-if="$v.po.$dirty && !$v.po.required">Please select PO</div>
-        </b-form-group> 
-        <b-form-group label-cols="4" label-cols-lg="2" label="SPO" label-for="input-default">
-             <b-form-select v-model="spo" :options="spoOptions"></b-form-select>
-        </b-form-group>  
-        <b-form-group label-cols="4" label-cols-lg="2" label="Status" label-for="input-default">
-             <b-form-select v-model="status" :options="statusOptions"></b-form-select>
+       <div class="popup-body">
+         <div class="row">
+           <div class="col-md-6">
+             <b-form-group label="Name" label-for="name">
+              <input type="hidden" id="id" v-model="id" name="id" />
+              <input type="text" id="name" v-model="name" name="name" placeholder="Enter project name"  class="normalBox">
+              <div class="error" v-if="$v.name.$dirty && !$v.name.required">Please enter project name</div>
+            </b-form-group> 
+            </div>
+            <div class="col-md-6">
+              <b-form-group label="code" label-for="code">
+                <input type="text" id="code" v-model="code" name="code" placeholder="Enter project code"  class="normalBox">
+                <div class="error" v-if="$v.code.$dirty && !$v.code.required">Please enter project code</div>
+              </b-form-group> 
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <b-form-group label="SMJ" label-for="smj">
+                <b-form-select v-model="smj" :options="smjOptions" id="smj"></b-form-select>
+                <div class="error" v-if="$v.smj.$dirty && !$v.smj.required">Please select SMJ</div>
+              </b-form-group> 
+            </div>
+            <div class="col-md-6">
+              <b-form-group label="Deputy SMJ" label-for="dsmj">
+                <b-form-select v-model="deputySmj" :options="dsmjOptions" id="dsmj"></b-form-select>
+              </b-form-group>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <b-form-group label="PO" label-for="po">
+                <b-form-select v-model="po" :options="poOptions" id="po"></b-form-select>
+                <div class="error" v-if="$v.po.$dirty && !$v.po.required">Please select PO</div>
+              </b-form-group> 
+            </div>
+            <div class="col-md-6">
+              <b-form-group label="SPO" label-for="spo">
+                <b-form-select v-model="spo" :options="spoOptions" id="spo"></b-form-select>
+              </b-form-group> 
+            </div>
+          </div>
+        <b-form-group label="Status" label-for="status">
+             <b-form-select v-model="status" :options="statusOptions" id="status"></b-form-select>
             <div class="error" v-if="$v.status.$dirty && !$v.status.required">Please select project status</div>
         </b-form-group>
+        </div>
        
-        <input type="submit" value="Save">
-        <input type="button" value="Cancel" class="button" v-on:click="closePopup">
+        <div class="popup-footer clearfix">
+        <div class="button-wrapper align-right">
+          <input type="submit" value="Save" class="button">
+          <input type="button" value="Cancel" class="button" v-on:click="closePopup">
+        </div>
+        </div>
     </form>
   </div>          
 </template>
@@ -101,6 +133,7 @@ export default {
          dsmjOptions: userOption,
          poOptions: userOption,
          spoOptions: userOption,
+         formType: !this.currentData._id ? "Add" : "Edit",
          /*poOptions: [
             { value: null, text: 'Please select user' },
             { value: 'a', text: 'This is First option' },

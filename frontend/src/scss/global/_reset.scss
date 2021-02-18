@@ -176,3 +176,9 @@ hr {
         text-align: right !important;
     }
 }
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}

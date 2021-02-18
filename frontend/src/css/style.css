@@ -1,29 +1,8 @@
-  #formContent {
-    -webkit-border-radius: 10px 10px 10px 10px;
-    border-radius: 10px 10px 10px 10px;
-    background: #fff;
-    padding: 30px;
-    width: 90%;
-    max-width: 450px;
-    position: relative;
-    padding: 0px;
-    -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
-    text-align: center;
-  }
   
-  #formFooter {
-    background-color: #f6f6f6;
-    border-top: 1px solid #dce8f1;
-    padding: 25px;
-    text-align: center;
-    -webkit-border-radius: 0 0 10px 10px;
-    border-radius: 0 0 10px 10px;
-  }
 
 /* FORM TYPOGRAPHY*/
   
-input[type=button], input[type=submit], input[type=reset]  {
+/* input[type=button], input[type=submit], input[type=reset]  {
     background-color: #39ace7;
     border: none;
     color: white;
@@ -55,9 +34,9 @@ input[type=button], input[type=submit], input[type=reset]  {
     -o-transform: scale(0.95);
     -ms-transform: scale(0.95);
     transform: scale(0.95);
-  }
+  } */
   
-  input[type=text], input[type=password], textarea, select, .custom-select, .custom-file {
+  /* input[type=text], input[type=password], textarea, select, .custom-select, .custom-file {
     background-color: #f6f6f6;
     border: none;
     color: #0d0d0d;
@@ -75,44 +54,30 @@ input[type=button], input[type=submit], input[type=reset]  {
     transition: all 0.5s ease-in-out;
     -webkit-border-radius: 5px 5px 5px 5px;
     border-radius: 5px 5px 5px 5px;
-  }
+  } */
 
-  select{
+  /* select{
     padding:0;
     margin:0;
   }
 
   .custom-select{
     padding: 0px;
-  }
-
-  .normalBox{
-    text-align: left !important;
-    padding: 15px 5px !important;
-  }
+  } */
   
-  input[type=text]:placeholder {
+  /* input[type=text]:placeholder {
     color: #cccccc;
-  }
+  } */
 
-  /*loader*/
-.loader
-{
-    position: absolute;
-    left: 45%;
-    top: 32%;
-    z-index: 10;
-    height: 31px;
-    width: 31px;
-}
+  
 /*error class for form elements*/
-.error{
+/* .error{
     color: red;
     left: 0;
-}
+} */
 
-.btn-primary{
+/* .btn-primary{
   background-color: #39ace7;
-}
+} */
 
   

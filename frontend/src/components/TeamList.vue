@@ -1,15 +1,28 @@
 <template>
-    <div class="wrapper" id="wrapper">
-          <b-spinner variant="primary" style="width: 3rem; height: 3rem;" class="m-5 loader" label="Spinning" v-if="teamLoader"></b-spinner>
-         <div class="align-right"><input class="button" type="button" v-on:click="openAddTeam('open')" value="Add Team"></div>
-         <modal name="hello-world" height="400">
+  <div class="wrapper" id="wrapper">
+    <div class="page-wrapper">
+        <b-spinner variant="primary" style="width: 3rem; height: 3rem;" class="m-5 loader" label="Spinning" v-if="teamLoader"></b-spinner>
+
+          <div class="page-header">
+            <div class="page-title align-left">
+              <div class="title">Team</div>
+              <div class="description align-left">Lorem ipsum dolor sit amet consectetur.</div>
+            </div>
+            
+            <div class="align-right add-button">
+              <input class="button" type="button" v-on:click="openAddTeam('open')" value="Add Team">
+            </div>
+          </div>
+
+         <modal name="hello-world" height="auto" width="80%" :maxWidth="480" :scrollable="true" :adaptive="true" class="vue-modal team">
             <AddTeam v-on:closeAddTeam="openAddTeam('close')" v-on:handleEditTeamForm="editTeamForm"  v-on:handleTeamForm="saveTeam" :currentData="currentData" />
          </modal>
          <vue-good-table
             :columns="columns"
             :rows="rows"
             :search-options="{
-                enabled: true
+                enabled: true,
+                placeholder: 'Search'
             }"
             :pagination-options="{
                 enabled: true,
@@ -18,14 +31,15 @@
             }"
          >
          <template slot="table-row" slot-scope="props">
-          <span v-if="props.column.field == 'option'">
-            <span><b-icon icon="pencil-square" v-on:click="editTeamPoup(props.formattedRow)"></b-icon></span> 
-            <span><b-icon icon="trash" v-on:click="deleteTeamAction(props.formattedRow['_id'])"></b-icon></span>
+          <span v-if="props.column.field == 'option'" class="option">
+            <a><b-icon icon="pencil-square" v-on:click="editTeamPoup(props.formattedRow)"></b-icon></a> 
+            <a><b-icon icon="trash-fill" v-on:click="deleteTeamAction(props.formattedRow['_id'])"></b-icon></a>
           </span>
           
         </template>
-         </vue-good-table>
-    </div>    
+      </vue-good-table>
+    </div>
+  </div>    
 </template>
 
 <script>
@@ -127,10 +141,10 @@ export default {
     },
     deleteTeamAction(id){
       Vue.$confirm({
-        title: 'Are you sure?',
-        message: 'Are you sure you want to delete team?',
+        title: 'Delete team?',
+        message: 'If you delete the team data will be gone forever. Are you sure you want to proceed?',
         button: {
-          yes: 'Yes',
+          yes: 'Delete',
           no: 'Cancel'
         },
         callback: confirm => {

@@ -1,30 +1,46 @@
 <template>
-  <div>
-     {{formType}} Sprint
+  <div class="popup">
+    <!-- header -->
+    <div class="popup-header">
+      <b-icon icon="card-checklist" class="rounded-circle header-icon"></b-icon>
+      <span class="popup-title">{{formType}} Sprint</span>
+      <span class="align-right close" v-on:click="closePopup">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"/></svg>
+      </span>
+    </div>
+
      <form @submit="saveSprint">
-        <b-form-group label-cols="4" label-cols-lg="2" label="Name" label-for="input-default">
+       <!-- body -->
+      <div class="popup-body">
+        <b-form-group label="Name" label-for="name">
             <input type="hidden" id="id" v-model="id" name="id" />
-            <input type="text" id="name" v-model="name" name="name" placeholder="name"  class="normalBox">
+            <input type="text" id="name" v-model="name" name="name" placeholder="Enter name"  class="normalBox">
             <div class="error" v-if="$v.name.$dirty && !$v.name.required">Please enter name</div>
         </b-form-group> 
-        <b-form-group label-cols="4" label-cols-lg="2" label="Code" label-for="input-default">
-          <input type="text" id="code" v-model="code" name="code" placeholder="code"  class="normalBox">
+        <b-form-group label="Code" label-for="code">
+          <input type="text" id="code" v-model="code" name="code" placeholder="Enter code"  class="normalBox">
           <div class="error" v-if="$v.code.$dirty && !$v.code.required">Please enter code</div>
         </b-form-group>
-        <b-form-group label-cols="4" label-cols-lg="2" label="Start Date" label-for="input-default">
-          <date-picker v-model="startDate" valueType="format" format="YYYY-MM-DD" class="normalBox"></date-picker>
+        <b-form-group label="Start Date" label-for="startDate">
+          <date-picker id="startDate" v-model="startDate" valueType="format" format="YYYY-MM-DD" class="normalBox" placeholder="Select start date"></date-picker>
           <div class="error" v-if="$v.startDate.$dirty && !$v.startDate.required">Please enter start date</div>
         </b-form-group>
-        <b-form-group label-cols="4" label-cols-lg="2" label="End Date" label-for="input-default">
-          <date-picker v-model="endDate" valueType="format" format="YYYY-MM-DD" class="normalBox"></date-picker>
+        <b-form-group label="End Date" label-for="endDate">
+          <date-picker id="endDate" v-model="endDate" valueType="format" format="YYYY-MM-DD" class="normalBox" placeholder="Select end date"></date-picker>
           <div class="error" v-if="$v.endDate.$dirty && !$v.endDate.required">Please enter end date</div>
         </b-form-group>
-         <b-form-group label-cols="4" label-cols-lg="2" label="Hours" label-for="input-default">
-          <input type="text" id="hours" v-model="hours" name="hours" placeholder="Working hours"  class="normalBox">
+         <b-form-group label="Hours" label-for="hours">
+          <input type="text" id="hours" v-model="hours" name="hours" placeholder="Enter working hours"  class="normalBox">
           <div class="error" v-if="$v.hours.$dirty && (!$v.hours.required || !$v.hours.decimal)">Please enter sprint working hours in numeric</div>
         </b-form-group>
-        <input type="submit" value="Save">
+        </div>
+         <!-- footer -->
+      <div class="popup-footer clearfix">
+        <div class="button-wrapper align-right">
+        <input type="submit" value="Save" class="button">
         <input type="button" value="Cancel" class="button" v-on:click="closePopup">
+        </div>
+        </div>
     </form>
   </div>          
 </template>
