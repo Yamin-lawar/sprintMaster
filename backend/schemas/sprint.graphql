@@ -25,6 +25,14 @@ type Tasks{
     comments: [Comments]
 }
 
+type AllocatedUsersType{
+  _id: ID,
+  firstName: String,
+  lastName: String,
+  email: String,
+  avtaar: String
+}
+
 type SprintProject{
     _id: ID!,
     name: String!,
@@ -36,7 +44,8 @@ type SprintProject{
     poRanking: Float,
     gurujiRanking: Float,
     completion: Float,
-    task:[Tasks]
+    task:[Tasks],
+    allocatedUsers:[AllocatedUsersType]
 }
 
 type Sprint{

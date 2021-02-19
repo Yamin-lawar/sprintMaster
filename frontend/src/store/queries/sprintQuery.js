@@ -38,6 +38,13 @@ export const ACTIVE_SPRINT = gql`
             _id,
             name,
             code,
+            allocatedUsers{
+                _id,
+                firstName,
+                lastName,
+                email,
+                avtaar
+            },
             smj{
                 firstName,
                 lastName
