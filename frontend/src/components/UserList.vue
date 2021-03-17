@@ -1,15 +1,28 @@
 <template>
-    <div class="wrapper" id="wrapper">
-          <b-spinner variant="primary" style="width: 3rem; height: 3rem;" class="m-5 loader" label="Spinning" v-if="userLoader"></b-spinner>
-         <div class="align-right"><input class="button" type="button" v-on:click="openAddUser('open')" value="Add User"></div>
-         <modal name="user-popup" height="auto" :scrollable="true">
+  <div class="wrapper" id="wrapper">
+    <div class="page-wrapper">
+        <b-spinner variant="primary" style="width: 3rem; height: 3rem;" class="m-5 loader" label="Spinning" v-if="userLoader"></b-spinner>
+
+          <div class="page-header">
+            <div class="page-title align-left">
+              <div class="title">Users</div>
+              <div class="description align-left">Lorem ipsum dolor sit amet consectetur.</div>
+            </div>
+            
+            <div class="align-right add-button">
+              <input class="button" type="button" v-on:click="openAddUser('open')" value="Add User">
+            </div>
+          </div>
+
+         <modal name="user-popup" height="auto" width="80%" :maxWidth="600" :adaptive="true" class="vue-modal" :scrollable="true">
             <AddUser v-on:closeAddUser="openAddUser('close')" v-on:handleEditUserForm="editUserForm"  v-on:handleUserForm="saveUser" :currentData="currentData" :teamData="this.$store.getters.teams" />
          </modal>
          <vue-good-table
             :columns="columns"
             :rows="rows"
             :search-options="{
-                enabled: true
+                enabled: true,
+                placeholder: 'Search'
             }"
             :pagination-options="{
                 enabled: true,
@@ -19,9 +32,9 @@
          >
          
          <template slot="table-row" slot-scope="props">              
-          <span v-if="props.column.field == 'option'">
-            <span><b-icon icon="pencil-square" v-on:click="editUserPoup(props.formattedRow)"></b-icon></span> 
-            <span><b-icon icon="trash" v-on:click="deleteUserAction(props.formattedRow['_id'])"></b-icon></span>
+          <span v-if="props.column.field == 'option'" class="option">
+            <a><b-icon icon="pencil-square" v-on:click="editUserPoup(props.formattedRow)"></b-icon></a> 
+            <a><b-icon icon="trash-fill" v-on:click="deleteUserAction(props.formattedRow['_id'])"></b-icon></a>
           </span>
           <span v-else-if="props.column.field == 'avtaar'">
             <span>
@@ -30,8 +43,9 @@
           </span>  
         </template>
         
-         </vue-good-table>
-    </div>    
+      </vue-good-table>
+    </div>
+  </div>    
 </template>
 
 <script>
@@ -150,10 +164,10 @@ export default {
     },
     deleteUserAction(id){
       Vue.$confirm({
-        title: 'Are you sure?',
-        message: 'Are you sure you want to delete user?',
+        title: 'Delete user?',
+        message: 'If you delete this user`s data will be gone forever. Are you sure you want to proceed?',
         button: {
-          yes: 'Yes',
+          yes: 'Delete',
           no: 'Cancel'
         },
         callback: confirm => {

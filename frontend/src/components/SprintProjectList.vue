@@ -24,8 +24,8 @@
                             <td class="assignee-select">
                                 <!-- Select dropdown will have view-only class for user with view permission -->
                                 <div class="custom-select-wrapper view-only"> 
-                                     <b-avatar variant="info" class="selectedPerson" :src="taskData.user !== undefined ? taskData.user.avtaar : ''" ></b-avatar>
-                                    <div class="person">{{taskData.user !== undefined ? `${taskData.user.firstName} ${taskData.user.lastName}`: '-'}}</div>
+                                     <b-avatar variant="info" class="selectedPerson" :src="taskData.user !== undefined && taskData.user !== null ? taskData.user.avtaar : ''" ></b-avatar>
+                                    <div class="person">{{taskData.user !== undefined && taskData.user !== null? `${taskData.user.firstName} ${taskData.user.lastName}`: 'No user found'}}</div>
                                 </div>
                             </td>
                             <td>Backend</td>

@@ -1,0 +1,439 @@
+/* common form elements style accros the project*/
+form {
+    font-size: $small;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    appearance: none;
+    outline: none;
+    border: none;
+    box-shadow: none;
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    @include transition(all 0.3s ease-in-out);
+
+    &:active,
+    &:focus {
+        border: 1px solid rgba(var(--rgb), 0.3);
+        box-shadow: 0 0 0 1px rgba(var(--rgb), 0.3);
+    }
+
+    &.display-error {
+        border: 2px solid var(--red);
+    }
+
+    &.display-success {
+        border: 2px solid var(--green);
+    }
+}
+
+label {
+    font-weight: $semi-bold;
+    color: var(--text-light);
+    margin-bottom: 5px;
+}
+
+.button {
+    margin-left: 10px !important;
+}
+
+.button,
+input[type=button],
+input[type=submit],
+input[type=reset] {
+    background-color: var(--main);
+    border: none;
+    color: var(--white);
+    padding: 12px 25px;
+    text-align: center;
+    font-weight: $bold;
+    box-shadow: none;
+    border-radius: 5px;
+    margin: 5px 0px;
+    border: 1px solid var(--main);
+    @include transition(all 0.3s ease-in-out);
+    cursor: pointer;
+    text-decoration: none !important;
+    font-size: $small;
+
+    &:hover {
+        color: var(--white);
+        background-color: var(--main);
+        border: 1px solid var(--main);
+        box-shadow: 0 0 5px 0 rgba(var(--normal-shadow), 0.4);
+    }
+}
+
+textarea,
+select,
+.custom-select,
+.custom-file {
+    border: none;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    transition: all 0.5s ease-in-out;
+    border-radius: 5px;
+    //background: var(--white);
+}
+
+.form-input {
+    position: relative;
+    padding: 0 0 20px;
+
+    .error {
+        position: absolute;
+        bottom: 2px;
+        font-size: 12px;
+        color: var(--red);
+    }
+}
+
+.form-footer {
+    padding: 25px;
+    text-align: center;
+}
+
+
+//Common style for all the popups
+.vue-modal {
+    &.team {
+        .vm--modal {
+            @include mq('phone') {
+                height: auto !important;
+                overflow: scroll;
+            }
+        }
+    }
+
+    .vm--modal {
+        height: auto !important;
+        border-radius: 5px;
+
+        @include mq('phone') {
+            height: 80% !important;
+            overflow: scroll;
+        }
+    }
+
+    .popup {
+
+        .popup-header {
+            padding: 20px;
+            border: 1px solid var(--border);
+
+            .header-icon {
+                color: var(--main);
+                background: rgba(var(--rgb), 0.3);
+                height: 40px;
+                width: 40px;
+                padding: 10px;
+                box-shadow: 0px 4px 6px 1px rgba(var(--card-shadow), 0.3);
+                vertical-align: middle;
+            }
+
+            .popup-title {
+                color: var(--black);
+                font-weight: $semi-bold;
+                font-size: $medium;
+                padding: 15px;
+                vertical-align: sub;
+            }
+
+            .close {
+                padding: 12px 5px 15px;
+                font-size: $medium;
+                color: var(--placeholder);
+                cursor: pointer;
+
+                &:hover {
+                    color: var(--main);
+                }
+            }
+        }
+
+        .popup-body {
+            padding: 20px;
+
+            .form-group {
+                position: relative;
+
+                .error {
+                    position: absolute;
+                    font-size: 12px;
+                    color: var(--red);
+                }
+
+                .mx-datepicker {
+                    width: 100%;
+
+                    .mx-input {
+                        border: 1px solid var(--border);
+                        border-radius: 5px;
+                        @include transition(all 0.3s ease-in-out);
+                        padding: 10px;
+                        height: auto;
+                        font-size: $small;
+                    }
+
+                }
+            }
+
+            textarea,
+            .custom-select {
+                width: 100%;
+                border: 1px solid var(--border);
+                border-radius: 5px;
+                @include transition(all 0.3s ease-in-out);
+                padding: 10px;
+                height: auto;
+                font-size: $small;
+                outline: none;
+
+                &:active,
+                &:focus {
+                    border: 1px solid rgba(var(--rgb), 0.3);
+                    box-shadow: 0 0 0 1px rgba(var(--rgb), 0.3);
+                }
+
+                &:before {
+                    content: "\e604";
+                }
+            }
+
+            .custom-select {
+                background: var(--white) url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23ced4da' d='M2 4L0 2h4zm0 0L0 4h4z'/%3e%3c/svg%3e") no-repeat right 0.75rem center/8px 10px;
+            }
+        }
+
+        .popup-footer {
+            background: var(--background);
+            padding: 10px 20px;
+
+            .button {
+                width: auto;
+            }
+        }
+    }
+}
+
+
+//Common style for vue-tabels
+table {
+    &.vgt-table {
+        font-size: $small;
+        margin: 10px 0 0;
+
+        thead {
+            th {
+                background: var(--white);
+                color: var(--black);
+                border-bottom: 2px solid var(--border) !important;
+            }
+        }
+
+        td {
+            color: var(--black);
+        }
+    }
+}
+
+.vgt-table.bordered td,
+.vgt-table.bordered th {
+    border: none;
+    border-bottom: 1px solid var(--border);
+    padding: 0.95rem;
+}
+
+.vgt-wrap {
+    .vgt-inner-wrap {
+        .vgt-global-search {
+            float: right;
+            padding: 0;
+            border: none;
+            background: none;
+
+            @include mq('phone') {
+                float: none;
+                margin: 0 0 0 10px;
+            }
+
+            .vgt-global-search__input {
+                position: relative;
+                @include transition(all 1s);
+                width: 45px;
+                height: 45px;
+                background: rgba(var(--rgb), 0.3);
+                box-sizing: border-box;
+                border: 2px solid var(--main);
+                border-radius: 10px;
+                padding: 5px;
+                margin-top: 8px;
+
+                .vgt-input {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 41px;
+                    outline: 0;
+                    border: 0;
+                    display: none;
+                    font-size: $small;
+                    border-radius: 10px;
+                    padding: 0 20px;
+                    background: var(--white);
+                    color: var(--black);
+
+                    @include mq('phone') {
+                        display: block;
+                    }
+                }
+
+                .input__icon {
+                    right: 0;
+                    left: auto;
+                    z-index: var(--z-before);
+                    top: -4px;
+
+                    .magnifying-glass {
+                        box-sizing: border-box;
+                        padding: 12px;
+                        width: 41px;
+                        height: 41px;
+                        position: absolute;
+                        top: 1px;
+                        right: 0;
+                        color: var(--main);
+                        border-radius: 10px;
+                        text-align: center;
+                        @include transition(all 1s);
+                        border: none;
+
+                        &:before {
+                            background: var(--main);
+                            right: 10px;
+                            bottom: 14px;
+                            width: 8px;
+                            height: 2px;
+                        }
+
+                        &:after {
+                            content: "";
+                            display: block;
+                            position: absolute;
+                            right: 15px;
+                            bottom: 15px;
+                            border: 2px solid var(--main);
+                            width: 14px;
+                            height: 14px;
+                            border-radius: 50%;
+                        }
+                    }
+                }
+
+                &:hover,
+                &:focus-within {
+                    width: 200px;
+                    cursor: pointer;
+
+                    .vgt-input {
+                        display: block;
+                    }
+
+                    .magnifying-glass {
+                        background: var(--main);
+
+                        &:before {
+                            background: var(--white);
+                        }
+
+                        &:after {
+                            border: 2px solid var(--white);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+/* delete popup */
+
+.vc-container {
+    min-width: 450px;
+    border-radius: 5px !important;
+
+    @include mq('phone') {
+        height: auto !important;
+        overflow: scroll;
+        min-width: auto;
+    }
+
+    .vc-text-grid {
+        padding: 0;
+
+        .vc-title {
+            padding: 28px 30px 28px 80px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            position: relative;
+
+            &:before {
+                content: url('~@/assets/delete.png');
+                position: absolute;
+                left: 20px;
+                top: 15px;
+            }
+        }
+
+        .vc-text {
+            padding: 20px;
+            text-align: left;
+            font-size: $small;
+            line-height: 1.5;
+            color: var(--text-light);
+            font-weight: $semi-bold;
+        }
+    }
+
+
+    .vc-btn-grid {
+        background: var(--background);
+        padding: 10px 20px;
+        display: unset;
+
+
+
+        .vc-btn {
+            background-color: var(--red);
+            border: none;
+            color: var(--white);
+            padding: 12px 25px;
+            text-align: center;
+            font-weight: $bold;
+            box-shadow: none;
+            border-radius: 5px;
+            margin: 5px 0px;
+            border: 1px solid var(--red);
+            @include transition(all 0.3s ease-in-out);
+            cursor: pointer;
+            text-decoration: none !important;
+            font-size: $small;
+            float: right;
+
+            &:hover {
+                color: var(--white);
+                box-shadow: 0 0 5px 0 rgba(var(--normal-shadow), 0.4);
+            }
+
+            &.left {
+                margin-left: 10px;
+                background-color: var(--white);
+                border: 0px solid var(--text-light);
+                color: var(--text-light);
+            }
+        }
+    }
+}

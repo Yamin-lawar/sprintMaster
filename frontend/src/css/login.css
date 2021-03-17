@@ -1,10 +1,7 @@
 
-  
-  
-  
   /* TABS */
   
-  h2.inactive {
+  /* h2.inactive {
     color: #cccccc;
   }
   
@@ -12,12 +9,12 @@
     color: #0d0d0d;
     border-bottom: 2px solid #5fbae9;
   }
-  
+   */
    
   /* ANIMATIONS */
   
   /* Simple CSS3 Fade-in-down Animation */
-  .fadeInDown {
+  /* .fadeInDown {
     -webkit-animation-name: fadeInDown;
     animation-name: fadeInDown;
     -webkit-animation-duration: 1s;
@@ -50,10 +47,10 @@
       -webkit-transform: none;
       transform: none;
     }
-  }
+  } */
   
   /* Simple CSS3 Fade-in Animation */
-  @-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+  /* @-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
   @-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
   @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
   
@@ -95,36 +92,16 @@
     -webkit-animation-delay: 1s;
     -moz-animation-delay: 1s;
     animation-delay: 1s;
-  }
+  } */
   
   /* Simple CSS3 Fade-in Animation */
-  .underlineHover:after {
-    display: block;
-    left: 0;
-    bottom: -10px;
-    width: 0;
-    height: 2px;
-    background-color: #56baed;
-    content: "";
-    transition: width 0.2s;
-  }
-  
-  .underlineHover:hover {
-    color: #0d0d0d;
-  }
-  
-  .underlineHover:hover:after{
-    width: 100%;
-  }
-  
-  
   
   /* OTHERS */
   
-  *:focus {
+  /* *:focus {
       outline: none;
   } 
   
   #icon {
     width:60%;
-  }
+  } */

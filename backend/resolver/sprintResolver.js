@@ -602,9 +602,45 @@ module.exports = {
                 .populate('projects.dsmj')
                 .populate('projects.task.createdBy')
                 .populate('projects.task.user')
-                .populate('projects.task.comments.user');  
-                return sprintData
-                
+                .populate('projects.task.comments.user');
+                //format manual response as we need to manipulate response for allocated user list together 
+                let finalResponse = []
+                finalResponse._id = sprintData._id
+                finalResponse.name = sprintData.name
+                finalResponse.code = sprintData.code
+                finalResponse.deleted = sprintData.deleted
+                finalResponse.startDate = sprintData.startDate
+                finalResponse.endDate = sprintData.endDate
+                finalResponse.status = sprintData.status
+                finalResponse.sprintHours = sprintData.sprintHours
+                finalResponse.createdAt = sprintData.createdAt
+                finalResponse.updatedAt = sprintData.updatedAt
+                finalResponse.createdBy = sprintData.createdBy
+                finalResponse.hours = sprintData.hours
+                finalResponse.completion = sprintData.completion
+                let projectResponse = [];
+                sprintData.projects.map(async (sprintProjectData,index) => {
+                  let projectSubObject = {}
+                  let allocatedUser = [];
+                  sprintProjectData.task.forEach(function(taskDetail) {
+                     allocatedUser.push(taskDetail.user)
+                  })
+                  projectSubObject._id = sprintProjectData._id
+                  projectSubObject.name = sprintProjectData.name
+                  projectSubObject.code = sprintProjectData.code
+                  projectSubObject.completion = sprintProjectData.completion
+                  projectSubObject.task = sprintProjectData.task
+                  projectSubObject.allocatedUsers = allocatedUser
+                  projectSubObject.smj = sprintProjectData.smj
+                  projectSubObject.dsmj = sprintProjectData.dsmj
+                  projectSubObject.po = sprintProjectData.po
+                  projectSubObject.spo = sprintProjectData.spo
+                  projectSubObject.poRanking = sprintProjectData.poRanking
+                  projectSubObject.gurujiRanking = sprintProjectData.gurujiRanking
+                  projectResponse.push(projectSubObject)
+                })
+                finalResponse.projects = projectResponse
+                return finalResponse
               }catch(err){
                 logger('sprint',`Sprint list: Problem in getting sprint data: ${err}`);
                 throw customErrorHandler(err.name == 'customError' ? err.message :  'Problem in getting sprint data', 500);

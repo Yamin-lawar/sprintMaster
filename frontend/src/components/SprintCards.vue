@@ -30,7 +30,7 @@
                                     <div class="score-container">
                                         Sprint Score
                                         <div class="score">{{projectData.gurujiRanking !== null ? projectData.gurujiRanking : '-'}}</div>
-                                        <span class="highlight-text">out of 5</span>
+                                        <span class="highlight-text">out of 10</span>
                                     </div>
                                 </div>
                             </div>
@@ -38,15 +38,11 @@
                                 <div class="score-card">
                                     <div class="allocation-container">
                                         <div class="title">Allocation</div>
-                                        <div class="team">
-                                            <div><img src="../assets/user1.jpeg"></div>
-                                            <div><img src="../assets/user5.png"></div>
-                                            <div><img src="../assets/user4.jpeg"></div>
-                                            <div><img src="../assets/user2.jpeg"></div>
-                                            <div><img src="../assets/user1.jpeg"></div>
-                                            <div><img src="../assets/user5.png"></div>
-                                            <div><img src="../assets/user4.jpeg"></div>
-                                        </div>
+                                        <div class="team" v-for="allocatedUserInProject in projectData.allocatedUsers" :key="allocatedUserInProject !== null ? allocatedUserInProject._id : null">
+                                            <div class="team-member" v-if="allocatedUserInProject !== null">
+                                                <b-avatar variant="info" :src="allocatedUserInProject.avtaar !== undefined ? allocatedUserInProject.avtaar : ''" ></b-avatar>
+                                                <span class="tooltip-text"><div class="name">{{allocatedUserInProject.firstName}} {{allocatedUserInProject.lastName}}</div>{{allocatedUserInProject.email}}</span></div>
+                                            </div>
                                         <div class="allocation-bar">
                                             <img src="../assets/allocation.png">
                                         </div>
