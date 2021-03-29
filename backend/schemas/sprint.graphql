@@ -6,6 +6,12 @@ enum taskStatusType{
    Onhold
 }
 
+enum sprintApprovalType{
+   Pending
+   Approved
+   Unapproved
+}
+
 type Comments{
     _id: ID,
     user: User,
@@ -44,6 +50,8 @@ type SprintProject{
     poRanking: Float,
     gurujiRanking: Float,
     completion: Float,
+    projectWiseAllocation: Float,
+    approvalStatus: sprintApprovalType
     task:[Tasks],
     allocatedUsers:[AllocatedUsersType]
 }
@@ -141,6 +149,12 @@ input updateProjectRankingInput{
   gurujiRanking: Float
 }
 
+input updateProjectApprovalStatusInput {
+  sprintId: ID!
+  projectId: ID!
+  approvalStatus: sprintApprovalType
+}
+
 input addCommentInput{
   sprintId: ID!
   projectId: ID!
@@ -170,6 +184,7 @@ type Mutation{
     updateSprint(input:updateSprintInput): SprintGeneralPayload
     removeSprint(input:deleteSprintInput): SprintGeneralPayload
     updateProjectRanking(input:updateProjectRankingInput): SprintGeneralPayload
+    updateProjectApprovalStatus(input:updateProjectApprovalStatusInput): SprintGeneralPayload
     addComment(input:addCommentInput): SprintGeneralPayload
     updateComment(input:updateCommentInput): SprintGeneralPayload
     removeComment(input:removeCommentInput): SprintGeneralPayload

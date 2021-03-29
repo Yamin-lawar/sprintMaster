@@ -11,6 +11,7 @@ import VueApollo from 'vue-apollo'
 import Notifications from 'vue-notification'
 import VueConfirmDialog from 'vue-confirm-dialog'
 import VueApexCharts from 'vue-apexcharts'
+import moment from 'moment'
 
 
 
@@ -62,7 +63,7 @@ Vue.use(VueApollo)
 Vue.use(Notifications)
 Vue.use(VueConfirmDialog)
 Vue.use(VueApexCharts)
-
+Vue.prototype.moment = moment
 Vue.component('vue-confirm-dialog', VueConfirmDialog.default)
 Vue.component('apexchart', VueApexCharts)
 

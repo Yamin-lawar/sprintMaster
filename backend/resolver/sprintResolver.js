@@ -3,7 +3,7 @@ const Project = require('../models/project')
 const Team = require('../models/team') 
 const User = require('../models/user') 
 import {logger, customErrorHandler, validationErrorResponse} from '../utils/general'
-import { createSprintValidation, addUpdateTaskValidation, updateTaskStatusValidation, updateSprintValidation,  deleteSprintValidation, updateProjectRankingValidation, addCommentValidation, updateCommentValidation, deleteCommentValidation} from '../validations/validator'
+import { createSprintValidation, addUpdateTaskValidation, updateTaskStatusValidation, updateSprintValidation,  deleteSprintValidation, updateProjectRankingValidation, addCommentValidation, updateCommentValidation, deleteCommentValidation, updateProjectApprovalStatusValidation} from '../validations/validator'
 import authMiddleware from '../middlewares/auth'
 import user from '../models/user'
 const mongoose = require('mongoose');
@@ -381,6 +381,37 @@ module.exports = {
               }
             },
             /**
+             * Update sprint project approval status
+             * @author Yamin
+             * @param {args,context}
+             */
+            updateProjectApprovalStatus: async(args, context) => {
+              try{
+                //TODO: check only po & SPO o guruji can update this can update this
+                const checkResponse = updateProjectApprovalStatusValidation.validate(args.input);
+                if(checkResponse.error !== undefined){
+                  return validationErrorResponse(checkResponse.error)
+                }  
+                const {sprintId, projectId, approvalStatus} = args.input
+                const statusUpdate = await Sprint.update(
+                    { 
+                      "_id" : sprintId, 
+                      "projects._id" : projectId
+                    },
+                    {    
+                      $set : { "projects.$.approvalStatus" : approvalStatus } 
+                    }
+                  )
+                  if(statusUpdate.nModified !== 1){
+                    throw customErrorHandler('Problem in updating project status', 500);
+                }
+                return {message: "Project status updated successfully"}
+              }catch(err){
+                logger('sprint',`update sprint approval status: Problem in updating sprint approval status: ${err}`);
+                throw customErrorHandler(err.name == 'customError' ? err.message :  'Problem in updating sprint approval status', 500);
+              }
+            },
+            /**
              * Add comment for any task 
              * @author Yamin
              * @param {args,context}
@@ -603,6 +634,16 @@ module.exports = {
                 .populate('projects.task.createdBy')
                 .populate('projects.task.user')
                 .populate('projects.task.comments.user');
+                //calculate total allocation for each project for that first get total number of user and multiple by sprint hours first
+                //TODO: here we are checking first preference only it can create issue if someone is po/spo and then he/she become SMJ or other user
+                const totalUser = await User.find({
+                 $and:[                  
+                    {'role.0.role': {$ne: 'spo'}},
+                    {'role.0.role': {$ne: 'po'}}
+                  ]
+                }).countDocuments()
+                const sprintHourFromDB = sprintData.hours !== undefined ? sprintData.hours : 0
+                const totalSprintHours = totalUser * sprintHourFromDB
                 //format manual response as we need to manipulate response for allocated user list together 
                 let finalResponse = []
                 finalResponse._id = sprintData._id
@@ -612,7 +653,7 @@ module.exports = {
                 finalResponse.startDate = sprintData.startDate
                 finalResponse.endDate = sprintData.endDate
                 finalResponse.status = sprintData.status
-                finalResponse.sprintHours = sprintData.sprintHours
+                finalResponse.hours = sprintData.hours
                 finalResponse.createdAt = sprintData.createdAt
                 finalResponse.updatedAt = sprintData.updatedAt
                 finalResponse.createdBy = sprintData.createdBy
@@ -622,9 +663,14 @@ module.exports = {
                 sprintData.projects.map(async (sprintProjectData,index) => {
                   let projectSubObject = {}
                   let allocatedUser = [];
+                  let projectWiseAllocatedHours = 0
                   sprintProjectData.task.forEach(function(taskDetail) {
                      allocatedUser.push(taskDetail.user)
+                     projectWiseAllocatedHours += taskDetail.hours !== undefined ? taskDetail.hours : 0
                   })
+                  //calculate project wise allocation % from total hours
+                  const projectWiseAllocationPercentage = (projectWiseAllocatedHours * 100) / totalSprintHours
+                  console.log(sprintProjectData.approvalStatus,'sprintProjectData.approvalStatus')
                   projectSubObject._id = sprintProjectData._id
                   projectSubObject.name = sprintProjectData.name
                   projectSubObject.code = sprintProjectData.code
@@ -637,6 +683,8 @@ module.exports = {
                   projectSubObject.spo = sprintProjectData.spo
                   projectSubObject.poRanking = sprintProjectData.poRanking
                   projectSubObject.gurujiRanking = sprintProjectData.gurujiRanking
+                  projectSubObject.projectWiseAllocation = projectWiseAllocationPercentage
+                  projectSubObject.approvalStatus = sprintProjectData.approvalStatus !== null && sprintProjectData.approvalStatus !== undefined ? sprintProjectData.approvalStatus : 'Pending'
                   projectResponse.push(projectSubObject)
                 })
                 finalResponse.projects = projectResponse
