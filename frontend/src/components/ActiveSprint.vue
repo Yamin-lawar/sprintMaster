@@ -4,7 +4,7 @@
             <div class="sprint-header clearfix">
                 <div class="sprint-info">
                     <div class="page-title">Active Sprint</div>
-                    <div class="current-sprint-week">December 28 - January 1</div>
+                    <div class="current-sprint-week">{{dateOfSprint}}</div>
                 </div>
                 <div class="search-container align-right">
                     <input placeholder="Search" class="search"/>
@@ -19,19 +19,31 @@
                         <img src="../assets/Visibly.png">
                         <div class="project-info">
                             <span class="project-name">{{projectData.name}}</span>
-                            <span class="project-code">{{projectData.code}}</span>
+                            <span class="project-code">{{projectData.code}} </span>
                         </div>
                         <div class="team">
-                            <div class="team-member"><img src="../assets/user1.jpeg"></div>
-                            <div class="team-member"><img src="../assets/user5.png"></div>
-                            <div class="team-member"><img src="../assets/user4.jpeg"></div>
-                            <div class="team-member"><img src="../assets/user2.jpeg"></div>
+                            <div class="team-member" v-if="projectData.smj !== undefined">
+                                <b-avatar variant="info" :src="projectData.smj.avtaar !== undefined ? projectData.smj.avtaar : ''" ></b-avatar>
+                                <span class="tooltip-text"><div class="name">{{projectData.smj.firstName}} {{projectData.smj.lastName}}</div>{{projectData.smj.email}}</span>
+                            </div>
+                            <div class="team-member" v-if="projectData.dsmj !== null">
+                                <b-avatar variant="info" :src="projectData.dsmj.avtaar !== undefined ? projectData.dsmj.avtaar : ''" ></b-avatar>
+                                <span class="tooltip-text"><div class="name">{{projectData.dsmj.firstName}} {{projectData.dsmj.lastName}}</div>{{projectData.dsmj.email}}</span>
+                            </div>
+                            <div class="team-member" v-if="projectData.po !== null">
+                                <b-avatar variant="info" :src="projectData.po.avtaar !== undefined ? projectData.po.avtaar : ''" ></b-avatar>
+                                <span class="tooltip-text"><div class="name">{{projectData.po.firstName}} {{projectData.po.lastName}}</div>{{projectData.po.email}}</span>
+                            </div>
+                            <div class="team-member" v-if="projectData.spo !== null">
+                                <b-avatar variant="info" :src="projectData.spo.avtaar !== undefined ? projectData.spo.avtaar : ''" ></b-avatar>
+                                <span class="tooltip-text"><div class="name">{{projectData.spo.firstName}} {{projectData.spo.lastName}}</div>{{projectData.spo.email}}</span>
+                            </div>
                         </div>
-                        <div class="sprint-task-status approved">Approved</div>
+                        <div class="sprint-task-status approved">{{projectData.approvalStatus}}</div>
                     </label>
 
                     <div class="accordion-content">
-                        <SprintCards :projectData="projectData" />
+                        <SprintCards :projectData="projectData" :daysLeft="daysLeft" />
                         <SprintProjectList :projectData="projectData" />
                     </div>  
                 </div> 
@@ -367,13 +379,24 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import SprintCards from './SprintCards'
+import moment from 'moment'
 import SprintProjectList from './SprintProjectList'
 export default {
-
     name: "ActiveSprint",
     computed: {
         ...mapGetters(["activeSprint"])
     },
+    watch:{
+      activeSprint(newValue, oldValue){
+            this.dateOfSprint = `${moment(newValue.startDate).format('MMMM DD')} - ${moment(newValue.endDate).format('MMMM DD')}` 
+      }
+    },
+    data(){
+        return{
+            daysLeft: Math.floor((Date.parse(new Date(this.$store.getters.activeSprint.endDate).toLocaleDateString("en-CA")) - Date.parse(new Date().toLocaleDateString("en-CA")) ) / 86400000),
+            dateOfSprint: `${moment(this.$store.getters.activeSprint.startDate).format('MMMM DD')} - ${moment(this.$store.getters.activeSprint.endDate).format('MMMM DD')}` 
+        }
+    }, 
     components:{
       SprintCards,
       SprintProjectList

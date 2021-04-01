@@ -63,6 +63,8 @@ export const ACTIVE_SPRINT = gql`
             },
             poRanking,
             gurujiRanking,
+            projectWiseAllocation,
+            approvalStatus,
             completion,
             task{
                 _id,

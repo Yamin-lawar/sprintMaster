@@ -90,6 +90,15 @@ const projectSchema = new Schema({
         type: Number,
         required: false,
     },
+    projectWiseAllocation: {
+        type: Number,
+        required: false,
+    },
+    approvalStatus: { 
+        type: String,
+        required: true,
+        default: 'Pending'
+    },
     completion: {
         type: Number,
         required: false,

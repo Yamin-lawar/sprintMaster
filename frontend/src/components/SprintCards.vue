@@ -47,7 +47,7 @@
                                             <img src="../assets/allocation.png">
                                         </div>
                                         <div class="allocation-percentage">
-                                            <span class="highlight-text">50%</span> of total resources
+                                            <span class="highlight-text">{{projectData.projectWiseAllocation.toFixed(1)}}%</span> of total resources
                                         </div>
                                     </div>
                                 </div>
@@ -57,11 +57,15 @@
                                     <div class="task-container">
                                         <div class="title">Task Completion</div>
                                         <div class="completion-bar">
-                                            <img src="../assets/completion.png">
+                                            <div id="projectCompletionChart">
+                                                <apexchart type="radialBar" height="120" :options="chartOptions" :series="series"></apexchart>
+                                            </div>
+    
                                         </div>
                                         <div class="completion-percentage">
                                             {{projectData.completion}}% of targeted tasks completed
-                                            <p>Days left: 1</p>
+                                            <p>Days left: {{daysLeft}}</p>
+                                           
                                         </div>
                                     </div>
                                 </div>
@@ -71,15 +75,31 @@
                     <!-- cards container ends -->
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex';
 export default {
     name: "sprintCards",
     computed: {
        
     },
-    props:['projectData'],
+    props:['projectData','daysLeft'],
     methods:{
-       
+    },
+    data(){
+        return {
+            series: [this.projectData.completion],
+            chartOptions: {
+                chart: {
+                type: 'radialBar',
+                },
+                plotOptions: {
+                radialBar: {
+                    hollow: {
+                        size: '50%',
+                    }
+                },
+                },
+                labels: [''],
+            }
+        }
     },
     created() {
     }

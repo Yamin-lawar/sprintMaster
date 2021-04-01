@@ -108,6 +108,12 @@ const updateProjectRankingValidation = Joi.object({
     projectId: Joi.string().required().messages({"string.empty": `Project is not available`}),
 }).unknown()
 
+const updateProjectApprovalStatusValidation = Joi.object({
+    sprintId: Joi.string().required().messages({"string.empty": `Sprint is not available`}),
+    projectId: Joi.string().required().messages({"string.empty": `Project is not available`}),
+    approvalStatus: Joi.string().required().messages({"string.empty": `Please provide approval status`}),
+}).unknown()
+
 const addCommentValidation = Joi.object({
     sprintId: Joi.string().required().messages({"string.empty": `Sprint is not available`}),
     projectId: Joi.string().required().messages({"string.empty": `Project is not available`}),
@@ -153,7 +159,8 @@ module.exports = {
     updateProjectRankingValidation,
     addCommentValidation,
     updateCommentValidation,
-    deleteCommentValidation
+    deleteCommentValidation,
+    updateProjectApprovalStatusValidation
 }
 
 
