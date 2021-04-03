@@ -69,7 +69,7 @@
                 background:rgba(var(--rgb),0.1);
             }
 
-            &.pending{
+            &.pending,&.unapproved{
                 color:var(--text-light);
                 background:rgba(var(--card-shadow),0.2);
             }
@@ -89,8 +89,7 @@
             display: none;
         }
 
-        div,
-        span {
+        div{
             cursor: pointer;
             margin-right: -20px;
             @include transition(0.4s ease);
@@ -118,6 +117,25 @@
         .team-member {
             position: relative;
 
+            .b-avatar,.badge-info,.rounded-circle{
+                cursor: pointer;
+                @include transition(0.4s ease);
+                display: inline-block;
+                max-height: 40px;
+                vertical-align: inherit;
+                max-width:inherit;
+                margin-right: 10px;
+                border: 5px solid var(--white);
+
+                svg {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    display: inline-block;
+                }   
+            }
+
             &:hover {
                 .tooltip-text {
                     visibility: visible;
@@ -137,10 +155,11 @@
                 box-shadow: 1px 1px 12px -3px rgba(var(--normal-shadow), 0.2);
                 border: 1px solid var(--border);
                 margin-top: 45px;
-                margin-left: -80px;
+                margin-left: -60px;
                 max-height: unset;
                 @include transition(opacity 0.3s ease-out);
                 font-size: 10px;
+                width: fit-content;
 
                 .name {
                     font-weight: $semi-bold;

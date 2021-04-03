@@ -3,3 +3,5 @@ node_modules/
 package-lock.json
 nodemon.json
 logs/
+.DS_Store
+Close

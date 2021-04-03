@@ -116,9 +116,21 @@
                     }
 
                     .team-member {
+                        display:inline-block;
                         .tooltip-text {
                             margin-top: 35px;
                             margin-left: -62px;
+                        }
+
+                        .b-avatar ,.badge-info, .rounded-circle{
+                            height: 30px;
+                            width: 30px;
+                            margin-right: 5px;
+                            svg{
+                                height: 30px;
+                                width: 30px;
+                                vertical-align: middle;
+                            }
                         }
                     }
 
@@ -150,16 +162,32 @@
                 }
 
                 .allocation-bar {
-                    margin-top: -6px;
-
+                    height: 5px;
+                    background: var(--border);
+                    display: inline-block;
+                    border-radius: 5px;
+                    position: relative;
+                    width: 100%;
+                    
                     @include mq('tablet') {
                         margin-top: 10px;
+                    }
+
+                    .allocation-bar-percentage{
+                        width: 0%;
+                        height: 5px;
+                        background: var(--main);
+                        display: inline-block;
+                        border-top-left-radius: 5px;
+                        border-bottom-left-radius: 5px;
+                        position: absolute;
                     }
                 }
             }
 
             .task-container {
                 font-size: $small;
+                margin-bottom:-20px;
 
                 .title {
                     color: var(--text-light);
@@ -173,7 +201,6 @@
 
                 .completion-bar {
                     width: 35%;
-                    vertical-align: bottom;
 
                     @include mq('tablet') {
                         width: 100%;
@@ -188,6 +215,7 @@
 
                 .completion-percentage {
                     width: 65%;
+                    vertical-align: middle;
 
                     p {
                         font-size: $small;
@@ -324,7 +352,8 @@
                 &.pink,
                 &.blue,
                 &.red,
-                &.green {
+                &.green,
+                &.status {
                     background-size: 15px 15px;
                     color: var(--white);
                     font-weight: $bold;
@@ -365,7 +394,7 @@
             .red,
             .green,
             .blue,
-            .pink {
+            .pink,.status{
                 color: var(--white);
                 font-weight: $semi-bold;
                 border-radius: 5px;
@@ -373,6 +402,16 @@
                 width: 65%;
                 text-align: center;
             }
+
+            .status{
+                &.Active{
+                    background: var(--blue);
+                }
+                &.Pending{
+                    background: var(--red);
+                }
+            }
+
 
             .red {
                 background: var(--red);
@@ -397,6 +436,56 @@
             }
         }
 
+    }
+
+    .target-achievement{
+
+        .task-completion{
+            width:20%;
+            display:inline-block;
+            font-weight:$semi-bold;
+
+            &.Active{
+                color: var(--blue);
+            }
+            &.Pending{
+                color: var(--red);
+            }
+        }
+        .task-completion-bar{
+            width:80%;
+            display:inline-block;
+        }
+        .progress-bar{
+            height: 5px;
+            background: var(--border);
+            display: inline-block;
+            border-radius: 5px;
+            position: relative;
+            width: 100%;
+            
+            @include mq('tablet') {
+                margin-top: 10px;
+            }
+
+            .progress-bar-percentage{
+                width: 0%;
+                height: 5px;
+                background: var(--main);
+                display: inline-block;
+                border-top-left-radius: 5px;
+                border-bottom-left-radius: 5px;
+                position: absolute;
+                left:0;
+
+                &.Active{
+                    background: var(--blue);
+                }
+                &.Pending{
+                    background: var(--red);
+                }
+            }
+        }
     }
 
     table {

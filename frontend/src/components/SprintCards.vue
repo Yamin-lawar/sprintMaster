@@ -38,13 +38,20 @@
                                 <div class="score-card">
                                     <div class="allocation-container">
                                         <div class="title">Allocation</div>
-                                        <div class="team" v-for="allocatedUserInProject in projectData.allocatedUsers" :key="allocatedUserInProject !== null ? allocatedUserInProject._id : null">
-                                            <div class="team-member" v-if="allocatedUserInProject !== null">
+                                        <div class="team" v-if="allocatedUserInProject !== null">
+                                            <div class="team-member" v-for="allocatedUserInProject in projectData.allocatedUsers" :key="allocatedUserInProject !== null ? allocatedUserInProject._id : null">
                                                 <b-avatar variant="info" :src="allocatedUserInProject.avtaar !== undefined ? allocatedUserInProject.avtaar : ''" ></b-avatar>
-                                                <span class="tooltip-text"><div class="name">{{allocatedUserInProject.firstName}} {{allocatedUserInProject.lastName}}</div>{{allocatedUserInProject.email}}</span></div>
+                                                <span class="tooltip-text">
+                                                    <div class="name">
+                                                        {{allocatedUserInProject.firstName}} {{allocatedUserInProject.lastName}}
+                                                    </div>{{allocatedUserInProject.email}}
+                                                </span>
                                             </div>
+                                        </div>
                                         <div class="allocation-bar">
-                                            <img src="../assets/allocation.png">
+                                            <span class="allocation-bar-percentage"
+                                                v-bind:style="{ width: projectData.projectWiseAllocation.toFixed(1) +'%' }"
+                                            ></span>
                                         </div>
                                         <div class="allocation-percentage">
                                             <span class="highlight-text">{{projectData.projectWiseAllocation.toFixed(1)}}%</span> of total resources
@@ -78,7 +85,7 @@
 export default {
     name: "sprintCards",
     computed: {
-       
+  
     },
     props:['projectData','daysLeft'],
     methods:{
@@ -88,14 +95,28 @@ export default {
             series: [this.projectData.completion],
             chartOptions: {
                 chart: {
-                type: 'radialBar',
+                    type: 'radialBar',
                 },
+                colors: ['#7498FB'],
                 plotOptions: {
-                radialBar: {
-                    hollow: {
-                        size: '50%',
-                    }
+                    radialBar: {
+                        hollow: {
+                            size: '50%',
+                        },
+                        dataLabels: {
+                            name: {
+                                show: false,
+                            },
+                            value: {
+                                fontSize: "12px",
+                                show: true,
+                                offsetY: 5,
+                            }
+                        }
+                    },
                 },
+                stroke: {
+                    lineCap: "round",
                 },
                 labels: [''],
             }

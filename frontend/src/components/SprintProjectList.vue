@@ -33,10 +33,20 @@
                             <td class="status-select">
                                 <!-- Select dropdown will have view-only class for user with view permission -->
                                 <div class="custom-select-wrapper view-only">
-                                <div class="red">{{taskData.status}}</div>
+                                <div :class="`status ${taskData.status}`"
+                                >{{taskData.status}}</div>
                             </div>
                             </td>
-                            <td>{{taskData.completion}}%</td>
+                            <td class="target-achievement">
+                                <div :class="`task-completion ${taskData.status}`">{{taskData.completion}}% </div>
+                                <div class="task-completion-bar">
+                                    <div class="progress-bar">
+                                        <span :class="`progress-bar-percentage ${taskData.status}`"
+                                            v-bind:style="{ width: taskData.completion +'%' }"
+                                        ></span>
+                                    </div>
+                                </div>
+                            </td>
                             <td>
                                 <div class="action">
                                     <img class="icon" src="../assets/chat.svg">
@@ -57,11 +67,11 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
     name: "SprintProjectList",
     computed: {
-       
+       console: () => console
     },
     props:['projectData'],
     methods:{
-       
+
     },
     created() {
     }
