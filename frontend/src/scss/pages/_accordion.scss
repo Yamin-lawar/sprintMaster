@@ -89,8 +89,7 @@
             display: none;
         }
 
-        div,
-        span {
+        div{
             cursor: pointer;
             margin-right: -20px;
             @include transition(0.4s ease);
@@ -117,6 +116,25 @@
 
         .team-member {
             position: relative;
+
+            .b-avatar,.badge-info,.rounded-circle{
+                cursor: pointer;
+                @include transition(0.4s ease);
+                display: inline-block;
+                max-height: 40px;
+                vertical-align: inherit;
+                max-width:inherit;
+                margin-right: 10px;
+                border: 5px solid var(--white);
+
+                svg {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 50%;
+                    object-fit: cover;
+                    display: inline-block;
+                }   
+            }
 
             &:hover {
                 .tooltip-text {

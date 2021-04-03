@@ -22,7 +22,7 @@
                             <span class="project-code">{{projectData.code}} </span>
                         </div>
                         <div class="team">
-                            <div class="team-member" v-if="projectData.smj !== undefined">
+                             <div class="team-member" v-if="projectData.smj !== undefined">
                                 <b-avatar variant="info" :src="projectData.smj.avtaar !== undefined ? projectData.smj.avtaar : ''" ></b-avatar>
                                 <span class="tooltip-text"><div class="name">{{projectData.smj.firstName}} {{projectData.smj.lastName}}</div>{{projectData.smj.email}}</span>
                             </div>
@@ -36,7 +36,7 @@
                             </div>
                             <div class="team-member" v-if="projectData.spo !== null">
                                 <b-avatar variant="info" :src="projectData.spo.avtaar !== undefined ? projectData.spo.avtaar : ''" ></b-avatar>
-                                <span class="tooltip-text"><div class="name">{{projectData.spo.firstName}} {{projectData.spo.lastName}}</div>{{projectData.spo.email}}</span>
+                                 <span class="tooltip-text"><div class="name">{{projectData.spo.firstName}} {{projectData.spo.lastName}}</div>{{projectData.spo.email}}</span>
                             </div>
                         </div>
                         <div class="sprint-task-status approved">{{projectData.approvalStatus}}</div>
