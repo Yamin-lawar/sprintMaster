@@ -69,7 +69,7 @@
                 background:rgba(var(--rgb),0.1);
             }
 
-            &.pending{
+            &.pending,&.unapproved{
                 color:var(--text-light);
                 background:rgba(var(--card-shadow),0.2);
             }
@@ -155,10 +155,11 @@
                 box-shadow: 1px 1px 12px -3px rgba(var(--normal-shadow), 0.2);
                 border: 1px solid var(--border);
                 margin-top: 45px;
-                margin-left: -80px;
+                margin-left: -60px;
                 max-height: unset;
                 @include transition(opacity 0.3s ease-out);
                 font-size: 10px;
+                width: fit-content;
 
                 .name {
                     font-weight: $semi-bold;

@@ -21,6 +21,7 @@
                             <span class="project-name">{{projectData.name}}</span>
                             <span class="project-code">{{projectData.code}} </span>
                         </div>
+                        
                         <div class="team">
                              <div class="team-member" v-if="projectData.smj !== undefined">
                                 <b-avatar variant="info" :src="projectData.smj.avtaar !== undefined ? projectData.smj.avtaar : ''" ></b-avatar>
@@ -39,7 +40,9 @@
                                  <span class="tooltip-text"><div class="name">{{projectData.spo.firstName}} {{projectData.spo.lastName}}</div>{{projectData.spo.email}}</span>
                             </div>
                         </div>
-                        <div class="sprint-task-status approved">{{projectData.approvalStatus}}</div>
+                        <div :class="['sprint-task-status', projectData.approvalStatus == 'Approved' ? 'approved' : 'unapproved']">
+                            {{projectData.approvalStatus}}
+                        </div>
                     </label>
 
                     <div class="accordion-content">
